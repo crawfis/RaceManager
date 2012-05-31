@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="HardcardTestDatabase" Class="HardcardDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=.\SQLEXPRESS;AttachDbFilename=C:\Users\Crawfis\Documents\Programming\OSU-svn\crawfis\personal\Consulting\HardCard\HardCardTests\SampleGUI\HardcardTestDatabase.mdf;Integrated Security=True;Connect Timeout=30;User Instance=True" SettingsObjectName="RaceResults.Properties.Settings" SettingsPropertyName="HardcardTestDatabaseConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Passings" Member="Passings">
+    <Type Name="Passing">
+      <Column Name="PassingNumber" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Tag" Type="System.String" DbType="NChar(24) NOT NULL" CanBeNull="false" />
+      <Column Name="PassingTime" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="ReadingNumber" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Lap" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TagReadings" Member="TagReadings">
+    <Type Name="TagReading">
+      <Column Name="ReadingNumber" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Tag" Type="System.String" DbType="Char(24) NOT NULL" CanBeNull="false" />
+      <Column Name="Time" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="SignalStrength" Type="System.Single" DbType="Real" CanBeNull="true" />
+      <Column Name="Antenna" Type="System.Int16" DbType="SmallInt" CanBeNull="true" />
+      <Column Name="Frequency" Type="System.Single" DbType="Real" CanBeNull="true" />
+    </Type>
+  </Table>
+</Database>

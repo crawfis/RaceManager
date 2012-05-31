@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="Hardcard">
+  <DataContextMoniker Name="/HardcardDataContext" />
+  <nestedChildShapes>
+    <classShape Id="02ae2ffe-3e03-4ea8-8130-9444c8fe7b4c" absoluteBounds="0.625, 0.75, 2, 1.7708968098958331">
+      <DataClassMoniker Name="/HardcardDataContext/Passing" />
+      <nestedChildShapes>
+        <elementListCompartment Id="70966d2c-d4db-4377-85ef-41f83e6d8853" absoluteBounds="0.64, 1.21, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="40ee27c7-c8f5-4938-9e19-b3ae4ae703c5" absoluteBounds="3.75, 0.75, 2, 1.9631982421875">
+      <DataClassMoniker Name="/HardcardDataContext/TagReading" />
+      <nestedChildShapes>
+        <elementListCompartment Id="dae453bb-0a5e-4226-8c09-0459a5425be7" absoluteBounds="3.765, 1.21, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>
