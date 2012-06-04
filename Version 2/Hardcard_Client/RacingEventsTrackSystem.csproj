@@ -65,13 +65,11 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Collections, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\Collections.dll</HintPath>
+    <Reference Include="Collections">
+      <HintPath>..\Core\Collections.dll</HintPath>
     </Reference>
-    <Reference Include="HardcardCore, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\HardcardCore.dll</HintPath>
+    <Reference Include="HardcardCore">
+      <HintPath>..\Core\HardcardCore.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
