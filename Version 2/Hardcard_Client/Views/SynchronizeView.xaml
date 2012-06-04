@@ -1,0 +1,33 @@
+﻿<UserControl x:Class="RacingEventsTrackSystem.Views.SynchronizeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="563" d:DesignWidth="883">
+    <Grid Height="566" Width="883">
+        <Border Background="{StaticResource lightBlueBrush}"
+        CornerRadius="6"
+        Margin="0,0,0,532"
+        Padding="4" Height="30">
+                <TextBlock Text="Synchronization Manager"
+                        FontWeight="Bold"
+                        Foreground="White"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Left"
+                        FontSize="22"
+                        FontFamily="Trebuchet" />
+        </Border>
+        <TextBlock Height="38" HorizontalAlignment="Left" Margin="12,50,0,0" Name="SynText" Text="Select the items to be synchronized with the central server and click 'one-time synchronize' button to start synchronization. Click 'toggle synchronize thread' to start/stop a thread that synchronizes every 30 seconds." VerticalAlignment="Top" Width="807" FontSize="12" ClipToBounds="False" TextWrapping="WrapWithOverflow" />
+        <CheckBox Content="Competitors" Height="16" HorizontalAlignment="Left" Margin="100,120,0,0" Name="CompetitorsCheckBox" VerticalAlignment="Top" IsChecked="{Binding SynchronizeModel.sync_competitors}" />
+        <Button Content="Synchronize" Height="23" HorizontalAlignment="Left" Margin="160,426,0,0" Name="Sync" VerticalAlignment="Top" Width="245" Click="Synchronize_Click" />
+        <Button Content="Turn On Synchronization Service" Height="23" HorizontalAlignment="Left" Margin="466,425,0,0" Name="SyncThreadButton" VerticalAlignment="Top" Width="245" Click="Synchronization_Service_Click" />
+        <CheckBox Content="Events" Height="16" HorizontalAlignment="Left" IsChecked="{Binding SynchronizeModel.sync_events}" Margin="100,152,0,0" Name="EventsCheckBox" VerticalAlignment="Top"/>
+        <ComboBox Height="23" HorizontalAlignment="Left" ItemsSource="{Binding EventsList}" Margin="167,150,0,0" Name="EventsComboBox" VerticalAlignment="Top" Width="120" SelectedIndex="0" />
+        <StatusBar Margin="-2,488,2,48" Height="30">
+            <StatusBarItem VerticalAlignment="Center" Height="30">
+                 <TextBlock Text="{Binding StatusText}"/>
+            </StatusBarItem>
+        </StatusBar>
+    </Grid>
+</UserControl>

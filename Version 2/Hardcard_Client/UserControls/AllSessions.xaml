@@ -1,0 +1,57 @@
+﻿<UserControl x:Class="RacingEventsTrackSystem.UserControls.AllSessions"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:ComponentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="265" d:DesignWidth="316" HorizontalAlignment="Right">
+    <UserControl.Resources>
+        <CollectionViewSource x:Key="contactSource" Source="{Binding SessionsForEvent}">
+            <CollectionViewSource.SortDescriptions>
+                <ComponentModel:SortDescription PropertyName="SessionID" /><!-- TODO: Sort by start time -->
+            </CollectionViewSource.SortDescriptions>
+        </CollectionViewSource>
+    </UserControl.Resources>
+
+    <DockPanel >
+        
+        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Name ="btnExcludeSession" Content="Exclude Session" Click="ExcludeSession">
+            <Button.ToolTip>
+                    <TextBlock> Exclude Session from the Event</TextBlock>
+            </Button.ToolTip>
+            </Button>
+
+        </StackPanel>
+
+        <Border Background="{StaticResource lightBlueBrush}" Margin="4" Padding="4" DockPanel.Dock="Top">
+            <TextBlock  Text="Sessions for the Event" FontWeight="Bold" Foreground="White" VerticalAlignment="Center" 
+                        HorizontalAlignment="Center" FontSize="15" FontFamily="Trebuchet" />
+        </Border>
+
+        <ScrollViewer x:Name="sbsv7" VerticalScrollBarVisibility="Auto" >
+            <ListView x:Name="ctlAllSessions" BorderThickness="0"   
+                          ItemsSource="{Binding Source={StaticResource contactSource}}"
+                          SelectedItem="{Binding CurrentSessionForEvent}" FontWeight="Normal">
+
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Id"
+                                    DisplayMemberBinding="{Binding Id}" />
+                        <GridViewColumn Header="Class"
+                                    DisplayMemberBinding="{Binding EventClass.RaceClass.ClassName}" />
+                        <GridViewColumn Header="Start Time"
+                                    DisplayMemberBinding="{Binding StartTime}" />
+                        <GridViewColumn Header="Stop Time"
+                                    DisplayMemberBinding="{Binding SchedStopTime}" />
+                        <GridViewColumn Header="Sch. Laps"
+                                    DisplayMemberBinding="{Binding SchedLaps}" />
+                        <GridViewColumn Header="EventId"
+                                    DisplayMemberBinding="{Binding EventClass.Event.Id}" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </ScrollViewer>
+    </DockPanel>
+</UserControl>

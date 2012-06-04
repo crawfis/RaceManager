@@ -1,0 +1,558 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="SynchronizeCompetitorDataWithClient">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="lastSync" type="s:dateTime" />
+            <s:element minOccurs="0" maxOccurs="1" name="crinlist" type="tns:ArrayOfCompetitor" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfCompetitor">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Competitor" nillable="true" type="tns:Competitor" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Competitor">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:EntityObject">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="CompetitorID" type="s:long" />
+              <s:element minOccurs="0" maxOccurs="1" name="FirstName" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="LastName" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="DOB" type="s:dateTime" />
+              <s:element minOccurs="0" maxOccurs="1" name="Gender" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="VehicleType" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="VehicleModel" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="VehicleCC" nillable="true" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="ClassID" nillable="true" type="s:long" />
+              <s:element minOccurs="0" maxOccurs="1" name="AddressLine1" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="AddressLine2" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="AddressLine3" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="City" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="State" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="PostalCode" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Country" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Phone" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="Deleted" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="LastUpdated" nillable="true" type="s:dateTime" />
+              <s:element minOccurs="0" maxOccurs="1" name="RaceClassReference" type="tns:EntityReferenceOfRaceClass" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="EntityObject" abstract="true">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:StructuralObject">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="EntityKey" type="tns:EntityKey" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="StructuralObject" abstract="true" />
+      <s:complexType name="EntityKey">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="EntitySetName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="EntityContainerName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="EntityKeyValues" type="tns:ArrayOfEntityKeyMember" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfEntityKeyMember">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="EntityKeyMember" nillable="true" type="tns:EntityKeyMember" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="EntityKeyMember">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Key" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Value" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="EntityReferenceOfRaceClass">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:EntityReference" />
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="EntityReference" abstract="true">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:RelatedEnd">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="EntityKey" type="tns:EntityKey" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="RelatedEnd" abstract="true" />
+      <s:element name="SynchronizeCompetitorDataWithClientResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="SynchronizeCompetitorDataWithClientResult" type="s:boolean" />
+            <s:element minOccurs="0" maxOccurs="1" name="croutlist" type="tns:ArrayOfCompetitor" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SynchronizeEventsDataWithClient">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="lastSync" type="s:dateTime" />
+            <s:element minOccurs="0" maxOccurs="1" name="eventslist" type="tns:ArrayOfEvent" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfEvent">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Event" nillable="true" type="tns:Event" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Event">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:EntityObject">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="EventID" type="s:long" />
+              <s:element minOccurs="0" maxOccurs="1" name="EventName" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="EventLocation" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="StartDate" nillable="true" type="s:dateTime" />
+              <s:element minOccurs="1" maxOccurs="1" name="EndDate" nillable="true" type="s:dateTime" />
+              <s:element minOccurs="1" maxOccurs="1" name="Deleted" nillable="true" type="s:boolean" />
+              <s:element minOccurs="0" maxOccurs="1" name="LastUpdated" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="SynchronizeEventsDataWithClientResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="SynchronizeEventsDataWithClientResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SynchronizeRaceClassesDataWithClient">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="lastSync" type="s:dateTime" />
+            <s:element minOccurs="0" maxOccurs="1" name="raceclasseslist" type="tns:ArrayOfRaceClass" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfRaceClass">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="RaceClass" nillable="true" type="tns:RaceClass" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="RaceClass">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:EntityObject">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="ClassID" type="s:long" />
+              <s:element minOccurs="0" maxOccurs="1" name="ClassName" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="MinAge" nillable="true" type="s:unsignedByte" />
+              <s:element minOccurs="1" maxOccurs="1" name="MaxAge" nillable="true" type="s:unsignedByte" />
+              <s:element minOccurs="0" maxOccurs="1" name="Gender" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="VehicleType" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="VehicleModel" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="VehicleCC" nillable="true" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="Deleted" nillable="true" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="LastUpdated" nillable="true" type="s:dateTime" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="SynchronizeRaceClassesDataWithClientResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="SynchronizeRaceClassesDataWithClientResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SynchronizeEventClassesDataWithClient">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="lastSync" type="s:dateTime" />
+            <s:element minOccurs="0" maxOccurs="1" name="eventclasseslist" type="tns:ArrayOfEventClass" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfEventClass">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="EventClass" nillable="true" type="tns:EventClass" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="EventClass">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:EntityObject">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="EventClassID" type="s:long" />
+              <s:element minOccurs="1" maxOccurs="1" name="EventID" type="s:long" />
+              <s:element minOccurs="1" maxOccurs="1" name="ClassID" type="s:long" />
+              <s:element minOccurs="1" maxOccurs="1" name="LastUpdated" nillable="true" type="s:dateTime" />
+              <s:element minOccurs="0" maxOccurs="1" name="RaceClassReference" type="tns:EntityReferenceOfRaceClass" />
+              <s:element minOccurs="0" maxOccurs="1" name="EventReference" type="tns:EntityReferenceOfEvent" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="EntityReferenceOfEvent">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:EntityReference" />
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="SynchronizeEventClassesDataWithClientResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="SynchronizeEventClassesDataWithClientResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SynchronizeSessionsDataWithClient">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="lastSync" type="s:dateTime" />
+            <s:element minOccurs="0" maxOccurs="1" name="sessionslist" type="tns:ArrayOfSession" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfSession">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Session" nillable="true" type="tns:Session" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Session">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:EntityObject">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="SessionID" type="s:long" />
+              <s:element minOccurs="1" maxOccurs="1" name="EventClassID" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="StartTime" nillable="true" type="s:dateTime" />
+              <s:element minOccurs="1" maxOccurs="1" name="SchedStopTime" nillable="true" type="s:dateTime" />
+              <s:element minOccurs="1" maxOccurs="1" name="SchedLaps" nillable="true" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="RollingStart" nillable="true" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="LastUpdated" nillable="true" type="s:dateTime" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="SynchronizeSessionsDataWithClientResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="SynchronizeSessionsDataWithClientResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SynchronizePassingsDataWithClient">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="lastSync" type="s:dateTime" />
+            <s:element minOccurs="0" maxOccurs="1" name="passingslist" type="tns:ArrayOfPassing" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfPassing">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Passing" nillable="true" type="tns:Passing" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Passing">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:EntityObject">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="PassingID" type="s:long" />
+              <s:element minOccurs="1" maxOccurs="1" name="SessionID" type="s:long" />
+              <s:element minOccurs="1" maxOccurs="1" name="RFID" type="s:long" />
+              <s:element minOccurs="1" maxOccurs="1" name="PassngTime" type="s:dateTime" />
+              <s:element minOccurs="1" maxOccurs="1" name="RaceTime" type="s:long" />
+              <s:element minOccurs="1" maxOccurs="1" name="LapTime" nillable="true" type="s:long" />
+              <s:element minOccurs="1" maxOccurs="1" name="Lap" nillable="true" type="s:short" />
+              <s:element minOccurs="1" maxOccurs="1" name="LeaderLap" nillable="true" type="s:short" />
+              <s:element minOccurs="1" maxOccurs="1" name="FlagState" nillable="true" type="s:unsignedByte" />
+              <s:element minOccurs="1" maxOccurs="1" name="Deleted" nillable="true" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="Invalid" nillable="true" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="LastUpdated" nillable="true" type="s:dateTime" />
+              <s:element minOccurs="0" maxOccurs="1" name="SessionReference" type="tns:EntityReferenceOfSession" />
+              <s:element minOccurs="0" maxOccurs="1" name="ValidTagReference" type="tns:EntityReferenceOfValidTag" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="EntityReferenceOfSession">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:EntityReference" />
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="EntityReferenceOfValidTag">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:EntityReference" />
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="SynchronizePassingsDataWithClientResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="SynchronizePassingsDataWithClientResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCompetitorData">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetCompetitorDataResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetCompetitorDataResult" type="tns:ArrayOfCompetitor" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetLastPassingData">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetLastPassingDataResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetLastPassingDataResult" type="tns:ArrayOfPassing" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="SynchronizeCompetitorDataWithClientSoapIn">
+    <wsdl:part name="parameters" element="tns:SynchronizeCompetitorDataWithClient" />
+  </wsdl:message>
+  <wsdl:message name="SynchronizeCompetitorDataWithClientSoapOut">
+    <wsdl:part name="parameters" element="tns:SynchronizeCompetitorDataWithClientResponse" />
+  </wsdl:message>
+  <wsdl:message name="SynchronizeEventsDataWithClientSoapIn">
+    <wsdl:part name="parameters" element="tns:SynchronizeEventsDataWithClient" />
+  </wsdl:message>
+  <wsdl:message name="SynchronizeEventsDataWithClientSoapOut">
+    <wsdl:part name="parameters" element="tns:SynchronizeEventsDataWithClientResponse" />
+  </wsdl:message>
+  <wsdl:message name="SynchronizeRaceClassesDataWithClientSoapIn">
+    <wsdl:part name="parameters" element="tns:SynchronizeRaceClassesDataWithClient" />
+  </wsdl:message>
+  <wsdl:message name="SynchronizeRaceClassesDataWithClientSoapOut">
+    <wsdl:part name="parameters" element="tns:SynchronizeRaceClassesDataWithClientResponse" />
+  </wsdl:message>
+  <wsdl:message name="SynchronizeEventClassesDataWithClientSoapIn">
+    <wsdl:part name="parameters" element="tns:SynchronizeEventClassesDataWithClient" />
+  </wsdl:message>
+  <wsdl:message name="SynchronizeEventClassesDataWithClientSoapOut">
+    <wsdl:part name="parameters" element="tns:SynchronizeEventClassesDataWithClientResponse" />
+  </wsdl:message>
+  <wsdl:message name="SynchronizeSessionsDataWithClientSoapIn">
+    <wsdl:part name="parameters" element="tns:SynchronizeSessionsDataWithClient" />
+  </wsdl:message>
+  <wsdl:message name="SynchronizeSessionsDataWithClientSoapOut">
+    <wsdl:part name="parameters" element="tns:SynchronizeSessionsDataWithClientResponse" />
+  </wsdl:message>
+  <wsdl:message name="SynchronizePassingsDataWithClientSoapIn">
+    <wsdl:part name="parameters" element="tns:SynchronizePassingsDataWithClient" />
+  </wsdl:message>
+  <wsdl:message name="SynchronizePassingsDataWithClientSoapOut">
+    <wsdl:part name="parameters" element="tns:SynchronizePassingsDataWithClientResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetCompetitorDataSoapIn">
+    <wsdl:part name="parameters" element="tns:GetCompetitorData" />
+  </wsdl:message>
+  <wsdl:message name="GetCompetitorDataSoapOut">
+    <wsdl:part name="parameters" element="tns:GetCompetitorDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetLastPassingDataSoapIn">
+    <wsdl:part name="parameters" element="tns:GetLastPassingData" />
+  </wsdl:message>
+  <wsdl:message name="GetLastPassingDataSoapOut">
+    <wsdl:part name="parameters" element="tns:GetLastPassingDataResponse" />
+  </wsdl:message>
+  <wsdl:portType name="SyncServiceSoap">
+    <wsdl:operation name="SynchronizeCompetitorDataWithClient">
+      <wsdl:input message="tns:SynchronizeCompetitorDataWithClientSoapIn" />
+      <wsdl:output message="tns:SynchronizeCompetitorDataWithClientSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SynchronizeEventsDataWithClient">
+      <wsdl:input message="tns:SynchronizeEventsDataWithClientSoapIn" />
+      <wsdl:output message="tns:SynchronizeEventsDataWithClientSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SynchronizeRaceClassesDataWithClient">
+      <wsdl:input message="tns:SynchronizeRaceClassesDataWithClientSoapIn" />
+      <wsdl:output message="tns:SynchronizeRaceClassesDataWithClientSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SynchronizeEventClassesDataWithClient">
+      <wsdl:input message="tns:SynchronizeEventClassesDataWithClientSoapIn" />
+      <wsdl:output message="tns:SynchronizeEventClassesDataWithClientSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SynchronizeSessionsDataWithClient">
+      <wsdl:input message="tns:SynchronizeSessionsDataWithClientSoapIn" />
+      <wsdl:output message="tns:SynchronizeSessionsDataWithClientSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SynchronizePassingsDataWithClient">
+      <wsdl:input message="tns:SynchronizePassingsDataWithClientSoapIn" />
+      <wsdl:output message="tns:SynchronizePassingsDataWithClientSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCompetitorData">
+      <wsdl:input message="tns:GetCompetitorDataSoapIn" />
+      <wsdl:output message="tns:GetCompetitorDataSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLastPassingData">
+      <wsdl:input message="tns:GetLastPassingDataSoapIn" />
+      <wsdl:output message="tns:GetLastPassingDataSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="SyncServiceSoap" type="tns:SyncServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="SynchronizeCompetitorDataWithClient">
+      <soap:operation soapAction="http://tempuri.org/SynchronizeCompetitorDataWithClient" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SynchronizeEventsDataWithClient">
+      <soap:operation soapAction="http://tempuri.org/SynchronizeEventsDataWithClient" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SynchronizeRaceClassesDataWithClient">
+      <soap:operation soapAction="http://tempuri.org/SynchronizeRaceClassesDataWithClient" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SynchronizeEventClassesDataWithClient">
+      <soap:operation soapAction="http://tempuri.org/SynchronizeEventClassesDataWithClient" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SynchronizeSessionsDataWithClient">
+      <soap:operation soapAction="http://tempuri.org/SynchronizeSessionsDataWithClient" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SynchronizePassingsDataWithClient">
+      <soap:operation soapAction="http://tempuri.org/SynchronizePassingsDataWithClient" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCompetitorData">
+      <soap:operation soapAction="http://tempuri.org/GetCompetitorData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLastPassingData">
+      <soap:operation soapAction="http://tempuri.org/GetLastPassingData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="SyncServiceSoap12" type="tns:SyncServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="SynchronizeCompetitorDataWithClient">
+      <soap12:operation soapAction="http://tempuri.org/SynchronizeCompetitorDataWithClient" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SynchronizeEventsDataWithClient">
+      <soap12:operation soapAction="http://tempuri.org/SynchronizeEventsDataWithClient" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SynchronizeRaceClassesDataWithClient">
+      <soap12:operation soapAction="http://tempuri.org/SynchronizeRaceClassesDataWithClient" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SynchronizeEventClassesDataWithClient">
+      <soap12:operation soapAction="http://tempuri.org/SynchronizeEventClassesDataWithClient" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SynchronizeSessionsDataWithClient">
+      <soap12:operation soapAction="http://tempuri.org/SynchronizeSessionsDataWithClient" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SynchronizePassingsDataWithClient">
+      <soap12:operation soapAction="http://tempuri.org/SynchronizePassingsDataWithClient" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCompetitorData">
+      <soap12:operation soapAction="http://tempuri.org/GetCompetitorData" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLastPassingData">
+      <soap12:operation soapAction="http://tempuri.org/GetLastPassingData" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="SyncService">
+    <wsdl:port name="SyncServiceSoap" binding="tns:SyncServiceSoap">
+      <soap:address location="http://localhost:61554/SyncService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="SyncServiceSoap12" binding="tns:SyncServiceSoap12">
+      <soap12:address location="http://localhost:61554/SyncService.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

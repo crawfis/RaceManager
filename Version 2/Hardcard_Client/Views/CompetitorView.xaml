@@ -1,0 +1,186 @@
+﻿<UserControl x:Class="RacingEventsTrackSystem.Views.CompetitorView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:RacingEventsTrackSystem.Presenters"
+             mc:Ignorable="d" d:DesignHeight="421" d:DesignWidth="680">
+    <UserControl.Resources>
+        <local:PhoneConverter x:Key="phoneConverter"/>
+        <local:BooleanToStatusConverter x:Key="booleanToStatusConverter"/>
+        <local:StatusToBooleanConverter x:Key="statusToBooleanConverter"/>
+
+    </UserControl.Resources>
+
+    <DockPanel >
+        <DockPanel DockPanel.Dock="Bottom">
+            <Button Content="Save as Competitor" Click="SaveCompetitor_Click" Width="126" >
+                <Button.ToolTip>
+                    <TextBlock> Set Class, CmpetitionNo, etc. to Athlete. Save Athlete as a Competitor in DataBase</TextBlock>
+                </Button.ToolTip>
+            </Button>
+        </DockPanel>    
+        
+        <WrapPanel>
+             <GroupBox BorderBrush="{StaticResource lightBlueBrush}" Height="137" Width="282">
+                <GroupBox.Header>
+                    <Border Background="{StaticResource lightBlueBrush}" Style="{StaticResource groupBoxHeader}">
+                        <TextBlock Text="General" />
+                    </Border>
+                </GroupBox.Header>
+                <Grid DataContext="{Binding ApplicationPresenter.AllAthletesPresenter.CurrentAthlete}">
+                <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="180" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="5*" />
+                    </Grid.RowDefinitions>
+
+                    <Label   Content="_First Name:" Grid.Row="0" HorizontalAlignment="Left" />
+                    <TextBox Grid.Row="0"  Grid.Column="1" IsReadOnly="True" Background="AliceBlue"
+                             Text="{Binding FirstName}" Margin="0,0,25,0"/>
+
+                    <Label   Content="_Last Name:"  Grid.Row="1"  HorizontalAlignment="Left"/>
+                    <TextBox Grid.Row="1" Grid.Column="1"  IsReadOnly="True" Background="AliceBlue"
+                             Text="{Binding LastName}" Margin="0,0,25,0" />
+
+                    <Label   Content="_Birthday:" Grid.Row="2" HorizontalAlignment="Left" />
+                    <TextBox Grid.Row="2" Grid.Column="1"  IsReadOnly="True" Background="AliceBlue"
+                             Text="{Binding DOB}" Margin="0,0,25,0"/>
+
+                    <Label   Content="_Gender:" Grid.Row="3" HorizontalAlignment="Left"  />
+                    <TextBox Grid.Row="3" Grid.Column="1"  IsReadOnly="True" Background="AliceBlue"
+                             Text="{Binding Gender}" Margin="0,0,25,0" />
+                </Grid>
+            </GroupBox >
+
+            <GroupBox BorderBrush="{StaticResource lightBlueBrush}" Width="356">
+                <GroupBox.Header>
+                    <Border Background="{StaticResource lightBlueBrush}" Style="{StaticResource groupBoxHeader}">
+                        <TextBlock Text="Assigned Classes for The Athlete" />
+                    </Border>
+                </GroupBox.Header>
+                <ListView x:Name="ClassList" VerticalAlignment="Stretch" BorderThickness="0"  Background="AliceBlue"
+                          ItemsSource="{Binding ApplicationPresenter.AllAthletesPresenter.EventClassesForAthlete}" FontWeight="Normal">
+                    <ListView.View >
+                        <GridView>
+                            <GridViewColumn Header="Class Name"
+                                    DisplayMemberBinding="{Binding RaceClass.ClassName}" />
+                            <GridViewColumn Header="Min Age"
+                                    DisplayMemberBinding="{Binding RaceClass.MinAge}" />
+                            <GridViewColumn Header="Max Age"
+                                    DisplayMemberBinding="{Binding RaceClass.MaxAge}" />
+                            <GridViewColumn Header="Gender"
+                                    DisplayMemberBinding="{Binding RaceClass.Gender}" />
+                            <GridViewColumn Header="Vechicle Type"
+                                    DisplayMemberBinding="{Binding RaceClass.VehicleType}" />
+                            <GridViewColumn Header="Vehicle Model"
+                                    DisplayMemberBinding="{Binding RaceClass.VehicleModel}" />
+                            <GridViewColumn Header="Vehicle CC"
+                                    DisplayMemberBinding="{Binding RaceClass.VehicleCC}" />
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </GroupBox>
+            
+            <GroupBox BorderBrush="{StaticResource lightBlueBrush}" Width="571" Height="137">
+                <GroupBox.Header>
+                    <Border Background="{StaticResource lightBlueBrush}" Style="{StaticResource groupBoxHeader}">
+                        <TextBlock Text="Address" />
+                    </Border>
+                </GroupBox.Header>
+                <Grid Height="112" DataContext="{Binding ApplicationPresenter.AllAthletesPresenter.CurrentAthlete}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="163" />
+                        <ColumnDefinition Width="2" />
+                        <ColumnDefinition Width="106" />
+                        <ColumnDefinition Width="200*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="2*" />
+                    </Grid.RowDefinitions>
+ 
+                    <Label   Grid.Row="0" Grid.Column="0" Content="Address Line 1" HorizontalAlignment="Left" />
+                    <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding AddressLine1}"  Margin="0,0,25,0" IsReadOnly="True" Background="AliceBlue"/>
+
+                    <Label   Grid.Row="1" Grid.Column="0" Content="Address Line 2" HorizontalAlignment="Left" />
+                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding AddressLine2}" Margin="0,0,25,0" IsReadOnly="True" Background="AliceBlue" />
+
+                    <Label   Grid.Row="2" Grid.Column="0" Content="City:" HorizontalAlignment="Left"  />
+                    <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding City}" Margin="0,0,25,0" IsReadOnly="True" Background="AliceBlue"/>
+
+                    <Label   Grid.Row="3" Grid.Column="0" Content="State:"  HorizontalAlignment="Left"/>
+                    <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding State}" Margin="0,0,25,0" IsReadOnly="True" Background="AliceBlue"/>
+
+                    <Label   Grid.Row="0" Grid.Column="3" Content="Country:"  HorizontalAlignment="Left" />
+                    <TextBox Grid.Row="0" Grid.Column="4" Text="{Binding Country}" Margin="0,0,5,0" IsReadOnly="True" Background="AliceBlue"/>
+
+                    <Label   Grid.Row="1" Grid.Column="3" Content="Postal Code:" HorizontalAlignment="Left" />
+                    <TextBox Grid.Row="1" Grid.Column="4" Text="{Binding PostalCode}" Margin="0,0,5,0" IsReadOnly="True" Background="AliceBlue" />
+
+                    <Label   Grid.Row="2" Grid.Column="3" Content="Phone:" HorizontalAlignment="Left" />
+                    <TextBox Grid.Row="2" Grid.Column="4" Text="{Binding Path = Phone, Converter = {StaticResource phoneConverter}}" Margin="0,0,5,0" IsReadOnly="True" Background="AliceBlue"/>
+
+                    <Label   Grid.Row="3" Grid.Column="3" Content="Email:" HorizontalAlignment="Left" />
+                    <TextBox Grid.Row="3" Grid.Column="4" Text="{Binding PrimaryEmail}" Margin="0,0,5,5" IsReadOnly="True" Background="AliceBlue" />
+
+                </Grid>
+            </GroupBox>
+
+            <GroupBox BorderBrush="{StaticResource lightBlueBrush}" Width="571">
+                <GroupBox.Header>
+                    <Border Background="{StaticResource lightBlueBrush}" Style="{StaticResource groupBoxHeader}">
+                        <TextBlock Text="Competitor Info" />
+                    </Border>
+                </GroupBox.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="100*" />
+                        <ColumnDefinition Width="100*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="2*" />
+                    </Grid.RowDefinitions>
+
+                    <Label   Grid.Row="0" Grid.Column="0" Content="Class" HorizontalAlignment="Left" />
+                    <ComboBox Name="cmbxEventClass" Grid.Row="0" Grid.Column="1" Height="Auto"  DockPanel.Dock="Right" VerticalAlignment="Center" Foreground="Black"
+                      ItemsSource="{Binding  ApplicationPresenter.AllEventsPresenter.CurrentEvent.EventClasses}" Margin="0,3,2,3" 
+                      SelectedItem="{Binding Path = CompetitorInfo.EventClassId}" >
+                    </ComboBox>
+
+                    <Label Grid.Row="0" Grid.Column="2" Content="Status"  HorizontalAlignment="Left" />
+                    <ComboBox Name="cmbxCompetitorStatus" Grid.Row="0" Grid.Column="3" Height="Auto"  
+                         ItemsSource="{Binding  Source={StaticResource competitorStatus}}"  Margin="0,3,2,3"
+                         SelectedItem="{Binding Path = CompetitorInfo.Status}">
+                    </ComboBox>
+
+                    <Label   Grid.Row="1" Grid.Column="0" Content="Vehicle Type" HorizontalAlignment="Left" />
+                    <TextBox Name="txbxVehicleType" Grid.Row="1" Grid.Column="1" Text="{Binding CompetitorInfo.vehicleType, Mode= TwoWay}" Margin="0,0,2,0" />
+
+                    <Label   Grid.Row="1" Grid.Column="2" Content="Vehicle Model" HorizontalAlignment="Left" />
+                    <TextBox Name="txbxVehicleModel" Grid.Row="1" Grid.Column="3" Text="{Binding CompetitorInfo.vehicleModel, Mode=OneWayToSource}" Margin="0,0,2,0" />
+
+                    <Label   Grid.Row="1" Grid.Column="4" Content="Vehicle CC" HorizontalAlignment="Left" />
+                    <TextBox Name="txbxVehicleCC" Grid.Row="1" Grid.Column="5" Text="{Binding CompetitorInfo.vehicleCC, Mode=OneWayToSource}" Margin="0,0,2,0" />
+                </Grid>
+            </GroupBox>
+        </WrapPanel>
+    </DockPanel>
+    
+</UserControl>

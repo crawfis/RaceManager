@@ -1,0 +1,140 @@
+﻿<Window x:Class="RacingEventsTrackSystem.Shell"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:RacingEventsTrackSystem"
+        xmlns:uc="clr-namespace:RacingEventsTrackSystem.UserControls"
+        xmlns:view="clr-namespace:RacingEventsTrackSystem.Views"
+        Title="Hardcard Racing Events Track System" Height="568" Width="1000" ResizeMode="CanMinimize" Icon="/RacingEventsTrackSystem;component/Resources/Application.ico">
+        <Window.Resources>
+        </Window.Resources>
+        <TabControl Height="556">
+            
+        <TabItem Header="Event" Name="EventsTab">
+            <Grid Height="501">
+                <uc:SearchBar x:Name="ctlEventSearchBar" Margin="0,-9,0,475"  />
+                <DockPanel>
+                    <uc:AllEventsControl x:Name="ctlAllEvents" DockPanel.Dock="Left" BorderThickness="1" BorderBrush="Black" Height="434" Width="277" Loaded="ctlAllEvents_Loaded" />
+                    <Grid>
+                        <view:EventView x:Name="eventView" DockPanel.Dock="Right" Height="434" BorderBrush="Black"  />
+                    </Grid>
+                </DockPanel>
+                <StatusBar VerticalAlignment="Center" Height="30" Margin="0,468,0,3">
+                    <StatusBarItem VerticalAlignment="Center" Height="30">
+                        <TextBlock Text="{Binding StatusText}" />
+                    </StatusBarItem>
+                </StatusBar>
+            </Grid>
+        </TabItem>
+        <TabItem Header="Race Class" Name="RaceClassesTab">
+            <Grid Height="501">
+                <uc:SearchBar x:Name="ctlRaceClassSearchBar" Margin="0,-9,0,475"  />
+                <DockPanel>
+                    <uc:AllRaceClassesControl x:Name="ctlAllRaceClasses" DockPanel.Dock="Left" BorderThickness="1" BorderBrush="Black" Height="434" Width="277" />
+                    <Grid>
+                        <view:RaceClassView x:Name="raceClassView" DockPanel.Dock="Right" Height="434" BorderBrush="Black"  />
+                    </Grid>
+                </DockPanel>
+                <StatusBar VerticalAlignment="Center" Height="30" Margin="0,468,0,3">
+                    <StatusBarItem VerticalAlignment="Center" Height="30">
+                        <TextBlock Text="{Binding StatusText}" />
+                    </StatusBarItem>
+                </StatusBar>
+            </Grid>
+        </TabItem>
+
+        <TabItem Header="Athlete" Name="AthleteTab">
+            <Grid Height="501">
+                <uc:SearchBar x:Name="ctlAthleteSearchBar" Margin="0,-9,0,475"  />
+                <DockPanel>
+                    <uc:AllAthletesControl x:Name="ctlAllAthletes" DockPanel.Dock="Left" BorderThickness="1" BorderBrush="Black" Height="434" Width="277" />
+                    <Grid>
+                        <view:AthleteView x:Name="athleteView" DockPanel.Dock="Right" Height="434" BorderBrush="Black" />
+                    </Grid>
+                </DockPanel>
+                <StatusBar VerticalAlignment="Center" Height="30" Margin="0,468,0,3">
+                    <StatusBarItem VerticalAlignment="Center" Height="30">
+                        <TextBlock Text="{Binding StatusText}" />
+                    </StatusBarItem>
+                </StatusBar>
+            </Grid>
+        </TabItem>
+
+        <TabItem Header="Competitor" Name="CompetitorsTab">
+            <Grid Height="501">
+                <uc:SearchBar x:Name="ctlCompetitorsSearchBar" Margin="0,-9,0,475" />
+                <DockPanel>
+                    <DockPanel Height="434" Width="277" >
+                        <uc:AllAthletesControl x:Name="ctlAthletes"                DockPanel.Dock="Top" BorderThickness="1" BorderBrush="Black" Height="200"  />
+                        <uc:AllCompetitorsControl  x:Name="ctlCompetitorsForEvent" DockPanel.Dock="Bottom" BorderThickness="1" BorderBrush="Black" />
+                    </DockPanel>
+                    <Grid>
+                        <view:CompetitorView x:Name="competitorView" DockPanel.Dock="Right" Height="434" BorderBrush="Black"  />
+                    </Grid>
+                </DockPanel>
+                <StatusBar VerticalAlignment="Center" Height="30" Margin="0,468,0,3">
+                     <StatusBarItem VerticalAlignment="Center" Height="30">
+                        <TextBlock Text="{Binding StatusText}" />
+                     </StatusBarItem>
+                </StatusBar>
+            </Grid>
+        </TabItem>
+
+        <TabItem Header="Session" Name="SesionTab">
+            <Grid Height="501">
+                <uc:SearchBar x:Name="ctlSessionSearchBar" Margin="0,-9,0,475" />
+                <DockPanel>
+                    <DockPanel Height="434" Width="277" >
+                        <uc:AllSessions  x:Name="ctlAllSessions" DockPanel.Dock="Top" BorderThickness="1" BorderBrush="Black" Height="200" />
+                        <uc:AllCompetitorsForEventClass  x:Name="ctlCompetitorsForEventClass" DockPanel.Dock="Bottom" BorderThickness="1" BorderBrush="Black"/>
+                    </DockPanel>
+                    <Grid>
+                        <view:SessionView x:Name="sessionView" DockPanel.Dock="Right" Height="434" BorderBrush="Black"  />
+                    </Grid>
+                </DockPanel>
+                <StatusBar VerticalAlignment="Center" Height="30" Margin="0,468,0,3">
+                    <StatusBarItem VerticalAlignment="Center" Height="30">
+                        <TextBlock Text="{Binding StatusText}" />
+                    </StatusBarItem>
+                </StatusBar>
+            </Grid>
+        </TabItem>
+
+        <TabItem Header="Race" Name="RaceTab">
+            <Grid>
+                <view:RaceManagerView  Margin="0,0,0,6" />
+            </Grid>
+        </TabItem>
+        
+        <TabItem Header="Results" Name="ResultsTab">
+            <!--<view:RaceView  Margin="0,0,0,6" />-->
+            <Grid Height="501">
+                <uc:SearchBar x:Name="ctlResultsSearchBar" Margin="0,-9,0,475"  />
+                <DockPanel>
+                    <DockPanel Height="434" Width="277" >
+                        <uc:AllSessions  x:Name="ctlAllResultsSessions" DockPanel.Dock="Top" BorderThickness="1" BorderBrush="Black" />
+                    </DockPanel>
+                    <Grid>
+                        <view:ResultsView x:Name="resultsView" DockPanel.Dock="Right" Height="434" BorderBrush="Black"  />
+                    </Grid>
+                </DockPanel>
+                <StatusBar VerticalAlignment="Center" Height="30" Margin="0,468,0,3">
+                    <StatusBarItem VerticalAlignment="Center" Height="30">
+                        <TextBlock Text="{Binding StatusText}" />
+                    </StatusBarItem>
+                </StatusBar>
+            </Grid>
+        </TabItem>
+        
+        <TabItem Header="Tags" Name="TagsTab">
+        </TabItem>
+        
+        <TabItem Header="Synchronization" Name="SynchronizationTab">
+            <Grid>
+                <!-- <view:SynchronizeView Margin="0,0,0,6" /> -->
+            </Grid>
+        </TabItem>
+        
+        <TabItem Header="Help" Name="HelpTab">
+        </TabItem>            
+        </TabControl>
+    </Window>

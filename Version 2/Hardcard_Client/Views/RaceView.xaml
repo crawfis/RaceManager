@@ -1,0 +1,34 @@
+﻿<UserControl x:Class="RacingEventsTrackSystem.Views.RaceView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:viviDesignHeight="563" d:DesignWidth="883">
+    <Grid Height="550">
+        <Grid Margin="0,0,203,20" Height="546">
+            <Border Background="{StaticResource lightBlueBrush}" CornerRadius="6" Margin="0,0,0,513" Padding="4"   Width="680" HorizontalAlignment="Left">
+            <TextBlock Height="23" Text="Passings" Foreground="White" FontSize="15" FontWeight="Bold" HorizontalAlignment="Center" />
+            </Border>
+            <Border Background="{StaticResource lightBlueBrush}" CornerRadius="6" Margin="0,243,0,264" Padding="4"  Width="680" HorizontalAlignment="Left">
+                <TextBlock Height="23" Text="Rankings" Foreground="White" FontSize="15" FontWeight="Bold" HorizontalAlignment="Center" />
+            </Border>
+            <DataGrid AutoGenerateColumns="True" Height="204" HorizontalAlignment="Left" Margin="0,279,0,0" Name="rankingsDataGrid" VerticalAlignment="Top" Width="680" Background="#FFE7EBF7" AlternatingRowBackground="#595695CB" />
+            <DataGrid AutoGenerateColumns="True" Height="211" HorizontalAlignment="Left" Margin="0,35,0,0" Name="passingsDataGrid" VerticalAlignment="Top" Width="680" ItemsSource="{Binding PassingsList}" Background="#21105D9C" CanUserReorderColumns="False" ForceCursor="False" AlternatingRowBackground="#595695CB" AllowDrop="True" CanUserAddRows="True" CanUserDeleteRows="True" SelectionMode="Single" CanUserResizeRows="False"></DataGrid>
+        </Grid>
+        <TextBlock Height="23" HorizontalAlignment="Left" Margin="747,39,0,0" Name="textBlock2" Text="Select Race" VerticalAlignment="Top" FontWeight="ExtraBold" Foreground="#FF105D9C" />
+        <!-- <ComboBox Height="23" HorizontalAlignment="Left" Margin="707,61,0,0" Name="eventComboBox" VerticalAlignment="Top" Width="150" ItemsSource="{Binding EventList}" SelectionChanged="Event_Selected" Background="#FFE7EBF7" Foreground="#FF105D9C" />-->
+        <ComboBox Height="23" HorizontalAlignment="Left" Margin="707,61,0,0" Name="eventComboBox" VerticalAlignment="Top" Width="150" ItemsSource="{Binding EventList}" Background="#FFE7EBF7" Foreground="#FF105D9C" />
+        <TextBlock Height="23" HorizontalAlignment="Left" Margin="741,95,0,0" Name="textBlock3" Text="Select Session" VerticalAlignment="Top" FontWeight="ExtraBold" Foreground="#FF105D9C" />
+        <ComboBox Height="23" HorizontalAlignment="Left" Margin="707,118,0,0" Name="sessionComboBox" VerticalAlignment="Top" Width="150" ItemsSource="{Binding SessionList}"  SelectionChanged="Session_Selected" Background="#FFE7EBF7" Foreground="#FF105D9C" />
+        <Button Content="Start Race" Height="23" HorizontalAlignment="Left" Margin="709,171,0,0" Name="startrace" VerticalAlignment="Top" Width="148" Click="Startrace_Click" Background="#FF105D9C" Foreground="White" FontWeight="ExtraBold" />
+        <Button Content="Stop Race" Height="23" HorizontalAlignment="Left" Margin="709,202,0,0" Name="button2" VerticalAlignment="Top" Width="148" Click="Stoprace_Click" FontWeight="ExtraBold" Foreground="White" Background="#FF105D9C" />
+        <Button Content="Add Passing" Height="23" HorizontalAlignment="Left" Margin="709,294,0,0" Name="AddPassing" VerticalAlignment="Top" Width="148" Foreground="White" FontWeight="ExtraBold" Background="#FF105D9C" Click="AddPassing_Click" />
+        <Button Content="Delete/Undelete Passing" Height="23" HorizontalAlignment="Left" Margin="709,323,0,0" Name="DeletePassing" VerticalAlignment="Top" Width="148" Foreground="White" FontWeight="ExtraBold" Background="#FF105D9C" />
+        <StatusBar Margin="0,445,0,-6" Height="30">
+            <StatusBarItem VerticalAlignment="Center" Height="30">
+                <TextBlock Text="{Binding StatusText}"/>
+            </StatusBarItem>
+        </StatusBar>
+    </Grid>
+</UserControl>

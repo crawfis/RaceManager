@@ -1,0 +1,61 @@
+After SQL database "Hardcard" was created run next scripts to create tables and data in Hardcard DB:
+
+in promt window set C:\Program Files\Microsoft Visual Studio 10.0\VC> 
+
+C:\Program Files\Microsoft Visual Studio 10.0\VC>
+sqlcmd -S .\sqlexpress -d Hardcard  -i E:\user_June\OSU_RogerS\source\Database_Scripts\create_tables_for_SQL_EX.sql
+
+sqlcmd -S .\sqlexpress -d Hardcard  -i E:\user_June\OSU_RogerS\source\Database_Scripts\create_triggers_for_SQL_EX.sql
+
+sqlcmd -S .\sqlexpress -d Hardcard  -i E:\user_June\OSU_RogerS\source\Database_Scripts\create_records_for_SQL_EX.sql
+
+-- sqlcmd -S .\sqlexpress -d Hardcard  -i E:\user_June\OSU_RogerS\source\Database_Scripts\create_records_initial_for_SQL_EX.sql
+
+
+
+If we need to recreate tables then run next “drop” scripts to remove tables and data from Hardcard DB:
+
+C:\Program Files\Microsoft Visual Studio 10.0\VC>
+sqlcmd -S .\sqlexpress -d Hardcard  -i E:\user_June\OSU_RogerS\source\Database_Scripts\drop_triggers_for_SQL_EX.sql
+
+sqlcmd -S .\sqlexpress -d Hardcard  -i E:\user_June\OSU_RogerS\source\Database_Scripts\drop_tables_for_SQL_EX.sql
+
+See help:C:\Program Files\Microsoft Visual Studio 10.0\VC>sqlcmd -?
+
+Then delete <connectionStrings> from App.config file; 
+then delete  Hardcard.mdl from DataAccess directory; 
+then Add ->New Item ->"ADO.Net Entity Data Model" item to DataAccess directory with name Hardcard.edmx
+
+Comments: create_records_initial_for_SQL_EX.sql loads three tables only:Athlete, RaceClass, and Event. This three tables can be used to 
+populate empty DataBase for new event.
+
+
+To create DB (case sensetive):
+
+
+it works:
+sqlcmd -e -S sata-comp\sqlexpress -Q "create database Hardcard"
+sqlcmd -e -S sata-comp\sqlexpress -d Hardcard -i "E:\user_June\OSU_RogerS\tmp\Hardcard.sql"
+sqlcmd -e -S sata-comp\sqlexpress -Q "drop database Hardcard"
+
+
+CRAWFIS-VAIO, OLGA-PC, SATA-COMP
+
+rem Is used to drop Hardcard Db, create Hardcard Db, run Hardcard.sql to create and populate Hardcard Db tables, execute setup.exe 
+rem If SQLServer name is MY-SQLSERVER and Hardcard.sql&setup.exe are in the current directory then correct syntax example :
+rem Hardcard_start.bat MY-SQLSERVER\sqlexpress . (it is .)
+
+
+HARDCARD_START.BAT
+
+How to delete / create records in the Database for one event:
+in directory E:\user_June\OSU_RogerS\source\Hardcard Client\EventDataBaseScripts
+
+sqlcmd -S .\sqlexpress -d Hardcard  -i E:\user_June\OSU_RogerS\source\Database_Scripts\EventDataBaseScripts\delete_event_records_for_SQL_EX.sql
+sqlcmd -S .\sqlexpress -d Hardcard  -i E:\user_June\OSU_RogerS\source\Database_Scripts\EventDataBaseScripts\create_event_records_for_SQL_EX.sql
+
+or use bat file:
+
+E:\user_June\OSU_RogerS\source\Database_Scripts\EventDataBaseScripts\DeleteDBForEvent.bat sata-comp Hardcard E:\user_June\OSU_RogerS\source\Database_Scripts\EventDataBaseScripts\delete_event_records_for_SQL_EX.sql
+E:\user_June\OSU_RogerS\source\Database_Scripts\EventDataBaseScripts\LoadExistingDBForEvent.bat sata-comp Hardcard E:\user_June\OSU_RogerS\source\Database_Scripts\EventDataBaseScripts\create_event_records_for_SQL_EX.sql
+

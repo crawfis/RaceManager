@@ -1,0 +1,65 @@
+﻿<UserControl x:Class="RacingEventsTrackSystem.Views.AllCompetitorsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d"
+             d:DesignHeight="150" d:DesignWidth="400">
+    <!-- xmlns:ComponentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase"> -->
+
+    <UserControl.Resources>
+        
+        <CollectionViewSource x:Key="competitorSource"
+                              Source="{Binding AllCompetitorsPresenter.AllCompetitors}">
+        <!--    <CollectionViewSource.SortDescriptions>
+                <ComponentModel:SortDescription PropertyName="LookupName" /> 
+            </CollectionViewSource.SortDescriptions>-->
+        </CollectionViewSource>
+    </UserControl.Resources>
+
+    <DockPanel Margin="5">
+        <Border DockPanel.Dock="Top"
+                Style="{StaticResource header}">
+            <!--            <Border Background="{StaticResource lightBlueBrush}" Margin="4" Padding="4" DockPanel.Dock="Top">
+                <TextBlock  Text="Athletes List" FontWeight="Bold" Foreground="White" VerticalAlignment="Center" 
+                        HorizontalAlignment="Center" FontSize="15" FontFamily="Trebuchet" />
+            </Border>
+-->
+           <StackPanel Orientation="Horizontal" Height="20">
+                <TextBlock FontSize="15" FontFamily="Trebuchet" Text="Competitors List(" />
+                <TextBlock FontSize="15" FontFamily="Trebuchet" Text="{Binding AllCompetitorsPresenter.AllCompetitors.Count}" />
+                <TextBlock FontSize="15" FontFamily="Trebuchet" Text=")" />
+            </StackPanel> 
+        </Border>
+
+        <StackPanel DockPanel.Dock="Bottom"
+                    Style="{StaticResource buttonPanel}" HorizontalAlignment="Left">
+            <Button Content="Remove Competitor from the List" Click="RemoveCompetitorFromTheList" />
+        </StackPanel>
+
+        <!-- <ListView Margin="5"
+                  ItemsSource="{Binding Source={StaticResource competitorSource}}"> -->
+            <ListView Margin="5"
+                  ItemsSource="{Binding AllCompetitors}"
+                  SelectedItem="{Binding CurrentCompetitor}" >
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Last Name"
+                                    DisplayMemberBinding="{Binding Athlete.LastName}" />
+                    <GridViewColumn Header="First Name"
+                                    DisplayMemberBinding="{Binding Athlete.FirstName}" />
+                    <GridViewColumn Header="City"
+                                    DisplayMemberBinding="{Binding Athlete.City}" />
+                    <GridViewColumn Header="State"
+                                    DisplayMemberBinding="{Binding Athlete.State}" />
+                    <GridViewColumn Header="Country"
+                                    DisplayMemberBinding="{Binding Athlete.Country}" />
+                    <GridViewColumn Header="Event Id"
+                                    DisplayMemberBinding="{Binding EventClass.EventID}" />
+                    <GridViewColumn Header="Class Id"
+                                    DisplayMemberBinding="{Binding EventClass.ClassID}" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </DockPanel>
+</UserControl>

@@ -1,0 +1,22 @@
+﻿<Application x:Class="RacingEventsTrackSystem.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:Model="clr-namespace:RacingEventsTrackSystem.Model"
+             StartupUri="Shell.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Resources\ColorsAndBrushes.xaml" />
+                <ResourceDictionary Source="Resources\DefaultStyles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <ObjectDataProvider  x:Key="competitorState"
+                                 MethodName="GetStateNames"
+                                 ObjectType="{x:Type Model:States}" />
+
+            <ObjectDataProvider  x:Key="competitorStatus"
+                                 MethodName="GetCompetitorStatus"
+                                 ObjectType="{x:Type Model:CompStatus}" />
+
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

@@ -1,0 +1,69 @@
+﻿<UserControl x:Class="RacingEventsTrackSystem.Views.ResultsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" d:DesignHeight="420" >
+    <UserControl.Resources>
+    </UserControl.Resources>
+
+    <DockPanel >
+        <DockPanel DockPanel.Dock="Bottom" >
+            <StackPanel DockPanel.Dock="Left" Orientation="Horizontal" OverridesDefaultStyle="False" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <Button Content="Update Standing" Click="UpdateStanding_Click" Width="108" FontWeight="Normal" />
+            </StackPanel>
+        </DockPanel>
+
+        <DockPanel DockPanel.Dock="Top">
+
+            <GroupBox DockPanel.Dock="Top" BorderBrush="{StaticResource lightBlueBrush}">
+                <GroupBox.Header>
+                    <Border Background="{StaticResource lightBlueBrush}" Style="{StaticResource groupBoxHeader}">
+                        <StackPanel Orientation="Horizontal" Height="20" VerticalAlignment="Center" >
+                            <TextBlock Text="Competitors for Session("               />
+                            <TextBlock Text="{Binding CurrentSessionForEvent.Entries.Count}" />
+                            <TextBlock Text=")"                                      />
+                        </StackPanel>
+                    </Border>
+                </GroupBox.Header>
+
+                <ListView x:Name="liviEntriesList" Background="AliceBlue"  
+                  ItemsSource="{Binding StandingsForSession, Mode=TwoWay}" FontWeight="Normal">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Sess Id"
+                                    DisplayMemberBinding="{Binding Entry.SessionId}" />
+                            <GridViewColumn Header="Comp Id"
+                                    DisplayMemberBinding="{Binding Entry.CompetitorId}" />
+                            <GridViewColumn Header="Last Name"
+                                    DisplayMemberBinding="{Binding Entry.Competitor.Athlete.LastName}" />
+                            <GridViewColumn Header="First Name"
+                                    DisplayMemberBinding="{Binding Entry.Competitor.Athlete.FirstName}" />
+                            <GridViewColumn Header="Comp No"
+                                    DisplayMemberBinding="{Binding Entry.CompetitionNo}" />
+                            <GridViewColumn Header="RFID"
+                                    DisplayMemberBinding="{Binding Entry.RFID}" />
+                            <GridViewColumn Header="Position"
+                                    DisplayMemberBinding="{Binding Position}" />
+                            <GridViewColumn Header="Laps Completed"
+                                    DisplayMemberBinding="{Binding LapsCompleted}" />
+                            <GridViewColumn Header="Completed Time"
+                                    DisplayMemberBinding="{Binding CompletedTime}" />
+                            <GridViewColumn Header="Best Lap Time"
+                                    DisplayMemberBinding="{Binding BestLapTime}" />
+                            <GridViewColumn Header="Avg Lap Time"
+                                    DisplayMemberBinding="{Binding AvgLapTime}" />
+                            <GridViewColumn Header="Passing Time"
+                                    DisplayMemberBinding="{Binding PassingTime}" />
+                            <GridViewColumn Header="Class "
+                                    DisplayMemberBinding="{Binding Entry.Competitor.EventClass.RaceClass.ClassName}" />
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </GroupBox>
+
+        </DockPanel>
+
+       
+    </DockPanel>
+</UserControl>

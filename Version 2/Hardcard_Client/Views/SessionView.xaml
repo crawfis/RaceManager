@@ -1,0 +1,168 @@
+﻿<UserControl x:Class="RacingEventsTrackSystem.Views.SessionView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" d:DesignHeight="420" >
+    <UserControl.Resources>
+    </UserControl.Resources>
+
+    <DockPanel >
+
+        <DockPanel DockPanel.Dock="Top">
+            <GroupBox DockPanel.Dock="Left" BorderBrush="{StaticResource lightBlueBrush}" Height="189" Width="282">
+                <GroupBox.Header>
+                    <Border Background="{StaticResource lightBlueBrush}" Style="{StaticResource groupBoxHeader}">
+                        <TextBlock Text="Session" />
+                    </Border>
+                </GroupBox.Header>
+                <Grid >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="180" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="5*" />
+                    </Grid.RowDefinitions>
+
+
+                    <Label   Content="Start Time" Grid.Row="0" HorizontalAlignment="Left" />
+                    <TextBox Grid.Row="0" Grid.Column="1"  
+                             Text="{Binding CurrentSessionForEvent.StartTime}" Margin="0,0,25,0"/>
+
+                    <Label   Content="Stop Time" Grid.Row="1" HorizontalAlignment="Left"  />
+                    <TextBox Grid.Row="1" Grid.Column="1"  
+                             Text="{Binding CurrentSessionForEvent.SchedStopTime}" Margin="0,0,25,0" />
+
+                    <Label   Content="Race Class"  Grid.Row="2"  HorizontalAlignment="Left"/>
+
+                    <ComboBox Name="cmbxEventClasses" Grid.Row="2" Grid.Column="1" Height="Auto"  DockPanel.Dock="Right" VerticalAlignment="Center" Foreground="Black"
+                        ItemsSource="{Binding  ApplicationPresenter.AllEventsPresenter.CurrentEvent.EventClasses}" Margin="0,0,26,2"
+                        SelectedItem="{Binding Path = CurrentSessionForEvent.EventClass, Mode=TwoWay}" >
+                    </ComboBox>
+
+                    <Label   Content="Sch. Laps" Grid.Row="3" HorizontalAlignment="Left"  />
+                    <TextBox Grid.Row="3" Grid.Column="1"  
+                             Text="{Binding CurrentSessionForEvent.SchedLaps}" Margin="0,0,25,0" />
+
+                    <Label   Content="Rolling Start" Grid.Row="4" HorizontalAlignment="Left"  />
+                    <TextBox Grid.Row="4" Grid.Column="1"  
+                             Text="{Binding CurrentSessionForEvent.RollingStart}" Margin="0,0,25,0" />
+                </Grid>
+            </GroupBox >
+
+        
+            <GroupBox DockPanel.Dock="Top" BorderBrush="{StaticResource lightBlueBrush}" Width="357" Height="189">
+                <GroupBox.Header>
+                    <Border Background="{StaticResource lightBlueBrush}" Style="{StaticResource groupBoxHeader}">
+                        <StackPanel Orientation="Horizontal" Height="20" VerticalAlignment="Center" >
+                            <TextBlock Text="Competitors for Session("               />
+                            <TextBlock Text="{Binding CurrentSessionForEvent.Entries.Count}" />
+                            <TextBlock Text=")"                                      />
+                        </StackPanel>
+
+                    </Border>
+                </GroupBox.Header>
+
+                <ListView x:Name="liviEntriesList" Background="AliceBlue"  
+                  ItemsSource="{Binding EntriesForSession}" FontWeight="Normal"
+                    SelectedItem="{Binding CurrentEntryForSession}">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Entr Id"
+                                    DisplayMemberBinding="{Binding Id}" />
+                            <GridViewColumn Header="Status"
+                                    DisplayMemberBinding="{Binding Status}" />
+                            <GridViewColumn Header="Last Name"
+                                    DisplayMemberBinding="{Binding Competitor.Athlete.LastName}" />
+                            <GridViewColumn Header="First Name"
+                                    DisplayMemberBinding="{Binding Competitor.Athlete.FirstName}" />
+                            <GridViewColumn Header="Athl Id"
+                                    DisplayMemberBinding="{Binding Competitor.Athlete.Id}" />
+                            <GridViewColumn Header="Comp No"
+                                    DisplayMemberBinding="{Binding CompetitionNo}" />
+                            <GridViewColumn Header="RFID"
+                                    DisplayMemberBinding="{Binding RFID}" />
+                            <GridViewColumn Header="Class "
+                                    DisplayMemberBinding="{Binding Competitor.EventClass.RaceClass.ClassName}" />
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </GroupBox>
+
+        </DockPanel>
+
+        <DockPanel DockPanel.Dock="Top" >
+            <StackPanel DockPanel.Dock="Left" Orientation="Horizontal" OverridesDefaultStyle="False" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <Button Content="Save Session" Click="SaveSession_Click" Width="108" FontWeight="Normal" />
+                <Button Content="New Session"  Click="NewSession_Click" Width="108" HorizontalAlignment="Left" FontWeight="Normal" />
+            </StackPanel>
+
+            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" OverridesDefaultStyle="False" HorizontalAlignment="Center" VerticalAlignment="Top">
+                <Button Content="Exclude from Session" Click="ExcludeCompetitorFromSession" FontWeight="Normal" />
+            </StackPanel>
+
+        </DockPanel>
+
+        <DockPanel DockPanel.Dock="Top" >
+        <GroupBox  BorderBrush="{StaticResource lightBlueBrush}" >
+            <GroupBox.Header>
+                <Border Background="{StaticResource lightBlueBrush}" Style="{StaticResource groupBoxHeader}">
+                    <TextBlock Text="Competitor" />
+                </Border>
+            </GroupBox.Header>
+                <Grid  DataContext = "{Binding TmpEntry}" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="2" />
+                    <ColumnDefinition Width="106" />
+                    <ColumnDefinition Width="150" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="26" />
+                    <RowDefinition Height="29" />
+                    <RowDefinition Height="29" />
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" Grid.Column="0" Content="Comp No" HorizontalAlignment="Left" />
+                <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding CompetitionNo}" Margin="0,0,25,0" />
+                <Label Grid.Row="1" Grid.Column="0" Content="RFID" HorizontalAlignment="Left" />
+                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding RFID}" Margin="0,0,25,0" />
+                <Label Grid.Row="2" Grid.Column="0" Content="Status" HorizontalAlignment="Left" />
+                <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Status}" Margin="0,0,25,0" />
+                <Label Grid.Row="3" Grid.Column="0" Content="Sponsor" HorizontalAlignment="Left" />
+                <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Sponsors}" Margin="0,0,25,0" />
+                <Label Grid.Row="0" Grid.Column="3" Content="Vehicle Type" HorizontalAlignment="Left" />
+                <TextBox Grid.Row="0" Grid.Column="4" Text="{Binding Competitor.VehicleType}" Margin="0,0,5,0" />
+                <Label Grid.Row="1" Grid.Column="3" Content="Vehicle Model" HorizontalAlignment="Left" />
+                    <TextBox Grid.Row="1" Grid.Column="4" Text="{Binding Competitor.VehicleModel}" Margin="0,0,5,0" />
+                <Label Grid.Row="2" Grid.Column="3" Content="Vehicle CC" HorizontalAlignment="Left" />
+                    <TextBox Grid.Row="2" Grid.Column="4" Text="{Binding Competitor.VehicleCC}" Margin="0,0,5,0" />
+                <Label Grid.Row="3" Grid.Column="3" Content="Equipment" HorizontalAlignment="Left" />
+                    <TextBox Grid.Row="3" Grid.Column="4" Text="{Binding Equipment}" Margin="0,0,5,0" />
+            </Grid>
+        </GroupBox>
+        </DockPanel>
+
+        <DockPanel DockPanel.Dock="Bottom" >
+            <StackPanel  Orientation="Horizontal" OverridesDefaultStyle="False" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+                <Button Content="Add Competitor to Session"  Click="AddCompetitorToSession" HorizontalAlignment="Left" FontWeight="Normal" >
+                    <Button.ToolTip>
+                        <TextBlock> Choose Competitor, type Competition No, RFID, etc. and click the button</TextBlock>
+                    </Button.ToolTip>
+                </Button>
+
+                <Button Content="Save Changes" Click="SaveChanges" FontWeight="Normal" />
+            </StackPanel>
+
+        </DockPanel>
+
+    </DockPanel>
+</UserControl>

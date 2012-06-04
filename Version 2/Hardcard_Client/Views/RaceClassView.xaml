@@ -1,0 +1,94 @@
+﻿<UserControl x:Class="RacingEventsTrackSystem.Views.RaceClassView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" d:DesignHeight="285">
+
+    <DockPanel >
+        <DockPanel>
+            <GroupBox Height="221" DockPanel.Dock="Top">
+                <GroupBox.Header>
+                    <Border Background="Green"
+                            Style="{StaticResource groupBoxHeader}">
+                        <TextBlock Text="Race Class Definition" />
+                    </Border>
+                </GroupBox.Header>
+                <Grid DataContext="{Binding CurrentRaceClass}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="175" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <Label Grid.Row="0"  Grid.Column="0" Content="Class Name:"/> 
+                    <TextBox x:Name="txbxClassName" Grid.Row="0"  Grid.Column="1" Text="{Binding ClassName}" />
+                    <Label Grid.Row="1" Grid.Column="0" Content="Min Age:" />
+                    <TextBox x:Name="txbxMinAge" Grid.Row="1" Grid.Column="1" Text="{Binding MinAge}" />
+                    <Label Grid.Row="2" Grid.Column="0" Content="Max Age:" />
+                    <TextBox x:Name="txbxMaxAge" Grid.Row="2" Grid.Column="1" Text="{Binding MaxAge}" />
+                    <Label Grid.Row="3" Grid.Column="0" Content="Gender:" />
+                    <TextBox x:Name="txbxGender" Grid.Row="3" Grid.Column="1" Text="{Binding Gender}" />
+                    <Label Grid.Row="4" Grid.Column="0" Content="Vechicle Type:"/>
+                    <TextBox x:Name="txbxVehicleType" Grid.Row="4" Grid.Column="1" Text="{Binding VehicleType}" />
+                    <Label Grid.Row="5" Grid.Column="0" Content="Vehicle Model:"/>
+                    <TextBox x:Name="txbxVehicleModel" Grid.Row="5" Grid.Column="1" Text="{Binding VehicleModel}" />
+                    <Label Grid.Row="6" Grid.Column="0" Content="Vehicle CC:"/>
+                    <TextBox x:Name="txbxVehicleCC" Grid.Row="6" Grid.Column="1" Text="{Binding VehicleCC}" />
+                </Grid>
+            </GroupBox>
+            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" OverridesDefaultStyle="False" HorizontalAlignment="Center" VerticalAlignment="Top">
+                <Button Content="Add Class to Event" Click="AddClassToEvent" Width="Auto" >
+                <Button.ToolTip>
+                    <TextBlock> Edit Race Class and Add it to Race Classes for Current Event</TextBlock>
+                </Button.ToolTip>
+                </Button>
+
+            </StackPanel>
+
+        </DockPanel>
+        
+        <DockPanel>
+            <GroupBox Height="221" DockPanel.Dock="Top">
+            <GroupBox.Header>
+                <Border Background="Green" Style="{StaticResource groupBoxHeader}">
+                    <TextBlock Text="Race Classes for Current Event" />
+                </Border>
+            </GroupBox.Header>
+                <ListView x:Name="lsbxEventClasses"  VerticalAlignment="Stretch" BorderThickness="0" Background="AliceBlue" 
+                      ItemsSource="{Binding ApplicationPresenter.AllEventsPresenter.AllEventClasses}" DisplayMemberPath="DataToDisplay"
+                      SelectedItem="{Binding ApplicationPresenter.AllEventsPresenter.CurrentEventClass}" FontWeight="Normal">
+                <ListView.View>
+                    <GridView>
+                         <GridViewColumn Header="Id" DisplayMemberBinding="{Binding RaceClass.Id}" />
+                         <GridViewColumn Header="Class Name" DisplayMemberBinding="{Binding RaceClass.ClassName}" />
+                         <GridViewColumn Header="Min Age" DisplayMemberBinding="{Binding RaceClass.MinAge}" />
+                         <GridViewColumn Header="Max Age" DisplayMemberBinding="{Binding RaceClass.MaxAge}" />
+                         <GridViewColumn Header="Gender" DisplayMemberBinding="{Binding RaceClass.Gender}" />
+                         <GridViewColumn Header="Vechicle Type" DisplayMemberBinding="{Binding RaceClass.VehicleType}" />
+                         <GridViewColumn Header="Vehicle Model" DisplayMemberBinding="{Binding RaceClass.VehicleModel}" />
+                         <GridViewColumn Header="Vehicle CC" DisplayMemberBinding="{Binding RaceClass.VehicleCC}" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </GroupBox>
+
+            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" OverridesDefaultStyle="False" HorizontalAlignment="Center" VerticalAlignment="Top">
+                <Button Content="Exclude Class from Event" Click="ExcludeClassFromEvent" />
+                <Button Content="Save Changes" Click="SaveChanges" />
+            </StackPanel>
+          
+
+        </DockPanel>
+
+    </DockPanel>
+</UserControl>
