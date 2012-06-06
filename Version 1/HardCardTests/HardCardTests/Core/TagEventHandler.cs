@@ -1,5 +1,5 @@
 ﻿
-namespace HardCard.Scoring
+namespace Hardcard.Scoring
 {
     /// <summary>
     /// Delegate defining the protocol for handling a tag detection

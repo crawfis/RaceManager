@@ -12,7 +12,7 @@
       <Value Profile="(Default)">001</Value>
     </Setting>
     <Setting Name="logPath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">"C://HardCard//Logs"</Value>
+      <Value Profile="(Default)">"C://Hardcard//Logs"</Value>
     </Setting>
     <Setting Name="serverIP" Type="System.String" Scope="User">
       <Value Profile="(Default)">localhost</Value>

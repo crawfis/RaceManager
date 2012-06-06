@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace HardCard.Scoring
+namespace Hardcard.Scoring
 {
     public interface IPassingStrategy
     {

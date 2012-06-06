@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace HardCard.Scoring
+namespace Hardcard.Scoring
 {
     public class LoggerBinary : TagSubscriberBase, IDisposable
     {

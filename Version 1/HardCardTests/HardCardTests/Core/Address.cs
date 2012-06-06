@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace HardCard.Scoring.Core
+namespace Hardcard.Scoring
 {
     /// <summary>
     /// This struct represents an address.

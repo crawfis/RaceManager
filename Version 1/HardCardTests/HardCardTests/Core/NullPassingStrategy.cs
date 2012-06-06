@@ -1,6 +1,6 @@
 ﻿
 using System.Collections.Generic;
-namespace HardCard.Scoring
+namespace Hardcard.Scoring
 {
     /// <summary>
     /// This implements the Null Design Pattern and is used to set an initial

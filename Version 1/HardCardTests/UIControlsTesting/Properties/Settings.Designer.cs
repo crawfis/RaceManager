@@ -61,7 +61,7 @@ namespace UIControlsTesting.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("\"C://HardCard//Logs\"")]
+        [global::System.Configuration.DefaultSettingValueAttribute("\"C://Hardcard//Logs\"")]
         public string logPath {
             get {
                 return ((string)(this["logPath"]));

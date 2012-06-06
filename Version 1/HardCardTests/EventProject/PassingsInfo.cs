@@ -148,14 +148,14 @@ namespace EventProject
         //            this.competitorID = value.ID;
 
         //            //competitor.PropertyChangedEvent +=
-        //            //    new HardCard.Scoring.Core.Competitor.PropertyChanged(competitor_PropertyChangedEvent);
+        //            //    new Hardcard.Scoring.Core.Competitor.PropertyChanged(competitor_PropertyChangedEvent);
         //            competitor.PropertyChangedEvent += this.competitor_PropertyChangedEvent;
         //        }
         //        else
         //        {
         //            //doesn't seem to remove the handler
         //            //competitor.PropertyChangedEvent -= 
-        //            //    new HardCard.Scoring.Core.Competitor.PropertyChanged(competitor_PropertyChangedEvent);
+        //            //    new Hardcard.Scoring.Core.Competitor.PropertyChanged(competitor_PropertyChangedEvent);
         //            if (competitor != null)
         //                competitor.PropertyChangedEvent -= this.competitor_PropertyChangedEvent;
         //            competitor = null;

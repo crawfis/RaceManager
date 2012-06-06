@@ -5,7 +5,7 @@ using System.Text;
 using System.Runtime.Serialization;
 using System.ComponentModel;
 
-namespace HardCard.Scoring.Core
+namespace Hardcard.Scoring
 {
     /// <summary>
     /// This struct represents a competitor.

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using OhioState.Collections;
 
-namespace HardCard.Scoring.Simulator
+namespace Hardcard.Scoring.Simulator
 {
     class Program
     {

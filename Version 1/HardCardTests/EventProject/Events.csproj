@@ -32,16 +32,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Collections, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\personal\Consulting\HardCard\Version 2\HardcardCore\SampleRelease\Collections.dll</HintPath>
+    <Reference Include="Collections">
+      <HintPath>..\..\..\Version 2\Core\Collections.dll</HintPath>
     </Reference>
-    <Reference Include="HardcardCore, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\personal\Consulting\HardCard\Version 2\HardcardCore\SampleRelease\HardcardCore.dll</HintPath>
+    <Reference Include="HardcardCore">
+      <HintPath>..\..\..\Version 2\Core\HardcardCore.dll</HintPath>
     </Reference>
     <Reference Include="LumenWorks.Framework.IO">
-      <HintPath>bin\LumenWorks.Framework.IO.dll</HintPath>
+      <HintPath>..\..\..\Version 2\Core\LumenWorks.Framework.IO.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

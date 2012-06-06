@@ -25,7 +25,7 @@ namespace UIControls.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("\"C://HardCard//\"")]
+        [global::System.Configuration.DefaultSettingValueAttribute("\"C://Hardcard//\"")]
         public string logPath {
             get {
                 return ((string)(this["logPath"]));

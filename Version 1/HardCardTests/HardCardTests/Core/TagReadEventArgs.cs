@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace HardCard.Scoring
+namespace Hardcard.Scoring
 {
     /// <summary>
     /// A data structure holding information about a tag reading.

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using HardCard.Scoring;
+using Hardcard.Scoring;
 
-namespace HardCard.Scoring.Simulator
+namespace Hardcard.Scoring.Simulator
 {
     /// <summary>
     /// Read in a log and produce network packets to simulate

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
 
-namespace HardCard.Scoring
+namespace Hardcard.Scoring
 {
     // TODO: Convert this over to TagSubscriberBase
     class LoggerXML : ITagEventSubscriber, IDisposable

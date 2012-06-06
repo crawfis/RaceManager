@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace HardCard.Scoring.Core
+namespace Hardcard.Scoring
 {
     public class Config
     {

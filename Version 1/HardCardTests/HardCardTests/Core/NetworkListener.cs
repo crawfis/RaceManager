@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
-using HardCard.Scoring.Core;
 
-namespace HardCard.Scoring
+namespace Hardcard.Scoring
 {
     /// <summary>
     /// NetworkListener converts the incoming network packets from
@@ -225,7 +224,7 @@ namespace HardCard.Scoring
         #region Instance variables (data).
         private List<TagId> registeredTags = new List<TagId>();
         private /*readonly*/ int portNumber = 3900;
-        private HardCard.Scoring.Simulator.ILineProcessStrategy lineProcessor = new HardCard.Scoring.Simulator.TestTagProcessor();
+        private Hardcard.Scoring.Simulator.ILineProcessStrategy lineProcessor = new Hardcard.Scoring.Simulator.TestTagProcessor();
         private bool quitRequested = false;
         private Thread listenThread;
         TcpListener tcpListener = null;

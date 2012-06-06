@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace HardCard.Scoring.Simulator
+namespace Hardcard.Scoring.Simulator
 {
     internal class TestTagProcessor : ILineProcessStrategy
     {

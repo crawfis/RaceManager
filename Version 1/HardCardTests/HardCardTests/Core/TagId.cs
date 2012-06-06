@@ -1,7 +1,7 @@
 ﻿
 using System;
 
-namespace HardCard.Scoring
+namespace Hardcard.Scoring
 {
     /// <summary>
     /// A user-defined type for the Tag ID. If this was

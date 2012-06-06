@@ -1,5 +1,5 @@
 ﻿
-namespace HardCard.Scoring
+namespace Hardcard.Scoring
 {
     public interface ITagEventSubscriber
     {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace HardCard.Scoring
+namespace Hardcard.Scoring
 {
     public class PassingTimeLocalPeakSignal : IPassingStrategy
     {

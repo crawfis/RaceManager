@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace HardCard.Scoring
+namespace Hardcard.Scoring
 {
     /// <summary>
     /// A very simple passing detection strategy. Just report the

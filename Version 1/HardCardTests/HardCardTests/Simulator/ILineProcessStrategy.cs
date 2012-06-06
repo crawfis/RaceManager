@@ -1,5 +1,5 @@
 ﻿
-namespace HardCard.Scoring.Simulator
+namespace Hardcard.Scoring.Simulator
 {
     internal interface ILineProcessStrategy
     {

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using OhioState.Collections;
 
-namespace HardCard.Scoring
+namespace Hardcard.Scoring
 {
     /// <summary>
     /// This class subscribes to the tag detected events and buffers the readings

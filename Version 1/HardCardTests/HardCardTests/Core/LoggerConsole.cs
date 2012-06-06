@@ -1,5 +1,5 @@
 ﻿
-namespace HardCard.Scoring
+namespace Hardcard.Scoring
 {
     /// <summary>
     /// A simple class to send all log messages to the Console.

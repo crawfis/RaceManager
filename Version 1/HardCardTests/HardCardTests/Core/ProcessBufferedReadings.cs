@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
 using OhioState.Collections;
-using HardCard.Scoring.Core;
 
-namespace HardCard.Scoring
+namespace Hardcard.Scoring
 {
     public class ProcessBufferedReadings : ITagEventPublisher
     {

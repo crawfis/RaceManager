@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace HardCard.Scoring
+namespace Hardcard.Scoring
 {
     /// <summary>
     /// This class is fairly dumb. It requires the user to send in a delegate 
