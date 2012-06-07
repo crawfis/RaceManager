@@ -51,18 +51,16 @@ namespace RacingEventsTrackSystem.Views
 
         private void Startrace_Click(object sender, RoutedEventArgs e)
         {
-            if (eventComboBox.SelectedIndex == -1 || sessionComboBox.SelectedIndex == -1)
-            {
-                return;
-            }
-            eventComboBox.IsEnabled = false;
-            sessionComboBox.IsEnabled = false;
+            // TODO disable the Start Button
+            // TODO: Enable the Stop Buttom
             Presenter.StartRace();
         }
 
         private void Stoprace_Click(object sender, RoutedEventArgs e)
         {
             Presenter.StopRace();
+            // TODO ensable the Start Button
+            // TODO: disable the Stop Buttom
             this.eventComboBox.IsEnabled = true;
             this.sessionComboBox.IsEnabled = true;
         }

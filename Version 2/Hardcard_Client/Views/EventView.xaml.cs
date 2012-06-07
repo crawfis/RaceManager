@@ -57,23 +57,6 @@ namespace RacingEventsTrackSystem.Views
             Presenter.SaveEvent(Presenter.CurrentEvent);
         }
         
-        private void DeleteCurrentEvent_Click(object sender, RoutedEventArgs e)
-        {
-            System.Windows.Forms.DialogResult result = System.Windows.Forms.MessageBox.Show(
-                                   "Want to delete all data for current event?",
-                                   "Exit",
-                                   System.Windows.Forms.MessageBoxButtons.YesNo);
-            if (result == System.Windows.Forms.DialogResult.Yes)
-            {
-                System.Windows.Forms.MessageBox.Show("Deleting Data from Database");
-                DeleteEventDataBase();
-            }
-            else
-            {
-                MessageBox.Show("Contine program");
-            }
-
-        }
         private void DeleteEventDataBase()
         {
             Process proc = null;
@@ -112,6 +95,10 @@ namespace RacingEventsTrackSystem.Views
             }
         }
 
+        private void BackupCurrentEvent_Click(object sender, RoutedEventArgs e)
+        {
+            Presenter.BackupCurrentEvent(); 
+        }
 
         private void LoadEventDataBaseFromSql(string sqlFilePath)
         {
@@ -140,6 +127,7 @@ namespace RacingEventsTrackSystem.Views
                 Console.WriteLine("Exception Occurred :{0},{1}", ex.Message, ex.StackTrace.ToString());
             }
         }
+
 
     }
 }

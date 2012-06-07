@@ -87,7 +87,7 @@
                         <TextBlock> Load Data for Existing Event</TextBlock>
                     </Button.ToolTip>
                 </Button>
-                <Button Content="Delete Current Event"  Click="DeleteCurrentEvent_Click" Width="108" HorizontalAlignment="Left" FontWeight="Normal" >
+                <Button Content="Backup Current Event"  Click="BackupCurrentEvent_Click" Width="129" HorizontalAlignment="Left" FontWeight="Normal" >
                     <Button.ToolTip>
                         <TextBlock> Delete Data for Current Event except Race Classes and Athletes</TextBlock>
                     </Button.ToolTip>
