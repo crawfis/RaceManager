@@ -1,5 +1,9 @@
 @echo off
-rem drop and create Hardcard Database. Create database schema and populate it with recirds  (, execute setup.exe - commented)
+rem drop and create Hardcard Database. Create database schema, populate it with records,  and execute setup.exe - commented
+@echo off
+rem first parameter is a SQL Server name, second - directory path to sql files to create and populate Hardcard Database
+@echo off
+rem setup.exe file should be in  the same directory as an sql files
 @echo off
 rem  If SQLServer name is MY-SQLSERVER and Hardcard*.sql files and setup.exe are in the current directory then correct syntax example : 
 @echo off
@@ -30,7 +34,7 @@ if errorlevel 1 goto on_sqlcmd3_error
 sqlcmd -S %1\sqlexpress -d Hardcard  -i %2\create_records_for_SQL_EX.sql
 if errorlevel 1 goto on_sqlcmd3_error
 
-rem %2\setup.exe
+%2\setup.exe
 if errorlevel 1 goto on_setup_error
 
 goto bat_end
