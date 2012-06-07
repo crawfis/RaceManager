@@ -10,6 +10,17 @@ using RacingEventsTrackSystem.Presenters;
 using System.Windows;
 using System.Data.Objects;
 
+using System.Data;
+using System.Data.SqlClient;
+using System.Data.Sql;
+using Microsoft.Win32;
+using Microsoft.SqlServer.Server;
+using Microsoft.SqlServer.Management.Smo;
+using Microsoft.SqlServer.Management.Smo.Agent;
+using Microsoft.SqlServer.Management.Common;
+using System.Windows.Shapes;
+
+
 namespace RacingEventsTrackSystem.Presenters
 {
     public partial class AllEventsPresenter : PresenterBase<Shell>
@@ -143,6 +154,10 @@ namespace RacingEventsTrackSystem.Presenters
         // 
         public void CreateNewEvent()
         {
+            DatabaseParam dbParam = new DatabaseParam();
+            //CreateDatabase(dbParam);
+            RestoreEventDataBase();
+
             _applicationPresenter.HardcardContext.SaveChanges();
             Event newEvent = new Event();
             newEvent.EventName = "Unknown";
@@ -312,6 +327,392 @@ namespace RacingEventsTrackSystem.Presenters
             return new ObservableCollection<EventClass>(myEvent.EventClasses.ToList());
         }
 
-    
+        public class DatabaseParam
+        {
+            //public string ServerName = "servername";
+            //public string ServerName = "(local)";
+            public string ServerName = string.Format(@"SATA-COMP\sqlexpress");
+            public string DatabaseName = "Hardcard10";
+            public string DataFileName = "DataFileName";
+            public string DataPathName = "DataPathName";
+            public string DataFileGrowth = "DataFileGrowth";
+            public string LogFileName = "LogFileName";
+            public string LogPathName = "LogPathName";
+            public string LogFileGrowth = "LogFileGrowth";
+        }
+
+        private string getServerName()
+        {
+            string sqlSErverInstance;
+            List<string> lstLocalInstances = new List<string>();
+            RegistryKey rk = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Microsoft SQL Server");
+            String[] instances = (String[])rk.GetValue("InstalledInstances");
+            if (instances.Length > 0)
+            {
+                foreach (String element in instances)
+                {
+                    if (element == "SQLEXPRESS")
+                        lstLocalInstances.Add(System.Environment.MachineName);
+                    else
+                        lstLocalInstances.Add(System.Environment.MachineName + @"\" + element);
+                }
+            }
+            return sqlSErverInstance = lstLocalInstances[0].ToString();
+        }
+        
+        private void CreateDatabase(DatabaseParam DBParam)
+        {
+
+            string currentCommectionString = RacingEventsTrackSystem.Properties.Settings.Default.HardcardConnectionString;
+            SqlConnection currConn = new SqlConnection(currentCommectionString);
+            if (currConn.State == ConnectionState.Open)
+                currConn.Close();
+            
+            //System.Data.SqlClient.SqlConnection tmpConn;
+            string sqlCreateDBQuery;
+            SqlConnection tmpConn;
+
+            /*
+             tmpConn = new SqlConnection("Server=localhost;Integrated security=SSPI;database=master");
+
+             sqlCreateDBQuery = "CREATE DATABASE Hardcard11 ON PRIMARY ";
+            
+            +
+                 "(NAME = MyDatabase_Data, " +
+                 "FILENAME = 'C:\\MyDatabaseData.mdf', " +
+                 "SIZE = 2MB, MAXSIZE = 10MB, FILEGROWTH = 10%) " +
+                 "LOG ON (NAME = MyDatabase_Log, " +
+                 "FILENAME = 'C:\\MyDatabaseLog.ldf', " +
+                 "SIZE = 1MB, " +
+                 "MAXSIZE = 5MB, " +
+                 "FILEGROWTH = 10%)";
+             */
+              
+
+            
+            
+ 
+            tmpConn = new SqlConnection();
+            string serverName = getServerName();
+            tmpConn.ConnectionString = string.Format(@"SERVER = SATA-COMP\sqlexpress; DATABASE = master;Integrated security=SSPI");
+            //            tmpConn.ConnectionString = "SERVER = " + DBParam.ServerName +
+            //"; DATABASE = master; User ID =; Pwd =;";
+  //          "; DATABASE = master; User ID = sa; Pwd = sa";
+            
+            sqlCreateDBQuery = "CREATE DATABASE Hardcard12";
+          
+            /*
+            sqlCreateDBQuery = " CREATE DATABASE "
+                               + DBParam.DatabaseName
+                               + " ON PRIMARY ";
+            
+                               + " (NAME = " + DBParam.DataFileName + ", "
+                               + " FILENAME = '" + DBParam.DataPathName + "', "
+                               + " SIZE = 2MB,"
+                               + " FILEGROWTH =" + DBParam.DataFileGrowth + ") "
+                               + " LOG ON (NAME =" + DBParam.LogFileName + ", "
+                               + " FILENAME = '" + DBParam.LogPathName + "', "
+                               + " SIZE = 1MB, "
+                               + " FILEGROWTH =" + DBParam.LogFileGrowth + ") ";
+            */
+            SqlCommand myCommand = new SqlCommand(sqlCreateDBQuery, tmpConn);
+            try
+            {
+                tmpConn.Open();
+                MessageBox.Show(sqlCreateDBQuery);
+                myCommand.ExecuteNonQuery();
+                System.Windows.Forms.MessageBox.Show("Database has been created successfully!",
+                                  "Create Database", System.Windows.Forms.MessageBoxButtons.OK,
+                                              System.Windows.Forms.MessageBoxIcon.Information);
+            }
+            catch (System.Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show(ex.ToString(), "Create Database",
+                                            System.Windows.Forms.MessageBoxButtons.OK,
+                                     System.Windows.Forms.MessageBoxIcon.Information);
+            }
+            finally
+            {
+                tmpConn.Close();
+            }
+            return;
+        }
+
+        public void BackupCurrentEvent()
+        {
+
+            System.Windows.Forms.DialogResult result = System.Windows.Forms.MessageBox.Show(
+                           "Want to Backup all data for current event?",
+                           "Exit",
+                           System.Windows.Forms.MessageBoxButtons.YesNo);
+            if (result == System.Windows.Forms.DialogResult.Yes)
+            {
+                System.Windows.Forms.MessageBox.Show("Copying DataBase to file");
+                BackupEventDataBase();
+                //DisplayAllDBConnections(); //just for this function test 
+            }
+            else
+            {
+                MessageBox.Show("Contine program");
+            }
+        }
+
+        public void BackupEventDataBase()
+        {
+            //string currentCommectionString = RacingEventsTrackSystem.Properties.Settings.Default.HardcardConnectionString;
+            //SqlConnection currConn = new SqlConnection(currentCommectionString);
+
+            //SqlConnection currConn = new SqlConnection();
+            //if (currConn.State == ConnectionState.Open)
+            //    currConn.Close();
+
+            //System.Data.SqlClient.SqlConnection tmpConn;
+            
+            //
+            // Uses sqlCreateDBQuery
+            // it works for Memory stick 
+            //
+            /*
+            string sqlCreateDBQuery;
+            SqlConnection tmpConn;
+
+            tmpConn = new SqlConnection();
+            string serverName = getServerName();
+            tmpConn.ConnectionString = string.Format(@"SERVER = SATA-COMP\sqlexpress; DATABASE = Hardcard;Integrated security=SSPI");
+
+            sqlCreateDBQuery = "BACKUP DATABASE Hardcard TO DISK = \'H:\\Hardcard.bak\' WITH FORMAT";
+
+            SqlCommand myCommand = new SqlCommand(sqlCreateDBQuery, tmpConn);
+            try
+            {
+                if (tmpConn.State != ConnectionState.Open)
+                    tmpConn.Open();
+                MessageBox.Show(sqlCreateDBQuery);
+                myCommand.ExecuteNonQuery();
+                System.Windows.Forms.MessageBox.Show("Database has been written successfully!",
+                                  "Backup Database", System.Windows.Forms.MessageBoxButtons.OK,
+                                              System.Windows.Forms.MessageBoxIcon.Information);
+            }
+            catch (System.Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show(ex.ToString(), "Backup Database",
+                                            System.Windows.Forms.MessageBoxButtons.OK,
+                                     System.Windows.Forms.MessageBoxIcon.Information);
+            }
+            finally
+            {
+                tmpConn.Close();
+            }
+            return;
+            */
+
+
+            //
+            // Uses SMO object 
+            // it works for Memory stick 
+            //
+            //Connect to the local, default instance of SQL Server. 
+
+            //Microsoft.SqlServer.Management.Smo.Server smoServer = new Server(new ServerConnection(server)); 
+            string srvName = "SATA-COMP\\sqlexpress";
+            Server smoServer = new Server(new ServerConnection(srvName));  
+            //Server smoServer = new Server();  
+            string DbFileName = CurrentEvent.EventName;
+
+              Backup bkp = new Backup();
+
+                   //this.Cursor = Cursors.WaitCursor;
+                   //this.dataGridView1.DataSource = string.Empty;
+                   try
+                   {
+                       string fileName = "H:\\Hardcard_tmp.bak";
+                       string databaseName = "Hardcard";
+
+                       bkp.Action = BackupActionType.Database;
+                       bkp.Database = databaseName;
+                       bkp.Devices.AddDevice(fileName, DeviceType.File);
+                       //bkp.Incremental = chkIncremental.Checked; ???
+                       //this.progressBar1.Value = 0;
+                       //this.progressBar1.Maximum = 100;
+                       //this.progressBar1.Value = 10;
+
+                       bkp.PercentCompleteNotification = 10;
+                       //bkp.PercentComplete += new PercentCompleteEventHandler(ProgressEventHandler);
+
+                       bkp.SqlBackup(smoServer);
+                       MessageBox.Show("Database Backed Up To: " + fileName, "SMO Demos");
+                   }
+            
+                   catch (Exception ex)
+                   {
+                       MessageBox.Show(ex.ToString());
+                   }
+                   finally
+                   {
+                       //this.Cursor = Cursors.Default;
+                       //this.progressBar1.Value = 0;
+                   }
+        }
+         /*
+        public void ProgressEventHandler(object sender, PercentCompleteEventArgs e)
+        {
+            this.progressBar1.Value = e.Percent;
+        }
+         */
+
+        //
+        // displays all database connections to the instance of SQL Server.
+        //
+        public void DisplayAllDBConnections()
+        {   // doesn't work
+            Server srv = default(Server);
+            string srvName = "SATA-COMP\\sqlexpress";
+            srv = new Server("srvName");
+            int count = 0; 
+            int total = 0; 
+            string str = "";
+            //Iterate through the databases and call the GetActiveDBConnectionCount method. 
+            Database db = new Database();
+            //db = default(Database);
+            foreach (Database db1 in srv.Databases) // Exception:can not connect to server
+            { 
+              count = srv.GetActiveDBConnectionCount(db1.Name); 
+              total = total + count; 
+              //Display the number of connections for each database. 
+              str += string.Format("\n{0} connections on {1} ",count, db1.Name); 
+            } 
+            //Display the total number of connections on the instance of SQL Server. 
+               str += string.Format("\nTotal connections = {0} ",total); 
+             System.Windows.Forms.MessageBox.Show(str);
+        } 
+
+        public void RestoreEventDataBase()
+        {
+            //string currentCommectionString = RacingEventsTrackSystem.Properties.Settings.Default.HardcardConnectionString;
+            //SqlConnection currConn = new SqlConnection(currentCommectionString);
+
+            //SqlConnection currConn = new SqlConnection();
+            //if (currConn.State == ConnectionState.Open)
+            //    currConn.Close();
+
+            //System.Data.SqlClient.SqlConnection tmpConn;
+
+            //string serverName = getServerName();
+            string serverName = "SATA-COMP\\sqlexpress";
+
+            //
+            // Uses sqlCreateDBQuery
+            // it doesn't work
+            //
+            
+            string currentCommectionString = RacingEventsTrackSystem.Properties.Settings.Default.HardcardConnectionString;
+            SqlConnection currConn = new SqlConnection(currentCommectionString);
+            if (currConn.State == ConnectionState.Open)
+                currConn.Close();
+            
+                      string sqlCreateDBQuery;
+                      SqlConnection tmpConn;
+
+                      tmpConn = new SqlConnection();
+            
+                      tmpConn.ConnectionString = string.Format(@"SERVER = SATA-COMP\sqlexpress; DATABASE = master;Integrated security=SSPI");
+
+                      sqlCreateDBQuery = "USE master RESTORE DATABASE Hardcard FROM DISK = 'E:\\Hardcard.bak'"
+                                         + "WITH FILE = 1, RECOVERY,  NOUNLOAD,  REPLACE, STATS = 10,"
+                                         + "MOVE 'C:\\Program Files\\Microsoft SQL Server\\MSSQL10.SQLEXPRESS\\MSSQL\\data\\Hardcard.mdf' to 'E:\\Hardcard_bk.mdf',"
+                                         + "MOVE 'C:\\Program Files\\Microsoft SQL Server\\MSSQL10.SQLEXPRESS\\MSSQL\\data\\Hardcard.ldf' to 'E:\\Hardcard_bk.ldf'";
+                      // RESTORE FILELISTONLY give you what logical files exist for a particular backup
+
+            //  RESTORE DATABASE [NewCopy_YourDatabase] 
+            // FROM  DISK ='\\Backup\YourDatabase\YourDatabase_FULL_20120318.bak' WITH  FILE = 1,  
+            // RECOVERY,  NOUNLOAD,  REPLACE, STATS = 10 , 
+            // move 'YourDatabase_Data' to 'D:\Data\NewCopy_YourDatabase_Data.MDF' , 
+            // move 'YourDatabase_Log' to 'F:\Logs\NewCopy_YourDatabase_Log.LDF'
+             
+                      SqlCommand myCommand = new SqlCommand(sqlCreateDBQuery, tmpConn);
+                      try
+                      {
+                          if (tmpConn.State != ConnectionState.Open)
+                              tmpConn.Open();
+                          MessageBox.Show(sqlCreateDBQuery);
+                          myCommand.ExecuteNonQuery();
+                          System.Windows.Forms.MessageBox.Show("Database has been restored successfully!",
+                                            "Restore Database", System.Windows.Forms.MessageBoxButtons.OK,
+                                                        System.Windows.Forms.MessageBoxIcon.Information);
+                      }
+                      catch (System.Exception ex)
+                      {
+                          System.Windows.Forms.MessageBox.Show(ex.ToString(), "Restore Database",
+                                                      System.Windows.Forms.MessageBoxButtons.OK,
+                                               System.Windows.Forms.MessageBoxIcon.Information);
+                      }
+                      finally
+                      {
+                          tmpConn.Close();
+                      }
+                      return;
+              
+
+            //
+            // Uses SMO Object
+            // it doesn't work ??
+            //
+            
+            
+            // tmpConn = new SqlConnection("Server=localhost;Integrated security=SSPI;database=master");
+
+            // sqlCreateDBQuery = "CREATE DATABASE Hardcard11 ON PRIMARY ";
+            /*
+            Server smoServer = new Server(new ServerConnection(serverName));
+            //Server smoServer = new Server();  
+            //string DbFileName = CurrentEvent.EventName;
+            string databaseName = "'Hardcard12'";
+            Database db = smoServer.Databases[databaseName]; 
+            //string dbPath = Path.Combine(db.PrimaryFilePath, 'MyDataBase.mdf'); string logPath = Path.Combine(db.PrimaryFilePath, 'MyDataBase_Log.ldf'); 
+            Restore restore = new Restore();
+            try
+            {
+                string fileName = "E:\\Hardcard_tmp.bak";
+
+                restore.NoRecovery = true;
+                restore.Database = databaseName;
+                restore.Action = RestoreActionType.Database;
+                restore.ReplaceDatabase = true;
+
+
+
+
+                //Add the device that contains the full database backup to the Restore object. 
+                BackupDeviceItem bdi = default(BackupDeviceItem);
+                bdi = new BackupDeviceItem(fileName, DeviceType.File);
+                restore.Devices.Add(bdi);
+                //restore.Devices.AddDevice(fileName, DeviceType.File);
+
+                restore.PercentCompleteNotification = 10;
+                //bkp.PercentComplete += new PercentCompleteEventHandler(ProgressEventHandler);
+
+                restore.SqlRestore(smoServer);
+                // Db or file should be offline and then turn to online
+                //db = smoServer.Databases['MyDataBase']; 
+                //db.SetOnline(); 
+                //smoServer.Refresh(); 
+                //db.Refresh(); 
+                MessageBox.Show("Database Restored From: " + fileName, "SMO Demos");
+            }
+
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+            finally
+            {
+                //this.Cursor = Cursors.Default;
+                //this.progressBar1.Value = 0;
+            }
+            */
+
+        }
+
+
     }
 }
