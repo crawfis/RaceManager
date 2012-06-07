@@ -19,6 +19,11 @@ using RacingEventsTrackSystem.DataAccess;
 using RacingEventsTrackSystem.UserControls;
 using RacingEventsTrackSystem.Views;
 
+using System.Data;
+using System.Data.SqlClient;
+using System.Data.Sql;
+
+
 namespace RacingEventsTrackSystem
 {
     /// <summary>
@@ -29,7 +34,7 @@ namespace RacingEventsTrackSystem
         public Shell()
         {
             InitializeComponent();
-            string myDatabase = RacingEventsTrackSystem.Properties.Settings.Default.HardcardConnectionString;
+            //string myDatabase = RacingEventsTrackSystem.Properties.Settings.Default.HardcardConnectionString;
             //HardcardEntities hardcardContext = new HardcardEntities(myDatabase);
             HardcardEntities hardcardContext = new HardcardEntities();
             ApplicationPresenter ap = new ApplicationPresenter(this, hardcardContext);
@@ -175,5 +180,12 @@ namespace RacingEventsTrackSystem
         {
 
         }
+
+        
+       
     }
+    
+
+    
+
 }
