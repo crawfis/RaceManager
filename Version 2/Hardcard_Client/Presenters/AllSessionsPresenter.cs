@@ -9,6 +9,11 @@ using RacingEventsTrackSystem.DataAccess;
 using RacingEventsTrackSystem.Presenters;
 using System.Windows;
 using System.Data.Objects;
+using System.Data.Linq.Mapping;
+using System.Data.Linq; // for Table<> type
+using System.Linq.Expressions;
+using System.Data.Linq.SqlClient; // for SqlMethods.Like()
+
 
 // EU 2012/02/19 new module
 namespace RacingEventsTrackSystem.Presenters
@@ -643,25 +648,95 @@ namespace RacingEventsTrackSystem.Presenters
         }
 
         // 
-        // Create Standings collection for Session sorted by LapsCompleted, BestLapTime
+        // Create Standings collection for Session.
+        // 
+        // This method uses PassingTime to select records from Passing table. Then it 
+        // populates sessionId and create records for Standing table.
+        // 
+        // This method is called during the session. When session was completed and all records in Passing 
+        // table have sessionId populated, then call GetStandingsForSession(Session session) it will 
+        // save time for selects.
         //
         public ObservableCollection<Standing> InitStandingsForSession(Session session)
         {
             ObservableCollection<Standing> Tmp;
             if (session == null)
+            {
                 Tmp = new ObservableCollection<Standing>();
+                return Tmp;
+            }
+
+            var hc = _applicationPresenter.HardcardContext;
+            long sessionId = session.Id;
+
+            // Fetch from Passing table all records with Session.StartTime <= PassingTime <= Session.SchedStopTime
+            // and set SessionId for each record.
+            List<Passing> query = ( from p in hc.Passings    
+                                    from e in hc.Entries
+                                    from s in hc.Sessions
+                                    where  e.SessionId == sessionId
+                                        && e.RFID == p.RFID  //session.Passings
+                                        && session.StartTime <= p.PassingTime
+                                        && p.PassingTime <= session.SchedStopTime
+                                   select p).ToList();
+            foreach (Passing p in query) p.SessionId = sessionId;
+
+           
+            Tmp = GetStandingsForSession(session);
+            return Tmp;
+        }
+
+        // 
+        // Create Standings collection for Session.
+        // 
+        // This method uses SessionId to select records from Passing table 
+        // and create records for Standing table.
+        //
+        // It includes criteria for records for Standing table 
+        // 
+        public ObservableCollection<Standing> GetStandingsForSession(Session session)
+        {
+            ObservableCollection<Standing> Tmp;
+            if (session == null)
+            {
+                Tmp = new ObservableCollection<Standing>();
+            }
             else
             {
                 var hc = _applicationPresenter.HardcardContext;
                 long sessionId = session.Id;
-                IQueryable<Standing> standings =
-                     from e in hc.Entries
-                     from s in hc.Standings
+
+
+                var passings =
+                     (from p in hc.Passings
+                      from e in hc.Entries
+                      from s in hc.Sessions
                      where e.SessionId == sessionId
-                     && s.EntryId == e.Id
-                     orderby s.LapsCompleted, s.BestLapTime
-                     select s;
-                Tmp = new ObservableCollection<Standing>(standings.ToList());
+                     && p.SessionId == sessionId
+                     && e.RFID == p.RFID
+                     orderby p.PassingTime
+                     group p by p.RFID into p_group
+                     orderby p_group.Key
+                     select p_group);
+
+                //Calculate s.LapsCompleted, etc for each record in Standing table
+                 List<Standing> standings = new List<Standing>(); 
+                Standing st = new Standing();
+                int i = 0;
+                foreach (var p_group in passings)
+                {
+                    st.EntryId = ++i;
+                    st.Position = (short)i;
+                    st.LapsCompleted = 5;
+                    st.CompletedTime = (p_group.Last()).RaceTime; 
+                    st.BestLapTime = 12345;
+                    st.AvgLapTime = (p_group.Last().RaceTime - p_group.Last().RaceTime)/st.LapsCompleted;
+                    st.WorstLapTime = 2134; 
+                    st.PassingTime = (p_group.Last()).RaceTime;
+                    standings.Add(st);
+                }
+                
+                Tmp = new ObservableCollection<Standing>(standings);
             }
             return Tmp;
         }
@@ -704,7 +779,7 @@ namespace RacingEventsTrackSystem.Presenters
                 return;
             }
 
-            
+  /*        for test only:  
             int NumOfLaps = (int)session.SchedLaps;
             int standingId = 0;
             Random random = new Random();
@@ -731,6 +806,7 @@ namespace RacingEventsTrackSystem.Presenters
             hc.SaveChanges(); 
             InitEntriesForSession(session);
             InitStandingsForSession(session);
+   */
         }
 
         public void SessionSelected()
