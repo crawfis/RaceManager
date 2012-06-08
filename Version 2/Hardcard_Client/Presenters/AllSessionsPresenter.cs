@@ -10,12 +10,12 @@ using RacingEventsTrackSystem.Presenters;
 using System.Windows;
 using System.Data.Objects;
 using System.Data.Linq.Mapping;
-using System.Data.Linq; // for Table<> type
+using System.Data.Linq; 
 using System.Linq.Expressions;
-using System.Data.Linq.SqlClient; // for SqlMethods.Like()
+using System.Data.Linq.SqlClient; 
 
 
-// EU 2012/02/19 new module
+// EU new module
 namespace RacingEventsTrackSystem.Presenters
 {
     public partial class AllSessionsPresenter : PresenterBase<Shell>
@@ -98,8 +98,11 @@ namespace RacingEventsTrackSystem.Presenters
                 StandingsForSession = InitStandingsForSession(_currentSessionForEvent);
 
             }
-            InitTmpEntry();
-            InitTmpStanding();
+            else
+            {
+                InitTmpEntry();
+                InitTmpStanding();
+            }
         }
 
         public ApplicationPresenter ApplicationPresenter
@@ -697,16 +700,14 @@ namespace RacingEventsTrackSystem.Presenters
         public ObservableCollection<Standing> GetStandingsForSession(Session session)
         {
             ObservableCollection<Standing> Tmp;
+            var hc = _applicationPresenter.HardcardContext;
             if (session == null)
             {
                 Tmp = new ObservableCollection<Standing>();
             }
             else
             {
-                var hc = _applicationPresenter.HardcardContext;
                 long sessionId = session.Id;
-
-
                 var passings =
                      (from p in hc.Passings
                       from e in hc.Entries
@@ -720,24 +721,45 @@ namespace RacingEventsTrackSystem.Presenters
                      select p_group);
 
                 //Calculate s.LapsCompleted, etc for each record in Standing table
-                 List<Standing> standings = new List<Standing>(); 
-                Standing st = new Standing();
                 int i = 0;
+                List<Standing> lstStandings = new List<Standing>();
                 foreach (var p_group in passings)
                 {
-                    st.EntryId = ++i;
+                    ++i;
+                    Standing st = new Standing();
+                    st.Id = i;
+                    st.EntryId = hc.Entries.First(a => a.RFID == p_group.Key).Id; 
                     st.Position = (short)i;
-                    st.LapsCompleted = 5;
-                    st.CompletedTime = (p_group.Last()).RaceTime; 
-                    st.BestLapTime = 12345;
-                    st.AvgLapTime = (p_group.Last().RaceTime - p_group.Last().RaceTime)/st.LapsCompleted;
-                    st.WorstLapTime = 2134; 
+                    st.LapsCompleted = (short)p_group.Count();
+                    st.CompletedTime = (p_group.Last()).RaceTime;
+                    long bestLapTime  = p_group.Last().RaceTime - p_group.First().RaceTime;
+                    long worstLapTime = p_group.Last().RaceTime - p_group.First().RaceTime;
+                    long avgLapTime   = p_group.Last().RaceTime - p_group.First().RaceTime;
+                    foreach (var passing in p_group)
+                    {
+                        bestLapTime = p_group.Last().RaceTime - passing.RaceTime;
+                        st.BestLapTime = 12345;
+                        st.AvgLapTime = (p_group.Last().RaceTime - p_group.Last().RaceTime) / st.LapsCompleted;
+                        st.WorstLapTime = 2134;
+                    }
                     st.PassingTime = (p_group.Last()).RaceTime;
-                    standings.Add(st);
+                    lstStandings.Add(st); // Add to Tmp directly
                 }
                 
-                Tmp = new ObservableCollection<Standing>(standings);
+                Tmp = new ObservableCollection<Standing>(lstStandings);
             }
+
+            //Remove data from Standing table
+            List<Standing> query = (from c in hc.Standings
+                                    select c).ToList();
+            foreach (Standing e in query) hc.Standings.DeleteObject(e);
+            hc.SaveChanges();
+
+            //Populate Standing table
+            foreach (Standing st in Tmp)
+                hc.Standings.AddObject(st);
+            hc.SaveChanges();
+
             return Tmp;
         }
 
