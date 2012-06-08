@@ -18,56 +18,45 @@
           <EntitySet Name="Session" EntityType="HardcardModel.Store.Session" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Standing" EntityType="HardcardModel.Store.Standing" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Synchronization" EntityType="HardcardModel.Store.Synchronization" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="sysdiagrams" EntityType="HardcardModel.Store.sysdiagrams" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="TagList" EntityType="HardcardModel.Store.TagList" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="ValidTag" EntityType="HardcardModel.Store.ValidTag" store:Type="Tables" Schema="dbo" />
-          <AssociationSet Name="FK__Competito__Athle__41CE9A8B" Association="HardcardModel.Store.FK__Competito__Athle__41CE9A8B">
+          <AssociationSet Name="FK__Competito__Athle__173876EA" Association="HardcardModel.Store.FK__Competito__Athle__173876EA">
             <End Role="Athlete" EntitySet="Athlete" />
             <End Role="Competitor" EntitySet="Competitor" />
           </AssociationSet>
-          <AssociationSet Name="FK__Competito__Event__40DA7652" Association="HardcardModel.Store.FK__Competito__Event__40DA7652">
+          <AssociationSet Name="FK__Competito__Event__164452B1" Association="HardcardModel.Store.FK__Competito__Event__164452B1">
             <End Role="EventClass" EntitySet="EventClass" />
             <End Role="Competitor" EntitySet="Competitor" />
           </AssociationSet>
-          <AssociationSet Name="FK__Entry__Competito__5A9A4855" Association="HardcardModel.Store.FK__Entry__Competito__5A9A4855">
+          <AssociationSet Name="FK__Entry__Competito__2A4B4B5E" Association="HardcardModel.Store.FK__Entry__Competito__2A4B4B5E">
             <End Role="Competitor" EntitySet="Competitor" />
             <End Role="Entry" EntitySet="Entry" />
           </AssociationSet>
-          <AssociationSet Name="FK__Entry__SessionId__5B8E6C8E" Association="HardcardModel.Store.FK__Entry__SessionId__5B8E6C8E">
+          <AssociationSet Name="FK__Entry__SessionId__2B3F6F97" Association="HardcardModel.Store.FK__Entry__SessionId__2B3F6F97">
             <End Role="Session" EntitySet="Session" />
             <End Role="Entry" EntitySet="Entry" />
           </AssociationSet>
-          <AssociationSet Name="FK__EventClas__Class__3B219CFC" Association="HardcardModel.Store.FK__EventClas__Class__3B219CFC">
+          <AssociationSet Name="FK__EventClas__Class__108B795B" Association="HardcardModel.Store.FK__EventClas__Class__108B795B">
             <End Role="RaceClass" EntitySet="RaceClass" />
             <End Role="EventClass" EntitySet="EventClass" />
           </AssociationSet>
-          <AssociationSet Name="FK__EventClas__Event__3C15C135" Association="HardcardModel.Store.FK__EventClas__Event__3C15C135">
+          <AssociationSet Name="FK__EventClas__Event__117F9D94" Association="HardcardModel.Store.FK__EventClas__Event__117F9D94">
             <End Role="Event" EntitySet="Event" />
             <End Role="EventClass" EntitySet="EventClass" />
           </AssociationSet>
-          <AssociationSet Name="FK__Passing__RFID__54E16EFF" Association="HardcardModel.Store.FK__Passing__RFID__54E16EFF">
-            <End Role="ValidTag" EntitySet="ValidTag" />
-            <End Role="Passing" EntitySet="Passing" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Passing__Session__55D59338" Association="HardcardModel.Store.FK__Passing__Session__55D59338">
+          <AssociationSet Name="FK__Passing__Session__25869641" Association="HardcardModel.Store.FK__Passing__Session__25869641">
             <End Role="Session" EntitySet="Session" />
             <End Role="Passing" EntitySet="Passing" />
           </AssociationSet>
-          <AssociationSet Name="FK__Penality__Sessio__501CB9E2" Association="HardcardModel.Store.FK__Penality__Sessio__501CB9E2">
+          <AssociationSet Name="FK__Penality__Sessio__20C1E124" Association="HardcardModel.Store.FK__Penality__Sessio__20C1E124">
             <End Role="Session" EntitySet="Session" />
             <End Role="Penality" EntitySet="Penality" />
           </AssociationSet>
-          <AssociationSet Name="FK__Session__EventCl__4B5804C5" Association="HardcardModel.Store.FK__Session__EventCl__4B5804C5">
+          <AssociationSet Name="FK__Session__EventCl__1BFD2C07" Association="HardcardModel.Store.FK__Session__EventCl__1BFD2C07">
             <End Role="EventClass" EntitySet="EventClass" />
             <End Role="Session" EntitySet="Session" />
           </AssociationSet>
-          <AssociationSet Name="FK__Standing__EntryI__6423B28F" Association="HardcardModel.Store.FK__Standing__EntryI__6423B28F">
+          <AssociationSet Name="FK__Standing__EntryI__33D4B598" Association="HardcardModel.Store.FK__Standing__EntryI__33D4B598">
             <End Role="Entry" EntitySet="Entry" />
             <End Role="Standing" EntitySet="Standing" />
-          </AssociationSet>
-          <AssociationSet Name="FK__TagList__RFID__46934FA8" Association="HardcardModel.Store.FK__TagList__RFID__46934FA8">
-            <End Role="ValidTag" EntitySet="ValidTag" />
-            <End Role="TagList" EntitySet="TagList" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Athlete">
@@ -77,7 +66,7 @@
           <Property Name="Id" Type="bigint" Nullable="false" />
           <Property Name="FirstName" Type="nvarchar" Nullable="false" MaxLength="20" />
           <Property Name="LastName" Type="nvarchar" Nullable="false" MaxLength="20" />
-          <Property Name="DOB" Type="date" />
+          <Property Name="DOB" Type="datetime" />
           <Property Name="Gender" Type="char" MaxLength="1" />
           <Property Name="AddressLine1" Type="nvarchar" MaxLength="50" />
           <Property Name="AddressLine2" Type="nvarchar" MaxLength="50" />
@@ -150,7 +139,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="bigint" Nullable="false" />
-          <Property Name="SessionId" Type="bigint" Nullable="false" />
+          <Property Name="SessionId" Type="bigint" />
           <Property Name="RFID" Type="bigint" Nullable="false" />
           <Property Name="PassingTime" Type="datetime" Nullable="false" />
           <Property Name="RaceTime" Type="bigint" Nullable="false" />
@@ -220,33 +209,7 @@
           <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="SyncDate" Type="datetime" Nullable="false" />
         </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="128" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
-        </EntityType>
-        <EntityType Name="TagList">
-          <Key>
-            <PropertyRef Name="RFID" />
-          </Key>
-          <Property Name="RFID" Type="bigint" Nullable="false" />
-          <Property Name="CompId" Type="bigint" Nullable="false" />
-          <Property Name="LastUpdated" Type="datetime" />
-        </EntityType>
-        <EntityType Name="ValidTag">
-          <Key>
-            <PropertyRef Name="RFID" />
-          </Key>
-          <Property Name="RFID" Type="bigint" Nullable="false" />
-          <Property Name="Valid" Type="bit" Nullable="false" />
-          <Property Name="LastUpdated" Type="datetime" />
-        </EntityType>
-        <Association Name="FK__Competito__Athle__41CE9A8B">
+        <Association Name="FK__Competito__Athle__173876EA">
           <End Role="Athlete" Type="HardcardModel.Store.Athlete" Multiplicity="1" />
           <End Role="Competitor" Type="HardcardModel.Store.Competitor" Multiplicity="*" />
           <ReferentialConstraint>
@@ -258,7 +221,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Competito__Event__40DA7652">
+        <Association Name="FK__Competito__Event__164452B1">
           <End Role="EventClass" Type="HardcardModel.Store.EventClass" Multiplicity="1" />
           <End Role="Competitor" Type="HardcardModel.Store.Competitor" Multiplicity="*" />
           <ReferentialConstraint>
@@ -270,7 +233,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Entry__Competito__5A9A4855">
+        <Association Name="FK__Entry__Competito__2A4B4B5E">
           <End Role="Competitor" Type="HardcardModel.Store.Competitor" Multiplicity="1" />
           <End Role="Entry" Type="HardcardModel.Store.Entry" Multiplicity="*" />
           <ReferentialConstraint>
@@ -282,7 +245,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Entry__SessionId__5B8E6C8E">
+        <Association Name="FK__Entry__SessionId__2B3F6F97">
           <End Role="Session" Type="HardcardModel.Store.Session" Multiplicity="1" />
           <End Role="Entry" Type="HardcardModel.Store.Entry" Multiplicity="*" />
           <ReferentialConstraint>
@@ -294,7 +257,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__EventClas__Class__3B219CFC">
+        <Association Name="FK__EventClas__Class__108B795B">
           <End Role="RaceClass" Type="HardcardModel.Store.RaceClass" Multiplicity="1" />
           <End Role="EventClass" Type="HardcardModel.Store.EventClass" Multiplicity="*" />
           <ReferentialConstraint>
@@ -306,7 +269,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__EventClas__Event__3C15C135">
+        <Association Name="FK__EventClas__Event__117F9D94">
           <End Role="Event" Type="HardcardModel.Store.Event" Multiplicity="1" />
           <End Role="EventClass" Type="HardcardModel.Store.EventClass" Multiplicity="*" />
           <ReferentialConstraint>
@@ -318,20 +281,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Passing__RFID__54E16EFF">
-          <End Role="ValidTag" Type="HardcardModel.Store.ValidTag" Multiplicity="1" />
-          <End Role="Passing" Type="HardcardModel.Store.Passing" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ValidTag">
-              <PropertyRef Name="RFID" />
-            </Principal>
-            <Dependent Role="Passing">
-              <PropertyRef Name="RFID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Passing__Session__55D59338">
-          <End Role="Session" Type="HardcardModel.Store.Session" Multiplicity="1" />
+        <Association Name="FK__Passing__Session__25869641">
+          <End Role="Session" Type="HardcardModel.Store.Session" Multiplicity="0..1" />
           <End Role="Passing" Type="HardcardModel.Store.Passing" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Session">
@@ -342,7 +293,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Penality__Sessio__501CB9E2">
+        <Association Name="FK__Penality__Sessio__20C1E124">
           <End Role="Session" Type="HardcardModel.Store.Session" Multiplicity="1" />
           <End Role="Penality" Type="HardcardModel.Store.Penality" Multiplicity="*" />
           <ReferentialConstraint>
@@ -354,7 +305,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Session__EventCl__4B5804C5">
+        <Association Name="FK__Session__EventCl__1BFD2C07">
           <End Role="EventClass" Type="HardcardModel.Store.EventClass" Multiplicity="1" />
           <End Role="Session" Type="HardcardModel.Store.Session" Multiplicity="*" />
           <ReferentialConstraint>
@@ -366,7 +317,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Standing__EntryI__6423B28F">
+        <Association Name="FK__Standing__EntryI__33D4B598">
           <End Role="Entry" Type="HardcardModel.Store.Entry" Multiplicity="1" />
           <End Role="Standing" Type="HardcardModel.Store.Standing" Multiplicity="*" />
           <ReferentialConstraint>
@@ -375,18 +326,6 @@
             </Principal>
             <Dependent Role="Standing">
               <PropertyRef Name="EntryId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__TagList__RFID__46934FA8">
-          <End Role="ValidTag" Type="HardcardModel.Store.ValidTag" Multiplicity="1" />
-          <End Role="TagList" Type="HardcardModel.Store.TagList" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="ValidTag">
-              <PropertyRef Name="RFID" />
-            </Principal>
-            <Dependent Role="TagList">
-              <PropertyRef Name="RFID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -408,56 +347,45 @@
           <EntitySet Name="Sessions" EntityType="HardcardModel.Session" />
           <EntitySet Name="Standings" EntityType="HardcardModel.Standing" />
           <EntitySet Name="Synchronizations" EntityType="HardcardModel.Synchronization" />
-          <EntitySet Name="sysdiagrams" EntityType="HardcardModel.sysdiagram" />
-          <EntitySet Name="TagLists" EntityType="HardcardModel.TagList" />
-          <EntitySet Name="ValidTags" EntityType="HardcardModel.ValidTag" />
-          <AssociationSet Name="FK__Competito__Athle__41CE9A8B" Association="HardcardModel.FK__Competito__Athle__41CE9A8B">
+          <AssociationSet Name="FK__Competito__Athle__173876EA" Association="HardcardModel.FK__Competito__Athle__173876EA">
             <End Role="Athlete" EntitySet="Athletes" />
             <End Role="Competitor" EntitySet="Competitors" />
           </AssociationSet>
-          <AssociationSet Name="FK__Competito__Event__40DA7652" Association="HardcardModel.FK__Competito__Event__40DA7652">
+          <AssociationSet Name="FK__Competito__Event__164452B1" Association="HardcardModel.FK__Competito__Event__164452B1">
             <End Role="EventClass" EntitySet="EventClasses" />
             <End Role="Competitor" EntitySet="Competitors" />
           </AssociationSet>
-          <AssociationSet Name="FK__Entry__Competito__5A9A4855" Association="HardcardModel.FK__Entry__Competito__5A9A4855">
+          <AssociationSet Name="FK__Entry__Competito__2A4B4B5E" Association="HardcardModel.FK__Entry__Competito__2A4B4B5E">
             <End Role="Competitor" EntitySet="Competitors" />
             <End Role="Entry" EntitySet="Entries" />
           </AssociationSet>
-          <AssociationSet Name="FK__Entry__SessionId__5B8E6C8E" Association="HardcardModel.FK__Entry__SessionId__5B8E6C8E">
+          <AssociationSet Name="FK__Entry__SessionId__2B3F6F97" Association="HardcardModel.FK__Entry__SessionId__2B3F6F97">
             <End Role="Session" EntitySet="Sessions" />
             <End Role="Entry" EntitySet="Entries" />
           </AssociationSet>
-          <AssociationSet Name="FK__Standing__EntryI__6423B28F" Association="HardcardModel.FK__Standing__EntryI__6423B28F">
+          <AssociationSet Name="FK__Standing__EntryI__33D4B598" Association="HardcardModel.FK__Standing__EntryI__33D4B598">
             <End Role="Entry" EntitySet="Entries" />
             <End Role="Standing" EntitySet="Standings" />
           </AssociationSet>
-          <AssociationSet Name="FK__EventClas__Event__3C15C135" Association="HardcardModel.FK__EventClas__Event__3C15C135">
+          <AssociationSet Name="FK__EventClas__Event__117F9D94" Association="HardcardModel.FK__EventClas__Event__117F9D94">
             <End Role="Event" EntitySet="Events" />
             <End Role="EventClass" EntitySet="EventClasses" />
           </AssociationSet>
-          <AssociationSet Name="FK__EventClas__Class__3B219CFC" Association="HardcardModel.FK__EventClas__Class__3B219CFC">
+          <AssociationSet Name="FK__EventClas__Class__108B795B" Association="HardcardModel.FK__EventClas__Class__108B795B">
             <End Role="RaceClass" EntitySet="RaceClasses" />
             <End Role="EventClass" EntitySet="EventClasses" />
           </AssociationSet>
-          <AssociationSet Name="FK__Session__EventCl__4B5804C5" Association="HardcardModel.FK__Session__EventCl__4B5804C5">
+          <AssociationSet Name="FK__Session__EventCl__1BFD2C07" Association="HardcardModel.FK__Session__EventCl__1BFD2C07">
             <End Role="EventClass" EntitySet="EventClasses" />
             <End Role="Session" EntitySet="Sessions" />
           </AssociationSet>
-          <AssociationSet Name="FK__Passing__RFID__54E16EFF" Association="HardcardModel.FK__Passing__RFID__54E16EFF">
-            <End Role="ValidTag" EntitySet="ValidTags" />
-            <End Role="Passing" EntitySet="Passings" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Passing__Session__55D59338" Association="HardcardModel.FK__Passing__Session__55D59338">
+          <AssociationSet Name="FK__Passing__Session__25869641" Association="HardcardModel.FK__Passing__Session__25869641">
             <End Role="Session" EntitySet="Sessions" />
             <End Role="Passing" EntitySet="Passings" />
           </AssociationSet>
-          <AssociationSet Name="FK__Penality__Sessio__501CB9E2" Association="HardcardModel.FK__Penality__Sessio__501CB9E2">
+          <AssociationSet Name="FK__Penality__Sessio__20C1E124" Association="HardcardModel.FK__Penality__Sessio__20C1E124">
             <End Role="Session" EntitySet="Sessions" />
             <End Role="Penality" EntitySet="Penalities" />
-          </AssociationSet>
-          <AssociationSet Name="FK__TagList__RFID__46934FA8" Association="HardcardModel.FK__TagList__RFID__46934FA8">
-            <End Role="ValidTag" EntitySet="ValidTags" />
-            <End Role="TagList" EntitySet="TagLists" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Athlete">
@@ -478,7 +406,7 @@
           <Property Name="Country" Type="String" MaxLength="20" Unicode="true" FixedLength="false" />
           <Property Name="Phone" Type="String" MaxLength="20" Unicode="true" FixedLength="false" />
           <Property Name="LastUpdated" Type="DateTime" />
-          <NavigationProperty Name="Competitors" Relationship="HardcardModel.FK__Competito__Athle__41CE9A8B" FromRole="Athlete" ToRole="Competitor" />
+          <NavigationProperty Name="Competitors" Relationship="HardcardModel.FK__Competito__Athle__173876EA" FromRole="Athlete" ToRole="Competitor" />
         </EntityType>
         <EntityType Name="CompetitionNo">
           <Key>
@@ -499,9 +427,9 @@
           <Property Name="VehicleCC" Type="Int32" />
           <Property Name="Deleted" Type="Boolean" Nullable="false" />
           <Property Name="LastUpdated" Type="DateTime" />
-          <NavigationProperty Name="Athlete" Relationship="HardcardModel.FK__Competito__Athle__41CE9A8B" FromRole="Competitor" ToRole="Athlete" />
-          <NavigationProperty Name="EventClass" Relationship="HardcardModel.FK__Competito__Event__40DA7652" FromRole="Competitor" ToRole="EventClass" />
-          <NavigationProperty Name="Entries" Relationship="HardcardModel.FK__Entry__Competito__5A9A4855" FromRole="Competitor" ToRole="Entry" />
+          <NavigationProperty Name="Athlete" Relationship="HardcardModel.FK__Competito__Athle__173876EA" FromRole="Competitor" ToRole="Athlete" />
+          <NavigationProperty Name="EventClass" Relationship="HardcardModel.FK__Competito__Event__164452B1" FromRole="Competitor" ToRole="EventClass" />
+          <NavigationProperty Name="Entries" Relationship="HardcardModel.FK__Entry__Competito__2A4B4B5E" FromRole="Competitor" ToRole="Entry" />
         </EntityType>
         <EntityType Name="Entry">
           <Key>
@@ -517,9 +445,9 @@
           <Property Name="Status" Type="String" MaxLength="1" Unicode="true" FixedLength="false" />
           <Property Name="EntryDate" Type="DateTime" Nullable="false" />
           <Property Name="LastUpdated" Type="DateTime" />
-          <NavigationProperty Name="Competitor" Relationship="HardcardModel.FK__Entry__Competito__5A9A4855" FromRole="Entry" ToRole="Competitor" />
-          <NavigationProperty Name="Session" Relationship="HardcardModel.FK__Entry__SessionId__5B8E6C8E" FromRole="Entry" ToRole="Session" />
-          <NavigationProperty Name="Standings" Relationship="HardcardModel.FK__Standing__EntryI__6423B28F" FromRole="Entry" ToRole="Standing" />
+          <NavigationProperty Name="Competitor" Relationship="HardcardModel.FK__Entry__Competito__2A4B4B5E" FromRole="Entry" ToRole="Competitor" />
+          <NavigationProperty Name="Session" Relationship="HardcardModel.FK__Entry__SessionId__2B3F6F97" FromRole="Entry" ToRole="Session" />
+          <NavigationProperty Name="Standings" Relationship="HardcardModel.FK__Standing__EntryI__33D4B598" FromRole="Entry" ToRole="Standing" />
         </EntityType>
         <EntityType Name="Event">
           <Key>
@@ -532,7 +460,7 @@
           <Property Name="EndDate" Type="DateTime" />
           <Property Name="Deleted" Type="Boolean" />
           <Property Name="LastUpdated" Type="DateTime" />
-          <NavigationProperty Name="EventClasses" Relationship="HardcardModel.FK__EventClas__Event__3C15C135" FromRole="Event" ToRole="EventClass" />
+          <NavigationProperty Name="EventClasses" Relationship="HardcardModel.FK__EventClas__Event__117F9D94" FromRole="Event" ToRole="EventClass" />
         </EntityType>
         <EntityType Name="EventClass">
           <Key>
@@ -542,17 +470,17 @@
           <Property Name="EventId" Type="Int64" Nullable="false" />
           <Property Name="ClassId" Type="Int64" Nullable="false" />
           <Property Name="LastUpdated" Type="DateTime" />
-          <NavigationProperty Name="Competitors" Relationship="HardcardModel.FK__Competito__Event__40DA7652" FromRole="EventClass" ToRole="Competitor" />
-          <NavigationProperty Name="Event" Relationship="HardcardModel.FK__EventClas__Event__3C15C135" FromRole="EventClass" ToRole="Event" />
-          <NavigationProperty Name="RaceClass" Relationship="HardcardModel.FK__EventClas__Class__3B219CFC" FromRole="EventClass" ToRole="RaceClass" />
-          <NavigationProperty Name="Sessions" Relationship="HardcardModel.FK__Session__EventCl__4B5804C5" FromRole="EventClass" ToRole="Session" />
+          <NavigationProperty Name="Competitors" Relationship="HardcardModel.FK__Competito__Event__164452B1" FromRole="EventClass" ToRole="Competitor" />
+          <NavigationProperty Name="Event" Relationship="HardcardModel.FK__EventClas__Event__117F9D94" FromRole="EventClass" ToRole="Event" />
+          <NavigationProperty Name="RaceClass" Relationship="HardcardModel.FK__EventClas__Class__108B795B" FromRole="EventClass" ToRole="RaceClass" />
+          <NavigationProperty Name="Sessions" Relationship="HardcardModel.FK__Session__EventCl__1BFD2C07" FromRole="EventClass" ToRole="Session" />
         </EntityType>
         <EntityType Name="Passing">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int64" Nullable="false" />
-          <Property Name="SessionId" Type="Int64" Nullable="false" />
+          <Property Name="SessionId" Type="Int64" />
           <Property Name="RFID" Type="Int64" Nullable="false" />
           <Property Name="PassingTime" Type="DateTime" Nullable="false" />
           <Property Name="RaceTime" Type="Int64" Nullable="false" />
@@ -560,8 +488,7 @@
           <Property Name="Deleted" Type="Boolean" />
           <Property Name="Invalid" Type="Boolean" />
           <Property Name="LastUpdated" Type="DateTime" />
-          <NavigationProperty Name="ValidTag" Relationship="HardcardModel.FK__Passing__RFID__54E16EFF" FromRole="Passing" ToRole="ValidTag" />
-          <NavigationProperty Name="Session" Relationship="HardcardModel.FK__Passing__Session__55D59338" FromRole="Passing" ToRole="Session" />
+          <NavigationProperty Name="Session" Relationship="HardcardModel.FK__Passing__Session__25869641" FromRole="Passing" ToRole="Session" />
         </EntityType>
         <EntityType Name="Penality">
           <Key>
@@ -575,7 +502,7 @@
           <Property Name="PostionPenality" Type="Byte" />
           <Property Name="Reason" Type="String" MaxLength="250" Unicode="true" FixedLength="false" />
           <Property Name="LastUpdated" Type="DateTime" />
-          <NavigationProperty Name="Session" Relationship="HardcardModel.FK__Penality__Sessio__501CB9E2" FromRole="Penality" ToRole="Session" />
+          <NavigationProperty Name="Session" Relationship="HardcardModel.FK__Penality__Sessio__20C1E124" FromRole="Penality" ToRole="Session" />
         </EntityType>
         <EntityType Name="RaceClass">
           <Key>
@@ -591,7 +518,7 @@
           <Property Name="VehicleCC" Type="Int32" />
           <Property Name="Deleted" Type="Boolean" />
           <Property Name="LastUpdated" Type="DateTime" />
-          <NavigationProperty Name="EventClasses" Relationship="HardcardModel.FK__EventClas__Class__3B219CFC" FromRole="RaceClass" ToRole="EventClass" />
+          <NavigationProperty Name="EventClasses" Relationship="HardcardModel.FK__EventClas__Class__108B795B" FromRole="RaceClass" ToRole="EventClass" />
         </EntityType>
         <EntityType Name="Session">
           <Key>
@@ -604,10 +531,10 @@
           <Property Name="SchedLaps" Type="Int32" />
           <Property Name="RollingStart" Type="Boolean" />
           <Property Name="LastUpdated" Type="DateTime" />
-          <NavigationProperty Name="Entries" Relationship="HardcardModel.FK__Entry__SessionId__5B8E6C8E" FromRole="Session" ToRole="Entry" />
-          <NavigationProperty Name="EventClass" Relationship="HardcardModel.FK__Session__EventCl__4B5804C5" FromRole="Session" ToRole="EventClass" />
-          <NavigationProperty Name="Passings" Relationship="HardcardModel.FK__Passing__Session__55D59338" FromRole="Session" ToRole="Passing" />
-          <NavigationProperty Name="Penalities" Relationship="HardcardModel.FK__Penality__Sessio__501CB9E2" FromRole="Session" ToRole="Penality" />
+          <NavigationProperty Name="Entries" Relationship="HardcardModel.FK__Entry__SessionId__2B3F6F97" FromRole="Session" ToRole="Entry" />
+          <NavigationProperty Name="EventClass" Relationship="HardcardModel.FK__Session__EventCl__1BFD2C07" FromRole="Session" ToRole="EventClass" />
+          <NavigationProperty Name="Passings" Relationship="HardcardModel.FK__Passing__Session__25869641" FromRole="Session" ToRole="Passing" />
+          <NavigationProperty Name="Penalities" Relationship="HardcardModel.FK__Penality__Sessio__20C1E124" FromRole="Session" ToRole="Penality" />
         </EntityType>
         <EntityType Name="Standing">
           <Key>
@@ -622,7 +549,7 @@
           <Property Name="AvgLapTime" Type="Int64" />
           <Property Name="WorstLapTime" Type="Int64" />
           <Property Name="PassingTime" Type="Int64" />
-          <NavigationProperty Name="Entry" Relationship="HardcardModel.FK__Standing__EntryI__6423B28F" FromRole="Standing" ToRole="Entry" />
+          <NavigationProperty Name="Entry" Relationship="HardcardModel.FK__Standing__EntryI__33D4B598" FromRole="Standing" ToRole="Entry" />
         </EntityType>
         <EntityType Name="Synchronization">
           <Key>
@@ -631,36 +558,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="SyncDate" Type="DateTime" Nullable="false" />
         </EntityType>
-        <EntityType Name="sysdiagram">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" Nullable="false" MaxLength="128" Unicode="true" FixedLength="false" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-        </EntityType>
-        <EntityType Name="TagList">
-          <Key>
-            <PropertyRef Name="RFID" />
-          </Key>
-          <Property Name="RFID" Type="Int64" Nullable="false" />
-          <Property Name="CompId" Type="Int64" Nullable="false" />
-          <Property Name="LastUpdated" Type="DateTime" />
-          <NavigationProperty Name="ValidTag" Relationship="HardcardModel.FK__TagList__RFID__46934FA8" FromRole="TagList" ToRole="ValidTag" />
-        </EntityType>
-        <EntityType Name="ValidTag">
-          <Key>
-            <PropertyRef Name="RFID" />
-          </Key>
-          <Property Name="RFID" Type="Int64" Nullable="false" />
-          <Property Name="Valid" Type="Boolean" Nullable="false" />
-          <Property Name="LastUpdated" Type="DateTime" />
-          <NavigationProperty Name="Passings" Relationship="HardcardModel.FK__Passing__RFID__54E16EFF" FromRole="ValidTag" ToRole="Passing" />
-          <NavigationProperty Name="TagList" Relationship="HardcardModel.FK__TagList__RFID__46934FA8" FromRole="ValidTag" ToRole="TagList" />
-        </EntityType>
-        <Association Name="FK__Competito__Athle__41CE9A8B">
+        <Association Name="FK__Competito__Athle__173876EA">
           <End Role="Athlete" Type="HardcardModel.Athlete" Multiplicity="1" />
           <End Role="Competitor" Type="HardcardModel.Competitor" Multiplicity="*" />
           <ReferentialConstraint>
@@ -672,7 +570,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Competito__Event__40DA7652">
+        <Association Name="FK__Competito__Event__164452B1">
           <End Role="EventClass" Type="HardcardModel.EventClass" Multiplicity="1" />
           <End Role="Competitor" Type="HardcardModel.Competitor" Multiplicity="*" />
           <ReferentialConstraint>
@@ -684,7 +582,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Entry__Competito__5A9A4855">
+        <Association Name="FK__Entry__Competito__2A4B4B5E">
           <End Role="Competitor" Type="HardcardModel.Competitor" Multiplicity="1" />
           <End Role="Entry" Type="HardcardModel.Entry" Multiplicity="*" />
           <ReferentialConstraint>
@@ -696,7 +594,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Entry__SessionId__5B8E6C8E">
+        <Association Name="FK__Entry__SessionId__2B3F6F97">
           <End Role="Session" Type="HardcardModel.Session" Multiplicity="1" />
           <End Role="Entry" Type="HardcardModel.Entry" Multiplicity="*" />
           <ReferentialConstraint>
@@ -708,7 +606,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Standing__EntryI__6423B28F">
+        <Association Name="FK__Standing__EntryI__33D4B598">
           <End Role="Entry" Type="HardcardModel.Entry" Multiplicity="1" />
           <End Role="Standing" Type="HardcardModel.Standing" Multiplicity="*" />
           <ReferentialConstraint>
@@ -720,7 +618,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__EventClas__Event__3C15C135">
+        <Association Name="FK__EventClas__Event__117F9D94">
           <End Role="Event" Type="HardcardModel.Event" Multiplicity="1" />
           <End Role="EventClass" Type="HardcardModel.EventClass" Multiplicity="*" />
           <ReferentialConstraint>
@@ -732,7 +630,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__EventClas__Class__3B219CFC">
+        <Association Name="FK__EventClas__Class__108B795B">
           <End Role="RaceClass" Type="HardcardModel.RaceClass" Multiplicity="1" />
           <End Role="EventClass" Type="HardcardModel.EventClass" Multiplicity="*" />
           <ReferentialConstraint>
@@ -744,7 +642,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Session__EventCl__4B5804C5">
+        <Association Name="FK__Session__EventCl__1BFD2C07">
           <End Role="EventClass" Type="HardcardModel.EventClass" Multiplicity="1" />
           <End Role="Session" Type="HardcardModel.Session" Multiplicity="*" />
           <ReferentialConstraint>
@@ -756,20 +654,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Passing__RFID__54E16EFF">
-          <End Role="ValidTag" Type="HardcardModel.ValidTag" Multiplicity="1" />
-          <End Role="Passing" Type="HardcardModel.Passing" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ValidTag">
-              <PropertyRef Name="RFID" />
-            </Principal>
-            <Dependent Role="Passing">
-              <PropertyRef Name="RFID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Passing__Session__55D59338">
-          <End Role="Session" Type="HardcardModel.Session" Multiplicity="1" />
+        <Association Name="FK__Passing__Session__25869641">
+          <End Role="Session" Type="HardcardModel.Session" Multiplicity="0..1" />
           <End Role="Passing" Type="HardcardModel.Passing" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Session">
@@ -780,7 +666,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Penality__Sessio__501CB9E2">
+        <Association Name="FK__Penality__Sessio__20C1E124">
           <End Role="Session" Type="HardcardModel.Session" Multiplicity="1" />
           <End Role="Penality" Type="HardcardModel.Penality" Multiplicity="*" />
           <ReferentialConstraint>
@@ -789,18 +675,6 @@
             </Principal>
             <Dependent Role="Penality">
               <PropertyRef Name="SessionID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__TagList__RFID__46934FA8">
-          <End Role="ValidTag" Type="HardcardModel.ValidTag" Multiplicity="1" />
-          <End Role="TagList" Type="HardcardModel.TagList" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="ValidTag">
-              <PropertyRef Name="RFID" />
-            </Principal>
-            <Dependent Role="TagList">
-              <PropertyRef Name="RFID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -924,23 +798,6 @@
             <ScalarProperty Name="Id" ColumnName="Id" />
             <ScalarProperty Name="SyncDate" ColumnName="SyncDate" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams"><EntityTypeMapping TypeName="HardcardModel.sysdiagram"><MappingFragment StoreEntitySet="sysdiagrams">
-            <ScalarProperty Name="name" ColumnName="name" />
-            <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-            <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-            <ScalarProperty Name="version" ColumnName="version" />
-            <ScalarProperty Name="definition" ColumnName="definition" />
-          </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="TagLists"><EntityTypeMapping TypeName="HardcardModel.TagList"><MappingFragment StoreEntitySet="TagList">
-            <ScalarProperty Name="RFID" ColumnName="RFID" />
-            <ScalarProperty Name="CompId" ColumnName="CompId" />
-            <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
-          </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="ValidTags"><EntityTypeMapping TypeName="HardcardModel.ValidTag"><MappingFragment StoreEntitySet="ValidTag">
-            <ScalarProperty Name="RFID" ColumnName="RFID" />
-            <ScalarProperty Name="Valid" ColumnName="Valid" />
-            <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
-          </MappingFragment></EntityTypeMapping></EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -961,71 +818,60 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram Name="Hardcard" ZoomLevel="85">
-        <EntityTypeShape EntityType="HardcardModel.Athlete" Width="1.5" PointX="4.75" PointY="0.5" Height="3.2357796223958331" IsExpanded="true" />
-        <EntityTypeShape EntityType="HardcardModel.CompetitionNo" Width="1.5" PointX="8.875" PointY="2.75" Height="1.2636116536458335" IsExpanded="true" />
-        <EntityTypeShape EntityType="HardcardModel.Competitor" Width="1.5" PointX="4.625" PointY="4.625" Height="2.7427376302083335" IsExpanded="true" />
-        <EntityTypeShape EntityType="HardcardModel.Entry" Width="1.5" PointX="6.75" PointY="4.25" Height="3.0714322916666656" IsExpanded="true" />
-        <EntityTypeShape EntityType="HardcardModel.Event" Width="1.5" PointX="0.875" PointY="0.5" Height="2.085348307291667" IsExpanded="true" />
-        <EntityTypeShape EntityType="HardcardModel.EventClass" Width="1.5" PointX="0.875" PointY="5.25" Height="2.2496956380208317" IsExpanded="true" />
-        <EntityTypeShape EntityType="HardcardModel.Passing" Width="1.5" PointX="4.625" PointY="8" Height="2.4140429687499996" IsExpanded="true" />
-        <EntityTypeShape EntityType="HardcardModel.Penality" Width="1.5" PointX="8.75" PointY="7.75" Height="2.2496956380208335" IsExpanded="true" />
-        <EntityTypeShape EntityType="HardcardModel.RaceClass" Width="1.5" PointX="2.75" PointY="0.5" Height="2.5783902994791665" IsExpanded="true" />
-        <EntityTypeShape EntityType="HardcardModel.Session" Width="1.5" PointX="6.75" PointY="7.75" Height="2.0853483072916656" IsExpanded="true" />
-        <EntityTypeShape EntityType="HardcardModel.Standing" Width="1.5" PointX="6.875" PointY="1.25" Height="2.5783902994791745" IsExpanded="true" />
-        <EntityTypeShape EntityType="HardcardModel.Synchronization" Width="1.5" PointX="8.875" PointY="1.25" Height="0.9349169921875" IsExpanded="true" />
-        <EntityTypeShape EntityType="HardcardModel.sysdiagram" Width="1.5" PointX="8.875" PointY="4.375" Height="1.7566536458333388" IsExpanded="true" />
-        <EntityTypeShape EntityType="HardcardModel.TagList" Width="1.5" PointX="0.75" PointY="8" Height="1.4279589843749996" IsExpanded="true" />
-        <EntityTypeShape EntityType="HardcardModel.ValidTag" Width="1.5" PointX="2.625" PointY="8" Height="1.4279589843749996" IsExpanded="true" />
-        <AssociationConnector Association="HardcardModel.FK__Competito__Athle__41CE9A8B" ManuallyRouted="false">
-          <ConnectorPoint PointX="5.4375" PointY="3.7357796223958331" />
-          <ConnectorPoint PointX="5.4375" PointY="4.625" />
+      <Diagram Name="Hardcard">
+        <EntityTypeShape EntityType="HardcardModel.Athlete" Width="1.5" PointX="4.625" PointY="0.625" Height="3.2357796223958331" IsExpanded="true" />
+        <EntityTypeShape EntityType="HardcardModel.CompetitionNo" Width="1.5" PointX="8.75" PointY="2.125" Height="1.2636116536458335" IsExpanded="true" />
+        <EntityTypeShape EntityType="HardcardModel.Competitor" Width="1.5" PointX="4.625" PointY="4.625" Height="2.2496956380208326" IsExpanded="true" />
+        <EntityTypeShape EntityType="HardcardModel.Entry" Width="1.5" PointX="7" PointY="4.625" Height="2.5783902994791656" IsExpanded="true" />
+        <EntityTypeShape EntityType="HardcardModel.Event" Width="1.5" PointX="0.5" PointY="0.875" Height="2.2496956380208335" IsExpanded="true" />
+        <EntityTypeShape EntityType="HardcardModel.EventClass" Width="1.5" PointX="2.125" PointY="4.75" Height="1.5923063151041665" IsExpanded="true" />
+        <EntityTypeShape EntityType="HardcardModel.Passing" Width="1.5" PointX="4.625" PointY="8.25" Height="2.4140429687499996" IsExpanded="true" />
+        <EntityTypeShape EntityType="HardcardModel.Penality" Width="1.5" PointX="9.125" PointY="8.25" Height="2.2496956380208335" IsExpanded="true" />
+        <EntityTypeShape EntityType="HardcardModel.RaceClass" Width="1.5" PointX="2.25" PointY="0.875" Height="2.5783902994791665" IsExpanded="true" />
+        <EntityTypeShape EntityType="HardcardModel.Session" Width="1.5" PointX="7" PointY="7.75" Height="2.0853483072916656" IsExpanded="true" />
+        <EntityTypeShape EntityType="HardcardModel.Standing" Width="1.5" PointX="6.875" PointY="1" Height="2.4140429687499996" IsExpanded="true" />
+        <EntityTypeShape EntityType="HardcardModel.Synchronization" Width="1.5" PointX="8.75" PointY="0.75" Height="1.2636116536458388" IsExpanded="true" />
+        <AssociationConnector Association="HardcardModel.FK__Competito__Athle__173876EA" ManuallyRouted="false">
+          <ConnectorPoint PointX="5.375" PointY="3.8607796223958331" />
+          <ConnectorPoint PointX="5.375" PointY="4.625" />
         </AssociationConnector>
-        <AssociationConnector Association="HardcardModel.FK__Competito__Event__40DA7652" ManuallyRouted="false">
-          <ConnectorPoint PointX="2.375" PointY="6.718975946044921" />
-          <ConnectorPoint PointX="4.625" PointY="6.718975946044921" />
+        <AssociationConnector Association="HardcardModel.FK__Competito__Event__164452B1" ManuallyRouted="false">
+          <ConnectorPoint PointX="3.625" PointY="5.5461531575520837" />
+          <ConnectorPoint PointX="4.625" PointY="5.5461531575520837" />
         </AssociationConnector>
-        <AssociationConnector Association="HardcardModel.FK__Entry__Competito__5A9A4855" ManuallyRouted="false">
-          <ConnectorPoint PointX="6.125" PointY="5.9732161458333328" />
-          <ConnectorPoint PointX="6.75" PointY="5.9732161458333328" />
+        <AssociationConnector Association="HardcardModel.FK__Entry__Competito__2A4B4B5E" ManuallyRouted="false">
+          <ConnectorPoint PointX="6.125" PointY="5.7498478190104159" />
+          <ConnectorPoint PointX="7" PointY="5.7498478190104159" />
         </AssociationConnector>
-        <AssociationConnector Association="HardcardModel.FK__Entry__SessionId__5B8E6C8E" ManuallyRouted="false">
-          <ConnectorPoint PointX="7.5" PointY="7.75" />
-          <ConnectorPoint PointX="7.5" PointY="7.3214322916666656" />
+        <AssociationConnector Association="HardcardModel.FK__Entry__SessionId__2B3F6F97" ManuallyRouted="false">
+          <ConnectorPoint PointX="7.75" PointY="7.75" />
+          <ConnectorPoint PointX="7.75" PointY="7.2033902994791656" />
         </AssociationConnector>
-        <AssociationConnector Association="HardcardModel.FK__Standing__EntryI__6423B28F" ManuallyRouted="false">
-          <ConnectorPoint PointX="7.5625" PointY="4.25" />
-          <ConnectorPoint PointX="7.5625" PointY="3.8283902994791745" />
+        <AssociationConnector Association="HardcardModel.FK__Standing__EntryI__33D4B598" ManuallyRouted="false">
+          <ConnectorPoint PointX="7.6875" PointY="4.625" />
+          <ConnectorPoint PointX="7.6875" PointY="3.4140429687499996" />
         </AssociationConnector>
-        <AssociationConnector Association="HardcardModel.FK__EventClas__Event__3C15C135" ManuallyRouted="false">
-          <ConnectorPoint PointX="1.625" PointY="2.585348307291667" />
-          <ConnectorPoint PointX="1.625" PointY="5.25" />
+        <AssociationConnector Association="HardcardModel.FK__EventClas__Event__117F9D94" ManuallyRouted="false">
+          <ConnectorPoint PointX="1.25" PointY="3.1246956380208335" />
+          <ConnectorPoint PointX="1.25" PointY="5.5461531575520837" />
+          <ConnectorPoint PointX="2.125" PointY="5.5461531575520837" />
         </AssociationConnector>
-        <AssociationConnector Association="HardcardModel.FK__EventClas__Class__3B219CFC" ManuallyRouted="false">
-          <ConnectorPoint PointX="3.5" PointY="3.0783902994791665" />
-          <ConnectorPoint PointX="3.5" PointY="5.9452142618815085" />
-          <ConnectorPoint PointX="2.375" PointY="5.9452142618815085" />
+        <AssociationConnector Association="HardcardModel.FK__EventClas__Class__108B795B" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.9375" PointY="3.4533902994791665" />
+          <ConnectorPoint PointX="2.9375" PointY="4.75" />
         </AssociationConnector>
-        <AssociationConnector Association="HardcardModel.FK__Session__EventCl__4B5804C5" ManuallyRouted="false">
-          <ConnectorPoint PointX="2.34375" PointY="7.4996956380208317" />
-          <ConnectorPoint PointX="2.34375" PointY="7.8437499999999991" />
-          <ConnectorPoint PointX="6.75" PointY="7.8437499999999991" />
+        <AssociationConnector Association="HardcardModel.FK__Session__EventCl__1BFD2C07" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.875" PointY="6.3423063151041665" />
+          <ConnectorPoint PointX="2.875" PointY="7.96875" />
+          <ConnectorPoint PointX="7" PointY="7.96875" />
         </AssociationConnector>
-        <AssociationConnector Association="HardcardModel.FK__Passing__RFID__54E16EFF" ManuallyRouted="false">
-          <ConnectorPoint PointX="4.125" PointY="8.7139794921875" />
-          <ConnectorPoint PointX="4.625" PointY="8.7139794921875" />
+        <AssociationConnector Association="HardcardModel.FK__Passing__Session__25869641" ManuallyRouted="false">
+          <ConnectorPoint PointX="7" PointY="9.0426741536458337" />
+          <ConnectorPoint PointX="6.125" PointY="9.0426741536458337" />
         </AssociationConnector>
-        <AssociationConnector Association="HardcardModel.FK__Passing__Session__55D59338" ManuallyRouted="false">
-          <ConnectorPoint PointX="6.75" PointY="8.9176741536458337" />
-          <ConnectorPoint PointX="6.125" PointY="8.9176741536458337" />
-        </AssociationConnector>
-        <AssociationConnector Association="HardcardModel.FK__Penality__Sessio__501CB9E2" ManuallyRouted="false">
-          <ConnectorPoint PointX="8.25" PointY="8.6494789459635424" />
-          <ConnectorPoint PointX="8.75" PointY="8.6494789459635424" />
-        </AssociationConnector>
-        <AssociationConnector Association="HardcardModel.FK__TagList__RFID__46934FA8" ManuallyRouted="false">
-          <ConnectorPoint PointX="2.625" PointY="8.7139794921875" />
-          <ConnectorPoint PointX="2.25" PointY="8.7139794921875" />
+        <AssociationConnector Association="HardcardModel.FK__Penality__Sessio__20C1E124" ManuallyRouted="false">
+          <ConnectorPoint PointX="8.5" PointY="9.0426741536458337" />
+          <ConnectorPoint PointX="9.125" PointY="9.0426741536458337" />
         </AssociationConnector>
       </Diagram>
     </Diagrams>

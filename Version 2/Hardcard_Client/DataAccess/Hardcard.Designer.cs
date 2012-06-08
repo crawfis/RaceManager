@@ -18,18 +18,16 @@ using System.Runtime.Serialization;
 [assembly: EdmSchemaAttribute()]
 #region EDM Relationship Metadata
 
-[assembly: EdmRelationshipAttribute("HardcardModel", "FK__Competito__Athle__41CE9A8B", "Athlete", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RacingEventsTrackSystem.DataAccess.Athlete), "Competitor", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RacingEventsTrackSystem.DataAccess.Competitor), true)]
-[assembly: EdmRelationshipAttribute("HardcardModel", "FK__Competito__Event__40DA7652", "EventClass", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RacingEventsTrackSystem.DataAccess.EventClass), "Competitor", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RacingEventsTrackSystem.DataAccess.Competitor), true)]
-[assembly: EdmRelationshipAttribute("HardcardModel", "FK__Entry__Competito__5A9A4855", "Competitor", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RacingEventsTrackSystem.DataAccess.Competitor), "Entry", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RacingEventsTrackSystem.DataAccess.Entry), true)]
-[assembly: EdmRelationshipAttribute("HardcardModel", "FK__Entry__SessionId__5B8E6C8E", "Session", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RacingEventsTrackSystem.DataAccess.Session), "Entry", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RacingEventsTrackSystem.DataAccess.Entry), true)]
-[assembly: EdmRelationshipAttribute("HardcardModel", "FK__Standing__EntryI__6423B28F", "Entry", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RacingEventsTrackSystem.DataAccess.Entry), "Standing", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RacingEventsTrackSystem.DataAccess.Standing), true)]
-[assembly: EdmRelationshipAttribute("HardcardModel", "FK__EventClas__Event__3C15C135", "Event", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RacingEventsTrackSystem.DataAccess.Event), "EventClass", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RacingEventsTrackSystem.DataAccess.EventClass), true)]
-[assembly: EdmRelationshipAttribute("HardcardModel", "FK__EventClas__Class__3B219CFC", "RaceClass", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RacingEventsTrackSystem.DataAccess.RaceClass), "EventClass", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RacingEventsTrackSystem.DataAccess.EventClass), true)]
-[assembly: EdmRelationshipAttribute("HardcardModel", "FK__Session__EventCl__4B5804C5", "EventClass", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RacingEventsTrackSystem.DataAccess.EventClass), "Session", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RacingEventsTrackSystem.DataAccess.Session), true)]
-[assembly: EdmRelationshipAttribute("HardcardModel", "FK__Passing__RFID__54E16EFF", "ValidTag", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RacingEventsTrackSystem.DataAccess.ValidTag), "Passing", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RacingEventsTrackSystem.DataAccess.Passing), true)]
-[assembly: EdmRelationshipAttribute("HardcardModel", "FK__Passing__Session__55D59338", "Session", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RacingEventsTrackSystem.DataAccess.Session), "Passing", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RacingEventsTrackSystem.DataAccess.Passing), true)]
-[assembly: EdmRelationshipAttribute("HardcardModel", "FK__Penality__Sessio__501CB9E2", "Session", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RacingEventsTrackSystem.DataAccess.Session), "Penality", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RacingEventsTrackSystem.DataAccess.Penality), true)]
-[assembly: EdmRelationshipAttribute("HardcardModel", "FK__TagList__RFID__46934FA8", "ValidTag", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RacingEventsTrackSystem.DataAccess.ValidTag), "TagList", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(RacingEventsTrackSystem.DataAccess.TagList), true)]
+[assembly: EdmRelationshipAttribute("HardcardModel", "FK__Competito__Athle__173876EA", "Athlete", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RacingEventsTrackSystem.DataAccess.Athlete), "Competitor", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RacingEventsTrackSystem.DataAccess.Competitor), true)]
+[assembly: EdmRelationshipAttribute("HardcardModel", "FK__Competito__Event__164452B1", "EventClass", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RacingEventsTrackSystem.DataAccess.EventClass), "Competitor", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RacingEventsTrackSystem.DataAccess.Competitor), true)]
+[assembly: EdmRelationshipAttribute("HardcardModel", "FK__Entry__Competito__2A4B4B5E", "Competitor", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RacingEventsTrackSystem.DataAccess.Competitor), "Entry", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RacingEventsTrackSystem.DataAccess.Entry), true)]
+[assembly: EdmRelationshipAttribute("HardcardModel", "FK__Entry__SessionId__2B3F6F97", "Session", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RacingEventsTrackSystem.DataAccess.Session), "Entry", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RacingEventsTrackSystem.DataAccess.Entry), true)]
+[assembly: EdmRelationshipAttribute("HardcardModel", "FK__Standing__EntryI__33D4B598", "Entry", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RacingEventsTrackSystem.DataAccess.Entry), "Standing", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RacingEventsTrackSystem.DataAccess.Standing), true)]
+[assembly: EdmRelationshipAttribute("HardcardModel", "FK__EventClas__Event__117F9D94", "Event", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RacingEventsTrackSystem.DataAccess.Event), "EventClass", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RacingEventsTrackSystem.DataAccess.EventClass), true)]
+[assembly: EdmRelationshipAttribute("HardcardModel", "FK__EventClas__Class__108B795B", "RaceClass", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RacingEventsTrackSystem.DataAccess.RaceClass), "EventClass", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RacingEventsTrackSystem.DataAccess.EventClass), true)]
+[assembly: EdmRelationshipAttribute("HardcardModel", "FK__Session__EventCl__1BFD2C07", "EventClass", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RacingEventsTrackSystem.DataAccess.EventClass), "Session", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RacingEventsTrackSystem.DataAccess.Session), true)]
+[assembly: EdmRelationshipAttribute("HardcardModel", "FK__Passing__Session__25869641", "Session", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(RacingEventsTrackSystem.DataAccess.Session), "Passing", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RacingEventsTrackSystem.DataAccess.Passing), true)]
+[assembly: EdmRelationshipAttribute("HardcardModel", "FK__Penality__Sessio__20C1E124", "Session", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RacingEventsTrackSystem.DataAccess.Session), "Penality", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RacingEventsTrackSystem.DataAccess.Penality), true)]
 
 #endregion
 
@@ -272,54 +270,6 @@ namespace RacingEventsTrackSystem.DataAccess
             }
         }
         private ObjectSet<Synchronization> _Synchronizations;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<sysdiagram> sysdiagrams
-        {
-            get
-            {
-                if ((_sysdiagrams == null))
-                {
-                    _sysdiagrams = base.CreateObjectSet<sysdiagram>("sysdiagrams");
-                }
-                return _sysdiagrams;
-            }
-        }
-        private ObjectSet<sysdiagram> _sysdiagrams;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<TagList> TagLists
-        {
-            get
-            {
-                if ((_TagLists == null))
-                {
-                    _TagLists = base.CreateObjectSet<TagList>("TagLists");
-                }
-                return _TagLists;
-            }
-        }
-        private ObjectSet<TagList> _TagLists;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<ValidTag> ValidTags
-        {
-            get
-            {
-                if ((_ValidTags == null))
-                {
-                    _ValidTags = base.CreateObjectSet<ValidTag>("ValidTags");
-                }
-                return _ValidTags;
-            }
-        }
-        private ObjectSet<ValidTag> _ValidTags;
 
         #endregion
         #region AddTo Methods
@@ -418,30 +368,6 @@ namespace RacingEventsTrackSystem.DataAccess
         public void AddToSynchronizations(Synchronization synchronization)
         {
             base.AddObject("Synchronizations", synchronization);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the sysdiagrams EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddTosysdiagrams(sysdiagram sysdiagram)
-        {
-            base.AddObject("sysdiagrams", sysdiagram);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the TagLists EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToTagLists(TagList tagList)
-        {
-            base.AddObject("TagLists", tagList);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the ValidTags EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToValidTags(ValidTag validTag)
-        {
-            base.AddObject("ValidTags", validTag);
         }
 
         #endregion
@@ -829,18 +755,18 @@ namespace RacingEventsTrackSystem.DataAccess
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("HardcardModel", "FK__Competito__Athle__41CE9A8B", "Competitor")]
+        [EdmRelationshipNavigationPropertyAttribute("HardcardModel", "FK__Competito__Athle__173876EA", "Competitor")]
         public EntityCollection<Competitor> Competitors
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Competitor>("HardcardModel.FK__Competito__Athle__41CE9A8B", "Competitor");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Competitor>("HardcardModel.FK__Competito__Athle__173876EA", "Competitor");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Competitor>("HardcardModel.FK__Competito__Athle__41CE9A8B", "Competitor", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Competitor>("HardcardModel.FK__Competito__Athle__173876EA", "Competitor", value);
                 }
             }
         }
@@ -1164,16 +1090,16 @@ namespace RacingEventsTrackSystem.DataAccess
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("HardcardModel", "FK__Competito__Athle__41CE9A8B", "Athlete")]
+        [EdmRelationshipNavigationPropertyAttribute("HardcardModel", "FK__Competito__Athle__173876EA", "Athlete")]
         public Athlete Athlete
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Athlete>("HardcardModel.FK__Competito__Athle__41CE9A8B", "Athlete").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Athlete>("HardcardModel.FK__Competito__Athle__173876EA", "Athlete").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Athlete>("HardcardModel.FK__Competito__Athle__41CE9A8B", "Athlete").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Athlete>("HardcardModel.FK__Competito__Athle__173876EA", "Athlete").Value = value;
             }
         }
         /// <summary>
@@ -1185,13 +1111,13 @@ namespace RacingEventsTrackSystem.DataAccess
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Athlete>("HardcardModel.FK__Competito__Athle__41CE9A8B", "Athlete");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Athlete>("HardcardModel.FK__Competito__Athle__173876EA", "Athlete");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Athlete>("HardcardModel.FK__Competito__Athle__41CE9A8B", "Athlete", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Athlete>("HardcardModel.FK__Competito__Athle__173876EA", "Athlete", value);
                 }
             }
         }
@@ -1202,16 +1128,16 @@ namespace RacingEventsTrackSystem.DataAccess
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("HardcardModel", "FK__Competito__Event__40DA7652", "EventClass")]
+        [EdmRelationshipNavigationPropertyAttribute("HardcardModel", "FK__Competito__Event__164452B1", "EventClass")]
         public EventClass EventClass
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<EventClass>("HardcardModel.FK__Competito__Event__40DA7652", "EventClass").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<EventClass>("HardcardModel.FK__Competito__Event__164452B1", "EventClass").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<EventClass>("HardcardModel.FK__Competito__Event__40DA7652", "EventClass").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<EventClass>("HardcardModel.FK__Competito__Event__164452B1", "EventClass").Value = value;
             }
         }
         /// <summary>
@@ -1223,13 +1149,13 @@ namespace RacingEventsTrackSystem.DataAccess
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<EventClass>("HardcardModel.FK__Competito__Event__40DA7652", "EventClass");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<EventClass>("HardcardModel.FK__Competito__Event__164452B1", "EventClass");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<EventClass>("HardcardModel.FK__Competito__Event__40DA7652", "EventClass", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<EventClass>("HardcardModel.FK__Competito__Event__164452B1", "EventClass", value);
                 }
             }
         }
@@ -1240,18 +1166,18 @@ namespace RacingEventsTrackSystem.DataAccess
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("HardcardModel", "FK__Entry__Competito__5A9A4855", "Entry")]
+        [EdmRelationshipNavigationPropertyAttribute("HardcardModel", "FK__Entry__Competito__2A4B4B5E", "Entry")]
         public EntityCollection<Entry> Entries
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Entry>("HardcardModel.FK__Entry__Competito__5A9A4855", "Entry");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Entry>("HardcardModel.FK__Entry__Competito__2A4B4B5E", "Entry");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Entry>("HardcardModel.FK__Entry__Competito__5A9A4855", "Entry", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Entry>("HardcardModel.FK__Entry__Competito__2A4B4B5E", "Entry", value);
                 }
             }
         }
@@ -1546,16 +1472,16 @@ namespace RacingEventsTrackSystem.DataAccess
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("HardcardModel", "FK__Entry__Competito__5A9A4855", "Competitor")]
+        [EdmRelationshipNavigationPropertyAttribute("HardcardModel", "FK__Entry__Competito__2A4B4B5E", "Competitor")]
         public Competitor Competitor
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Competitor>("HardcardModel.FK__Entry__Competito__5A9A4855", "Competitor").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Competitor>("HardcardModel.FK__Entry__Competito__2A4B4B5E", "Competitor").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Competitor>("HardcardModel.FK__Entry__Competito__5A9A4855", "Competitor").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Competitor>("HardcardModel.FK__Entry__Competito__2A4B4B5E", "Competitor").Value = value;
             }
         }
         /// <summary>
@@ -1567,13 +1493,13 @@ namespace RacingEventsTrackSystem.DataAccess
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Competitor>("HardcardModel.FK__Entry__Competito__5A9A4855", "Competitor");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Competitor>("HardcardModel.FK__Entry__Competito__2A4B4B5E", "Competitor");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Competitor>("HardcardModel.FK__Entry__Competito__5A9A4855", "Competitor", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Competitor>("HardcardModel.FK__Entry__Competito__2A4B4B5E", "Competitor", value);
                 }
             }
         }
@@ -1584,16 +1510,16 @@ namespace RacingEventsTrackSystem.DataAccess
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("HardcardModel", "FK__Entry__SessionId__5B8E6C8E", "Session")]
+        [EdmRelationshipNavigationPropertyAttribute("HardcardModel", "FK__Entry__SessionId__2B3F6F97", "Session")]
         public Session Session
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Session>("HardcardModel.FK__Entry__SessionId__5B8E6C8E", "Session").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Session>("HardcardModel.FK__Entry__SessionId__2B3F6F97", "Session").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Session>("HardcardModel.FK__Entry__SessionId__5B8E6C8E", "Session").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Session>("HardcardModel.FK__Entry__SessionId__2B3F6F97", "Session").Value = value;
             }
         }
         /// <summary>
@@ -1605,13 +1531,13 @@ namespace RacingEventsTrackSystem.DataAccess
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Session>("HardcardModel.FK__Entry__SessionId__5B8E6C8E", "Session");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Session>("HardcardModel.FK__Entry__SessionId__2B3F6F97", "Session");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Session>("HardcardModel.FK__Entry__SessionId__5B8E6C8E", "Session", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Session>("HardcardModel.FK__Entry__SessionId__2B3F6F97", "Session", value);
                 }
             }
         }
@@ -1622,18 +1548,18 @@ namespace RacingEventsTrackSystem.DataAccess
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("HardcardModel", "FK__Standing__EntryI__6423B28F", "Standing")]
+        [EdmRelationshipNavigationPropertyAttribute("HardcardModel", "FK__Standing__EntryI__33D4B598", "Standing")]
         public EntityCollection<Standing> Standings
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Standing>("HardcardModel.FK__Standing__EntryI__6423B28F", "Standing");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Standing>("HardcardModel.FK__Standing__EntryI__33D4B598", "Standing");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Standing>("HardcardModel.FK__Standing__EntryI__6423B28F", "Standing", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Standing>("HardcardModel.FK__Standing__EntryI__33D4B598", "Standing", value);
                 }
             }
         }
@@ -1848,18 +1774,18 @@ namespace RacingEventsTrackSystem.DataAccess
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("HardcardModel", "FK__EventClas__Event__3C15C135", "EventClass")]
+        [EdmRelationshipNavigationPropertyAttribute("HardcardModel", "FK__EventClas__Event__117F9D94", "EventClass")]
         public EntityCollection<EventClass> EventClasses
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<EventClass>("HardcardModel.FK__EventClas__Event__3C15C135", "EventClass");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<EventClass>("HardcardModel.FK__EventClas__Event__117F9D94", "EventClass");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<EventClass>("HardcardModel.FK__EventClas__Event__3C15C135", "EventClass", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<EventClass>("HardcardModel.FK__EventClas__Event__117F9D94", "EventClass", value);
                 }
             }
         }
@@ -2004,18 +1930,18 @@ namespace RacingEventsTrackSystem.DataAccess
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("HardcardModel", "FK__Competito__Event__40DA7652", "Competitor")]
+        [EdmRelationshipNavigationPropertyAttribute("HardcardModel", "FK__Competito__Event__164452B1", "Competitor")]
         public EntityCollection<Competitor> Competitors
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Competitor>("HardcardModel.FK__Competito__Event__40DA7652", "Competitor");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Competitor>("HardcardModel.FK__Competito__Event__164452B1", "Competitor");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Competitor>("HardcardModel.FK__Competito__Event__40DA7652", "Competitor", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Competitor>("HardcardModel.FK__Competito__Event__164452B1", "Competitor", value);
                 }
             }
         }
@@ -2026,16 +1952,16 @@ namespace RacingEventsTrackSystem.DataAccess
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("HardcardModel", "FK__EventClas__Event__3C15C135", "Event")]
+        [EdmRelationshipNavigationPropertyAttribute("HardcardModel", "FK__EventClas__Event__117F9D94", "Event")]
         public Event Event
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Event>("HardcardModel.FK__EventClas__Event__3C15C135", "Event").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Event>("HardcardModel.FK__EventClas__Event__117F9D94", "Event").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Event>("HardcardModel.FK__EventClas__Event__3C15C135", "Event").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Event>("HardcardModel.FK__EventClas__Event__117F9D94", "Event").Value = value;
             }
         }
         /// <summary>
@@ -2047,13 +1973,13 @@ namespace RacingEventsTrackSystem.DataAccess
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Event>("HardcardModel.FK__EventClas__Event__3C15C135", "Event");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Event>("HardcardModel.FK__EventClas__Event__117F9D94", "Event");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Event>("HardcardModel.FK__EventClas__Event__3C15C135", "Event", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Event>("HardcardModel.FK__EventClas__Event__117F9D94", "Event", value);
                 }
             }
         }
@@ -2064,16 +1990,16 @@ namespace RacingEventsTrackSystem.DataAccess
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("HardcardModel", "FK__EventClas__Class__3B219CFC", "RaceClass")]
+        [EdmRelationshipNavigationPropertyAttribute("HardcardModel", "FK__EventClas__Class__108B795B", "RaceClass")]
         public RaceClass RaceClass
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<RaceClass>("HardcardModel.FK__EventClas__Class__3B219CFC", "RaceClass").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<RaceClass>("HardcardModel.FK__EventClas__Class__108B795B", "RaceClass").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<RaceClass>("HardcardModel.FK__EventClas__Class__3B219CFC", "RaceClass").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<RaceClass>("HardcardModel.FK__EventClas__Class__108B795B", "RaceClass").Value = value;
             }
         }
         /// <summary>
@@ -2085,13 +2011,13 @@ namespace RacingEventsTrackSystem.DataAccess
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<RaceClass>("HardcardModel.FK__EventClas__Class__3B219CFC", "RaceClass");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<RaceClass>("HardcardModel.FK__EventClas__Class__108B795B", "RaceClass");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<RaceClass>("HardcardModel.FK__EventClas__Class__3B219CFC", "RaceClass", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<RaceClass>("HardcardModel.FK__EventClas__Class__108B795B", "RaceClass", value);
                 }
             }
         }
@@ -2102,18 +2028,18 @@ namespace RacingEventsTrackSystem.DataAccess
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("HardcardModel", "FK__Session__EventCl__4B5804C5", "Session")]
+        [EdmRelationshipNavigationPropertyAttribute("HardcardModel", "FK__Session__EventCl__1BFD2C07", "Session")]
         public EntityCollection<Session> Sessions
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Session>("HardcardModel.FK__Session__EventCl__4B5804C5", "Session");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Session>("HardcardModel.FK__Session__EventCl__1BFD2C07", "Session");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Session>("HardcardModel.FK__Session__EventCl__4B5804C5", "Session", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Session>("HardcardModel.FK__Session__EventCl__1BFD2C07", "Session", value);
                 }
             }
         }
@@ -2135,15 +2061,13 @@ namespace RacingEventsTrackSystem.DataAccess
         /// Create a new Passing object.
         /// </summary>
         /// <param name="id">Initial value of the Id property.</param>
-        /// <param name="sessionId">Initial value of the SessionId property.</param>
         /// <param name="rFID">Initial value of the RFID property.</param>
         /// <param name="passingTime">Initial value of the PassingTime property.</param>
         /// <param name="raceTime">Initial value of the RaceTime property.</param>
-        public static Passing CreatePassing(global::System.Int64 id, global::System.Int64 sessionId, global::System.Int64 rFID, global::System.DateTime passingTime, global::System.Int64 raceTime)
+        public static Passing CreatePassing(global::System.Int64 id, global::System.Int64 rFID, global::System.DateTime passingTime, global::System.Int64 raceTime)
         {
             Passing passing = new Passing();
             passing.Id = id;
-            passing.SessionId = sessionId;
             passing.RFID = rFID;
             passing.PassingTime = passingTime;
             passing.RaceTime = raceTime;
@@ -2183,9 +2107,9 @@ namespace RacingEventsTrackSystem.DataAccess
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.Int64 SessionId
+        public Nullable<global::System.Int64> SessionId
         {
             get
             {
@@ -2200,8 +2124,8 @@ namespace RacingEventsTrackSystem.DataAccess
                 OnSessionIdChanged();
             }
         }
-        private global::System.Int64 _SessionId;
-        partial void OnSessionIdChanging(global::System.Int64 value);
+        private Nullable<global::System.Int64> _SessionId;
+        partial void OnSessionIdChanging(Nullable<global::System.Int64> value);
         partial void OnSessionIdChanged();
     
         /// <summary>
@@ -2382,54 +2306,16 @@ namespace RacingEventsTrackSystem.DataAccess
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("HardcardModel", "FK__Passing__RFID__54E16EFF", "ValidTag")]
-        public ValidTag ValidTag
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<ValidTag>("HardcardModel.FK__Passing__RFID__54E16EFF", "ValidTag").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<ValidTag>("HardcardModel.FK__Passing__RFID__54E16EFF", "ValidTag").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<ValidTag> ValidTagReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<ValidTag>("HardcardModel.FK__Passing__RFID__54E16EFF", "ValidTag");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<ValidTag>("HardcardModel.FK__Passing__RFID__54E16EFF", "ValidTag", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("HardcardModel", "FK__Passing__Session__55D59338", "Session")]
+        [EdmRelationshipNavigationPropertyAttribute("HardcardModel", "FK__Passing__Session__25869641", "Session")]
         public Session Session
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Session>("HardcardModel.FK__Passing__Session__55D59338", "Session").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Session>("HardcardModel.FK__Passing__Session__25869641", "Session").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Session>("HardcardModel.FK__Passing__Session__55D59338", "Session").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Session>("HardcardModel.FK__Passing__Session__25869641", "Session").Value = value;
             }
         }
         /// <summary>
@@ -2441,13 +2327,13 @@ namespace RacingEventsTrackSystem.DataAccess
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Session>("HardcardModel.FK__Passing__Session__55D59338", "Session");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Session>("HardcardModel.FK__Passing__Session__25869641", "Session");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Session>("HardcardModel.FK__Passing__Session__55D59338", "Session", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Session>("HardcardModel.FK__Passing__Session__25869641", "Session", value);
                 }
             }
         }
@@ -2688,16 +2574,16 @@ namespace RacingEventsTrackSystem.DataAccess
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("HardcardModel", "FK__Penality__Sessio__501CB9E2", "Session")]
+        [EdmRelationshipNavigationPropertyAttribute("HardcardModel", "FK__Penality__Sessio__20C1E124", "Session")]
         public Session Session
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Session>("HardcardModel.FK__Penality__Sessio__501CB9E2", "Session").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Session>("HardcardModel.FK__Penality__Sessio__20C1E124", "Session").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Session>("HardcardModel.FK__Penality__Sessio__501CB9E2", "Session").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Session>("HardcardModel.FK__Penality__Sessio__20C1E124", "Session").Value = value;
             }
         }
         /// <summary>
@@ -2709,13 +2595,13 @@ namespace RacingEventsTrackSystem.DataAccess
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Session>("HardcardModel.FK__Penality__Sessio__501CB9E2", "Session");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Session>("HardcardModel.FK__Penality__Sessio__20C1E124", "Session");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Session>("HardcardModel.FK__Penality__Sessio__501CB9E2", "Session", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Session>("HardcardModel.FK__Penality__Sessio__20C1E124", "Session", value);
                 }
             }
         }
@@ -3002,18 +2888,18 @@ namespace RacingEventsTrackSystem.DataAccess
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("HardcardModel", "FK__EventClas__Class__3B219CFC", "EventClass")]
+        [EdmRelationshipNavigationPropertyAttribute("HardcardModel", "FK__EventClas__Class__108B795B", "EventClass")]
         public EntityCollection<EventClass> EventClasses
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<EventClass>("HardcardModel.FK__EventClas__Class__3B219CFC", "EventClass");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<EventClass>("HardcardModel.FK__EventClas__Class__108B795B", "EventClass");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<EventClass>("HardcardModel.FK__EventClas__Class__3B219CFC", "EventClass", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<EventClass>("HardcardModel.FK__EventClas__Class__108B795B", "EventClass", value);
                 }
             }
         }
@@ -3228,18 +3114,18 @@ namespace RacingEventsTrackSystem.DataAccess
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("HardcardModel", "FK__Entry__SessionId__5B8E6C8E", "Entry")]
+        [EdmRelationshipNavigationPropertyAttribute("HardcardModel", "FK__Entry__SessionId__2B3F6F97", "Entry")]
         public EntityCollection<Entry> Entries
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Entry>("HardcardModel.FK__Entry__SessionId__5B8E6C8E", "Entry");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Entry>("HardcardModel.FK__Entry__SessionId__2B3F6F97", "Entry");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Entry>("HardcardModel.FK__Entry__SessionId__5B8E6C8E", "Entry", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Entry>("HardcardModel.FK__Entry__SessionId__2B3F6F97", "Entry", value);
                 }
             }
         }
@@ -3250,16 +3136,16 @@ namespace RacingEventsTrackSystem.DataAccess
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("HardcardModel", "FK__Session__EventCl__4B5804C5", "EventClass")]
+        [EdmRelationshipNavigationPropertyAttribute("HardcardModel", "FK__Session__EventCl__1BFD2C07", "EventClass")]
         public EventClass EventClass
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<EventClass>("HardcardModel.FK__Session__EventCl__4B5804C5", "EventClass").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<EventClass>("HardcardModel.FK__Session__EventCl__1BFD2C07", "EventClass").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<EventClass>("HardcardModel.FK__Session__EventCl__4B5804C5", "EventClass").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<EventClass>("HardcardModel.FK__Session__EventCl__1BFD2C07", "EventClass").Value = value;
             }
         }
         /// <summary>
@@ -3271,13 +3157,13 @@ namespace RacingEventsTrackSystem.DataAccess
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<EventClass>("HardcardModel.FK__Session__EventCl__4B5804C5", "EventClass");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<EventClass>("HardcardModel.FK__Session__EventCl__1BFD2C07", "EventClass");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<EventClass>("HardcardModel.FK__Session__EventCl__4B5804C5", "EventClass", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<EventClass>("HardcardModel.FK__Session__EventCl__1BFD2C07", "EventClass", value);
                 }
             }
         }
@@ -3288,18 +3174,18 @@ namespace RacingEventsTrackSystem.DataAccess
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("HardcardModel", "FK__Passing__Session__55D59338", "Passing")]
+        [EdmRelationshipNavigationPropertyAttribute("HardcardModel", "FK__Passing__Session__25869641", "Passing")]
         public EntityCollection<Passing> Passings
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Passing>("HardcardModel.FK__Passing__Session__55D59338", "Passing");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Passing>("HardcardModel.FK__Passing__Session__25869641", "Passing");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Passing>("HardcardModel.FK__Passing__Session__55D59338", "Passing", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Passing>("HardcardModel.FK__Passing__Session__25869641", "Passing", value);
                 }
             }
         }
@@ -3310,18 +3196,18 @@ namespace RacingEventsTrackSystem.DataAccess
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("HardcardModel", "FK__Penality__Sessio__501CB9E2", "Penality")]
+        [EdmRelationshipNavigationPropertyAttribute("HardcardModel", "FK__Penality__Sessio__20C1E124", "Penality")]
         public EntityCollection<Penality> Penalities
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Penality>("HardcardModel.FK__Penality__Sessio__501CB9E2", "Penality");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Penality>("HardcardModel.FK__Penality__Sessio__20C1E124", "Penality");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Penality>("HardcardModel.FK__Penality__Sessio__501CB9E2", "Penality", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Penality>("HardcardModel.FK__Penality__Sessio__20C1E124", "Penality", value);
                 }
             }
         }
@@ -3584,16 +3470,16 @@ namespace RacingEventsTrackSystem.DataAccess
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("HardcardModel", "FK__Standing__EntryI__6423B28F", "Entry")]
+        [EdmRelationshipNavigationPropertyAttribute("HardcardModel", "FK__Standing__EntryI__33D4B598", "Entry")]
         public Entry Entry
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Entry>("HardcardModel.FK__Standing__EntryI__6423B28F", "Entry").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Entry>("HardcardModel.FK__Standing__EntryI__33D4B598", "Entry").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Entry>("HardcardModel.FK__Standing__EntryI__6423B28F", "Entry").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Entry>("HardcardModel.FK__Standing__EntryI__33D4B598", "Entry").Value = value;
             }
         }
         /// <summary>
@@ -3605,13 +3491,13 @@ namespace RacingEventsTrackSystem.DataAccess
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Entry>("HardcardModel.FK__Standing__EntryI__6423B28F", "Entry");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Entry>("HardcardModel.FK__Standing__EntryI__33D4B598", "Entry");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Entry>("HardcardModel.FK__Standing__EntryI__6423B28F", "Entry", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Entry>("HardcardModel.FK__Standing__EntryI__33D4B598", "Entry", value);
                 }
             }
         }
@@ -3698,475 +3584,6 @@ namespace RacingEventsTrackSystem.DataAccess
 
         #endregion
     
-    }
-    
-    /// <summary>
-    /// No Metadata Documentation available.
-    /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="HardcardModel", Name="sysdiagram")]
-    [Serializable()]
-    [DataContractAttribute(IsReference=true)]
-    public partial class sysdiagram : EntityObject
-    {
-        #region Factory Method
-    
-        /// <summary>
-        /// Create a new sysdiagram object.
-        /// </summary>
-        /// <param name="name">Initial value of the name property.</param>
-        /// <param name="principal_id">Initial value of the principal_id property.</param>
-        /// <param name="diagram_id">Initial value of the diagram_id property.</param>
-        public static sysdiagram Createsysdiagram(global::System.String name, global::System.Int32 principal_id, global::System.Int32 diagram_id)
-        {
-            sysdiagram sysdiagram = new sysdiagram();
-            sysdiagram.name = name;
-            sysdiagram.principal_id = principal_id;
-            sysdiagram.diagram_id = diagram_id;
-            return sysdiagram;
-        }
-
-        #endregion
-        #region Primitive Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String name
-        {
-            get
-            {
-                return _name;
-            }
-            set
-            {
-                OnnameChanging(value);
-                ReportPropertyChanging("name");
-                _name = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("name");
-                OnnameChanged();
-            }
-        }
-        private global::System.String _name;
-        partial void OnnameChanging(global::System.String value);
-        partial void OnnameChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int32 principal_id
-        {
-            get
-            {
-                return _principal_id;
-            }
-            set
-            {
-                Onprincipal_idChanging(value);
-                ReportPropertyChanging("principal_id");
-                _principal_id = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("principal_id");
-                Onprincipal_idChanged();
-            }
-        }
-        private global::System.Int32 _principal_id;
-        partial void Onprincipal_idChanging(global::System.Int32 value);
-        partial void Onprincipal_idChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int32 diagram_id
-        {
-            get
-            {
-                return _diagram_id;
-            }
-            set
-            {
-                if (_diagram_id != value)
-                {
-                    Ondiagram_idChanging(value);
-                    ReportPropertyChanging("diagram_id");
-                    _diagram_id = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("diagram_id");
-                    Ondiagram_idChanged();
-                }
-            }
-        }
-        private global::System.Int32 _diagram_id;
-        partial void Ondiagram_idChanging(global::System.Int32 value);
-        partial void Ondiagram_idChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Int32> version
-        {
-            get
-            {
-                return _version;
-            }
-            set
-            {
-                OnversionChanging(value);
-                ReportPropertyChanging("version");
-                _version = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("version");
-                OnversionChanged();
-            }
-        }
-        private Nullable<global::System.Int32> _version;
-        partial void OnversionChanging(Nullable<global::System.Int32> value);
-        partial void OnversionChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.Byte[] definition
-        {
-            get
-            {
-                return StructuralObject.GetValidValue(_definition);
-            }
-            set
-            {
-                OndefinitionChanging(value);
-                ReportPropertyChanging("definition");
-                _definition = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("definition");
-                OndefinitionChanged();
-            }
-        }
-        private global::System.Byte[] _definition;
-        partial void OndefinitionChanging(global::System.Byte[] value);
-        partial void OndefinitionChanged();
-
-        #endregion
-    
-    }
-    
-    /// <summary>
-    /// No Metadata Documentation available.
-    /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="HardcardModel", Name="TagList")]
-    [Serializable()]
-    [DataContractAttribute(IsReference=true)]
-    public partial class TagList : EntityObject
-    {
-        #region Factory Method
-    
-        /// <summary>
-        /// Create a new TagList object.
-        /// </summary>
-        /// <param name="rFID">Initial value of the RFID property.</param>
-        /// <param name="compId">Initial value of the CompId property.</param>
-        public static TagList CreateTagList(global::System.Int64 rFID, global::System.Int64 compId)
-        {
-            TagList tagList = new TagList();
-            tagList.RFID = rFID;
-            tagList.CompId = compId;
-            return tagList;
-        }
-
-        #endregion
-        #region Primitive Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int64 RFID
-        {
-            get
-            {
-                return _RFID;
-            }
-            set
-            {
-                if (_RFID != value)
-                {
-                    OnRFIDChanging(value);
-                    ReportPropertyChanging("RFID");
-                    _RFID = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("RFID");
-                    OnRFIDChanged();
-                }
-            }
-        }
-        private global::System.Int64 _RFID;
-        partial void OnRFIDChanging(global::System.Int64 value);
-        partial void OnRFIDChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int64 CompId
-        {
-            get
-            {
-                return _CompId;
-            }
-            set
-            {
-                OnCompIdChanging(value);
-                ReportPropertyChanging("CompId");
-                _CompId = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("CompId");
-                OnCompIdChanged();
-            }
-        }
-        private global::System.Int64 _CompId;
-        partial void OnCompIdChanging(global::System.Int64 value);
-        partial void OnCompIdChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.DateTime> LastUpdated
-        {
-            get
-            {
-                return _LastUpdated;
-            }
-            set
-            {
-                OnLastUpdatedChanging(value);
-                ReportPropertyChanging("LastUpdated");
-                _LastUpdated = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("LastUpdated");
-                OnLastUpdatedChanged();
-            }
-        }
-        private Nullable<global::System.DateTime> _LastUpdated;
-        partial void OnLastUpdatedChanging(Nullable<global::System.DateTime> value);
-        partial void OnLastUpdatedChanged();
-
-        #endregion
-    
-        #region Navigation Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("HardcardModel", "FK__TagList__RFID__46934FA8", "ValidTag")]
-        public ValidTag ValidTag
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<ValidTag>("HardcardModel.FK__TagList__RFID__46934FA8", "ValidTag").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<ValidTag>("HardcardModel.FK__TagList__RFID__46934FA8", "ValidTag").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<ValidTag> ValidTagReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<ValidTag>("HardcardModel.FK__TagList__RFID__46934FA8", "ValidTag");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<ValidTag>("HardcardModel.FK__TagList__RFID__46934FA8", "ValidTag", value);
-                }
-            }
-        }
-
-        #endregion
-    }
-    
-    /// <summary>
-    /// No Metadata Documentation available.
-    /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="HardcardModel", Name="ValidTag")]
-    [Serializable()]
-    [DataContractAttribute(IsReference=true)]
-    public partial class ValidTag : EntityObject
-    {
-        #region Factory Method
-    
-        /// <summary>
-        /// Create a new ValidTag object.
-        /// </summary>
-        /// <param name="rFID">Initial value of the RFID property.</param>
-        /// <param name="valid">Initial value of the Valid property.</param>
-        public static ValidTag CreateValidTag(global::System.Int64 rFID, global::System.Boolean valid)
-        {
-            ValidTag validTag = new ValidTag();
-            validTag.RFID = rFID;
-            validTag.Valid = valid;
-            return validTag;
-        }
-
-        #endregion
-        #region Primitive Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int64 RFID
-        {
-            get
-            {
-                return _RFID;
-            }
-            set
-            {
-                if (_RFID != value)
-                {
-                    OnRFIDChanging(value);
-                    ReportPropertyChanging("RFID");
-                    _RFID = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("RFID");
-                    OnRFIDChanged();
-                }
-            }
-        }
-        private global::System.Int64 _RFID;
-        partial void OnRFIDChanging(global::System.Int64 value);
-        partial void OnRFIDChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Boolean Valid
-        {
-            get
-            {
-                return _Valid;
-            }
-            set
-            {
-                OnValidChanging(value);
-                ReportPropertyChanging("Valid");
-                _Valid = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("Valid");
-                OnValidChanged();
-            }
-        }
-        private global::System.Boolean _Valid;
-        partial void OnValidChanging(global::System.Boolean value);
-        partial void OnValidChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.DateTime> LastUpdated
-        {
-            get
-            {
-                return _LastUpdated;
-            }
-            set
-            {
-                OnLastUpdatedChanging(value);
-                ReportPropertyChanging("LastUpdated");
-                _LastUpdated = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("LastUpdated");
-                OnLastUpdatedChanged();
-            }
-        }
-        private Nullable<global::System.DateTime> _LastUpdated;
-        partial void OnLastUpdatedChanging(Nullable<global::System.DateTime> value);
-        partial void OnLastUpdatedChanged();
-
-        #endregion
-    
-        #region Navigation Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("HardcardModel", "FK__Passing__RFID__54E16EFF", "Passing")]
-        public EntityCollection<Passing> Passings
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Passing>("HardcardModel.FK__Passing__RFID__54E16EFF", "Passing");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Passing>("HardcardModel.FK__Passing__RFID__54E16EFF", "Passing", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("HardcardModel", "FK__TagList__RFID__46934FA8", "TagList")]
-        public TagList TagList
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TagList>("HardcardModel.FK__TagList__RFID__46934FA8", "TagList").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TagList>("HardcardModel.FK__TagList__RFID__46934FA8", "TagList").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<TagList> TagListReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TagList>("HardcardModel.FK__TagList__RFID__46934FA8", "TagList");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<TagList>("HardcardModel.FK__TagList__RFID__46934FA8", "TagList", value);
-                }
-            }
-        }
-
-        #endregion
     }
 
     #endregion
