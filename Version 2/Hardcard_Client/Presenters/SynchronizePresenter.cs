@@ -342,7 +342,7 @@ namespace RacingEventsTrackSystem.Presenters
                     newPassing.RFID = plocal.RFID;
                     newPassing.PassngTime = plocal.PassingTime;
                     newPassing.RaceTime = plocal.RaceTime;
-                    newPassing.SessionID = plocal.SessionId;
+                    newPassing.SessionID = (long)plocal.SessionId;
                     passingsPushList.Add(newPassing);
                 }
                 result = ss.SynchronizePassingsDataWithClient(lastSync, passingsPushList.ToArray());
