@@ -28,35 +28,22 @@
                 </GroupBox.Header>
 
                 <ListView x:Name="liviEntriesList" Background="AliceBlue"  
-                  ItemsSource="{Binding StandingsForSession, Mode=TwoWay}" FontWeight="Normal">
+                  ItemsSource="{Binding StandingsForSession}" FontWeight="Normal">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="Sess Id"
-                                    DisplayMemberBinding="{Binding Entry.SessionId}" />
-                            <GridViewColumn Header="Comp Id"
-                                    DisplayMemberBinding="{Binding Entry.CompetitorId}" />
-                            <GridViewColumn Header="Last Name"
-                                    DisplayMemberBinding="{Binding Entry.Competitor.Athlete.LastName}" />
-                            <GridViewColumn Header="First Name"
-                                    DisplayMemberBinding="{Binding Entry.Competitor.Athlete.FirstName}" />
-                            <GridViewColumn Header="Comp No"
-                                    DisplayMemberBinding="{Binding Entry.CompetitionNo}" />
-                            <GridViewColumn Header="RFID"
-                                    DisplayMemberBinding="{Binding Entry.RFID}" />
-                            <GridViewColumn Header="Position"
-                                    DisplayMemberBinding="{Binding Position}" />
-                            <GridViewColumn Header="Laps Completed"
-                                    DisplayMemberBinding="{Binding LapsCompleted}" />
-                            <GridViewColumn Header="Completed Time"
-                                    DisplayMemberBinding="{Binding CompletedTime}" />
-                            <GridViewColumn Header="Best Lap Time"
-                                    DisplayMemberBinding="{Binding BestLapTime}" />
-                            <GridViewColumn Header="Avg Lap Time"
-                                    DisplayMemberBinding="{Binding AvgLapTime}" />
-                            <GridViewColumn Header="Passing Time"
-                                    DisplayMemberBinding="{Binding PassingTime}" />
-                            <GridViewColumn Header="Class "
-                                    DisplayMemberBinding="{Binding Entry.Competitor.EventClass.RaceClass.ClassName}" />
+                            <!--GridViewColumn Header="Sess Id" DisplayMemberBinding="{Binding Entry.SessionId}" /-->
+                            <!--GridViewColumn Header="Comp Id" DisplayMemberBinding="{Binding Entry.CompetitorId}" /-->
+                            <GridViewColumn Header="Last Name"  DisplayMemberBinding="{Binding Entry.Competitor.Athlete.LastName}" />
+                            <GridViewColumn Header="First Name" DisplayMemberBinding="{Binding Entry.Competitor.Athlete.FirstName}" />
+                            <GridViewColumn Header="Comp No"    DisplayMemberBinding="{Binding Entry.CompetitionNo}" />
+                            <!--GridViewColumn Header="RFID"    DisplayMemberBinding="{Binding Entry.RFID}" /-->
+                            <GridViewColumn Header="Position"       DisplayMemberBinding="{Binding Position}" />
+                            <GridViewColumn Header="Laps Completed" DisplayMemberBinding="{Binding LapsCompleted}" />
+                            <!--GridViewColumn Header="Completed Time" DisplayMemberBinding="{Binding CompletedTime}" /-->
+                            <GridViewColumn Header="Best Lap Time"  DisplayMemberBinding="{Binding BestLapTime}" />
+                            <GridViewColumn Header="Avg Lap Time"   DisplayMemberBinding="{Binding AvgLapTime}" />
+                            <GridViewColumn Header="Passing Time"   DisplayMemberBinding="{Binding PassingTime}" />
+                            <GridViewColumn Header="Class "         DisplayMemberBinding="{Binding Entry.Competitor.EventClass.RaceClass.ClassName}" />
                         </GridView>
                     </ListView.View>
                 </ListView>
