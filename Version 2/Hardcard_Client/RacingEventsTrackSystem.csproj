@@ -141,7 +141,6 @@
     <Compile Include="Presenters\RacePresenter.cs" />
     <Compile Include="Presenters\SessionPresenter.cs" />
     <Compile Include="Presenters\StringToBooleanConverter.cs" />
-    <Compile Include="Presenters\SynchronizePresenter.cs" />
     <Compile Include="UIChildFinder.cs" />
     <Compile Include="UserControls\AllAthletesControl.xaml.cs">
       <DependentUpon>AllAthletesControl.xaml</DependentUpon>
@@ -185,9 +184,6 @@
     </Compile>
     <Compile Include="Views\SessionView.xaml.cs">
       <DependentUpon>SessionView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\SynchronizeView.xaml.cs">
-      <DependentUpon>SynchronizeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Web References\hardcardserver\Reference.cs">
       <AutoGen>True</AutoGen>
@@ -269,10 +265,6 @@
     <Page Include="Views\SessionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\SynchronizeView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
