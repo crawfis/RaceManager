@@ -291,7 +291,6 @@ namespace RacingEventsTrackSystem.Presenters
             _tmpStanding.BestLapTime = 6;
             _tmpStanding.AvgLapTime = 7;
             _tmpStanding.WorstLapTime = 8;
-            _tmpStanding.PassingTime = 9;
         }
 
 
@@ -307,6 +306,11 @@ namespace RacingEventsTrackSystem.Presenters
         public void SaveSession(Session session)
         {
             if (session == null) return;
+
+            // populate RaceSchedStopTime and RaceStartTime in milliseconds
+            session.RaceSchedStopTime = (long)ConvertToUnixTime((DateTime)session.SchedStopTime) * 1000;
+            session.RaceStartTime = (long)ConvertToUnixTime((DateTime)session.StartTime) * 1000;
+
             if (ValidateSession(session) == false) return; // not valid input parameters
 
             var hc = _applicationPresenter.HardcardContext;
@@ -653,7 +657,7 @@ namespace RacingEventsTrackSystem.Presenters
         // 
         // Create Standings collection for Session.
         // 
-        // This method uses PassingTime to select records from Passing table. Then it 
+        // This method uses Passing.RaceTime to select records from Passing table. Then it 
         // populates sessionId and create records for Standing table.
         // 
         // This method is called during the session. When session was completed and all records in Passing 
@@ -669,24 +673,33 @@ namespace RacingEventsTrackSystem.Presenters
                 return Tmp;
             }
 
+            SetSessionIdForPassingTable(session);
+            Tmp = GetStandingsForSession(session);
+            return Tmp;
+        }
+
+        // 
+        // Populate SessionId in Passing table.
+        //
+        // Fetch from Passing table all records with 
+        // Session.RaceStartTime <= Passing.RaceTime <= Session.RaceSchedStopTime
+        // and set SessionId for each record.
+        // 
+        public void SetSessionIdForPassingTable(Session session)
+        {
             var hc = _applicationPresenter.HardcardContext;
             long sessionId = session.Id;
 
-            // Fetch from Passing table all records with Session.StartTime <= PassingTime <= Session.SchedStopTime
-            // and set SessionId for each record.
-            List<Passing> query = ( from p in hc.Passings    
-                                    from e in hc.Entries
-                                    from s in hc.Sessions
-                                    where  e.SessionId == sessionId
-                                        && e.RFID == p.RFID  //session.Passings
-                                        && session.StartTime <= p.PassingTime
-                                        && p.PassingTime <= session.SchedStopTime
+            // 
+            List<Passing> query = (from p in hc.Passings
+                                   from e in hc.Entries
+                                   where e.SessionId == sessionId             // use RaceTime instead of PassingTime. 
+                                       && e.RFID == p.RFID
+                                       && session.RaceStartTime <= p.RaceTime
+                                       && p.RaceTime <= session.RaceSchedStopTime
                                    select p).ToList();
             foreach (Passing p in query) p.SessionId = sessionId;
-
-           
-            Tmp = GetStandingsForSession(session);
-            return Tmp;
+            hc.SaveChanges();
         }
 
         // 
@@ -695,8 +708,6 @@ namespace RacingEventsTrackSystem.Presenters
         // This method uses SessionId to select records from Passing table 
         // and create records for Standing table.
         //
-        // It includes criteria for records for Standing table 
-        // 
         public ObservableCollection<Standing> GetStandingsForSession(Session session)
         {
             ObservableCollection<Standing> Tmp;
@@ -711,16 +722,15 @@ namespace RacingEventsTrackSystem.Presenters
                 var passings =
                      (from p in hc.Passings
                       from e in hc.Entries
-                      from s in hc.Sessions
                      where e.SessionId == sessionId
                      && p.SessionId == sessionId
                      && e.RFID == p.RFID
-                     orderby p.PassingTime
+                     orderby p.RaceTime
                      group p by p.RFID into p_group
                      orderby p_group.Key
                      select p_group);
 
-                //Calculate s.LapsCompleted, etc for each record in Standing table
+                // Calculate field values for Standing table.
                 int i = 0;
                 List<Standing> lstStandings = new List<Standing>();
                 foreach (var p_group in passings)
@@ -729,24 +739,50 @@ namespace RacingEventsTrackSystem.Presenters
                     Standing st = new Standing();
                     st.Id = i;
                     st.EntryId = hc.Entries.First(a => a.RFID == p_group.Key).Id; 
-                    st.Position = (short)i;
-                    st.LapsCompleted = (short)p_group.Count();
-                    st.CompletedTime = (p_group.Last()).RaceTime;
-                    long bestLapTime  = p_group.Last().RaceTime - p_group.First().RaceTime;
-                    long worstLapTime = p_group.Last().RaceTime - p_group.First().RaceTime;
-                    long avgLapTime   = p_group.Last().RaceTime - p_group.First().RaceTime;
-                    foreach (var passing in p_group)
-                    {
-                        bestLapTime = p_group.Last().RaceTime - passing.RaceTime;
-                        st.BestLapTime = 12345;
-                        st.AvgLapTime = (p_group.Last().RaceTime - p_group.Last().RaceTime) / st.LapsCompleted;
-                        st.WorstLapTime = 2134;
-                    }
-                    st.PassingTime = (p_group.Last()).RaceTime;
-                    lstStandings.Add(st); // Add to Tmp directly
+                    
+
+                    // Compute Best, Average, and Worst Loop Time
+                    long bestLapTime = 0;
+                    long avgLapTime = 0;
+                    long worstLapTime = 0;
+                    long delta = 0;
+                     if (p_group.Count() <= 1)
+                     {
+                         st.LapsCompleted = 0;
+                     }
+                     else
+                     {
+                         st.LapsCompleted = (short)(p_group.Count() - 1);
+                         avgLapTime = (long)((p_group.Last().RaceTime - p_group.First().RaceTime) / st.LapsCompleted);
+                         bestLapTime = avgLapTime;
+                         worstLapTime = avgLapTime;
+                         List<Passing> tmpList = p_group.ToList();
+                         for ( int j = 1; j < tmpList.Count(); ++j)
+                         {
+                             delta = tmpList[j].RaceTime - tmpList[j - 1].RaceTime;
+                             if (bestLapTime > delta) bestLapTime = delta;
+                             if (worstLapTime < delta) worstLapTime = delta;
+                         }
+
+                     }
+
+                    st.CompletedTime = p_group.Last().RaceTime - p_group.First().RaceTime;
+                    st.BestLapTime = bestLapTime;
+                    st.AvgLapTime = avgLapTime;
+                    st.WorstLapTime = worstLapTime;
+                    
+                    lstStandings.Add(st); 
                 }
                 
-                Tmp = new ObservableCollection<Standing>(lstStandings);
+                List<Standing> srtLstStandings = new List<Standing>();
+                srtLstStandings = lstStandings.OrderBy(c => c.AvgLapTime).ToList();
+                int pos = 0;
+                foreach (var st in srtLstStandings)
+                {
+                    st.Position = (short)++pos;
+                }
+
+                Tmp = new ObservableCollection<Standing>(srtLstStandings);
             }
 
             //Remove data from Standing table
@@ -820,7 +856,6 @@ namespace RacingEventsTrackSystem.Presenters
                     st.BestLapTime = random.Next(90,110);
                     st.AvgLapTime = st.BestLapTime + random.Next(5,10);
                     st.WorstLapTime = st.AvgLapTime + random.Next(10,20);
-                    st.PassingTime = 9;
 
                     hc.Standings.AddObject(st);
                 }
@@ -829,6 +864,21 @@ namespace RacingEventsTrackSystem.Presenters
             InitEntriesForSession(session);
             InitStandingsForSession(session);
    */
+        }
+
+        //Converts Seconds to DateTime
+        static DateTime ConvertFromUnixTime(double unixTime)
+        {
+            DateTime origin = new DateTime(1970, 1, 1, 0, 0, 0, 0);
+            return origin.AddSeconds(unixTime);
+        }
+        
+        //Converts DateTime to Seconds
+        static double ConvertToUnixTime(DateTime date)
+        {
+            DateTime origin = new DateTime(1970, 1, 1, 0, 0, 0, 0);
+            TimeSpan diff = date - origin;
+            return Math.Floor(diff.TotalSeconds);
         }
 
         public void SessionSelected()

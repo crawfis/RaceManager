@@ -208,5 +208,20 @@ namespace RacingEventsTrackSystem.Presenters
         }
     }//class PhoneConverter : IValueConverter
 
+    public class TimeSpanConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            long data = (long)value;
+            TimeSpan result = new TimeSpan();
+            if (data != 0 )  return result = TimeSpan.FromMilliseconds(data);
+            else return result;
+        }
 
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            //you only need to implement this for two-way conversions
+            throw new NotImplementedException();
+        }
+    }//class PhoneConverter : IValueConverter
 }
