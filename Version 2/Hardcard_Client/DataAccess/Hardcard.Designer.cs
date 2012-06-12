@@ -2062,14 +2062,12 @@ namespace RacingEventsTrackSystem.DataAccess
         /// </summary>
         /// <param name="id">Initial value of the Id property.</param>
         /// <param name="rFID">Initial value of the RFID property.</param>
-        /// <param name="passingTime">Initial value of the PassingTime property.</param>
         /// <param name="raceTime">Initial value of the RaceTime property.</param>
-        public static Passing CreatePassing(global::System.Int64 id, global::System.Int64 rFID, global::System.DateTime passingTime, global::System.Int64 raceTime)
+        public static Passing CreatePassing(global::System.Int64 id, global::System.Int64 rFID, global::System.Int64 raceTime)
         {
             Passing passing = new Passing();
             passing.Id = id;
             passing.RFID = rFID;
-            passing.PassingTime = passingTime;
             passing.RaceTime = raceTime;
             return passing;
         }
@@ -2151,30 +2149,6 @@ namespace RacingEventsTrackSystem.DataAccess
         private global::System.Int64 _RFID;
         partial void OnRFIDChanging(global::System.Int64 value);
         partial void OnRFIDChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.DateTime PassingTime
-        {
-            get
-            {
-                return _PassingTime;
-            }
-            set
-            {
-                OnPassingTimeChanging(value);
-                ReportPropertyChanging("PassingTime");
-                _PassingTime = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("PassingTime");
-                OnPassingTimeChanged();
-            }
-        }
-        private global::System.DateTime _PassingTime;
-        partial void OnPassingTimeChanging(global::System.DateTime value);
-        partial void OnPassingTimeChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -3037,6 +3011,54 @@ namespace RacingEventsTrackSystem.DataAccess
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
+        public Nullable<global::System.Int64> RaceStartTime
+        {
+            get
+            {
+                return _RaceStartTime;
+            }
+            set
+            {
+                OnRaceStartTimeChanging(value);
+                ReportPropertyChanging("RaceStartTime");
+                _RaceStartTime = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("RaceStartTime");
+                OnRaceStartTimeChanged();
+            }
+        }
+        private Nullable<global::System.Int64> _RaceStartTime;
+        partial void OnRaceStartTimeChanging(Nullable<global::System.Int64> value);
+        partial void OnRaceStartTimeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int64> RaceSchedStopTime
+        {
+            get
+            {
+                return _RaceSchedStopTime;
+            }
+            set
+            {
+                OnRaceSchedStopTimeChanging(value);
+                ReportPropertyChanging("RaceSchedStopTime");
+                _RaceSchedStopTime = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("RaceSchedStopTime");
+                OnRaceSchedStopTimeChanged();
+            }
+        }
+        private Nullable<global::System.Int64> _RaceSchedStopTime;
+        partial void OnRaceSchedStopTimeChanging(Nullable<global::System.Int64> value);
+        partial void OnRaceSchedStopTimeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
         public Nullable<global::System.Int32> SchedLaps
         {
             get
@@ -3435,30 +3457,6 @@ namespace RacingEventsTrackSystem.DataAccess
         private Nullable<global::System.Int64> _WorstLapTime;
         partial void OnWorstLapTimeChanging(Nullable<global::System.Int64> value);
         partial void OnWorstLapTimeChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Int64> PassingTime
-        {
-            get
-            {
-                return _PassingTime;
-            }
-            set
-            {
-                OnPassingTimeChanging(value);
-                ReportPropertyChanging("PassingTime");
-                _PassingTime = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("PassingTime");
-                OnPassingTimeChanged();
-            }
-        }
-        private Nullable<global::System.Int64> _PassingTime;
-        partial void OnPassingTimeChanging(Nullable<global::System.Int64> value);
-        partial void OnPassingTimeChanged();
 
         #endregion
     
