@@ -20,7 +20,7 @@ namespace RacingEventsTrackSystem.Views
     /// </summary>
     public partial class RaceManagerView : UserControl
     {
-        static bool RaceStarted = true;
+        static bool RaceStarted = false;
         public RaceManagerView()
         {
             try
@@ -51,25 +51,25 @@ namespace RacingEventsTrackSystem.Views
 
         private void btnStartStopRace_Click(object sender, RoutedEventArgs e)
         {
-             if (RaceStarted == true)
+             if (RaceStarted == false)
              {
-                RaceStarted = false;
-                btnStartStopRace.Content = "Stop Race";
-                if (eventComboBox.SelectedIndex == -1 || sessionComboBox.SelectedIndex == -1)
-                {
-                    return;
-                }
+                RaceStarted = true;
+                btnStartStopRace.Content = "Stop Tag Readings";
+                //if (eventComboBox.SelectedIndex == -1 || sessionComboBox.SelectedIndex == -1)
+                //{
+                //    return;
+                //}
                 eventComboBox.IsEnabled = false;
                 sessionComboBox.IsEnabled = false;
                 Presenter.StartRace();
             }
             else
             {
-                RaceStarted = true;
-                btnStartStopRace.Content = "Start Race";
+                RaceStarted = false;
+                btnStartStopRace.Content = "Start Tag Readings";
                 Presenter.StopRace();
-                eventComboBox.IsEnabled = true;
-                sessionComboBox.IsEnabled = true;
+                //eventComboBox.IsEnabled = true;
+                //sessionComboBox.IsEnabled = true;
 
             }
         }

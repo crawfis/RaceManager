@@ -867,14 +867,14 @@ namespace RacingEventsTrackSystem.Presenters
         }
 
         //Converts Seconds to DateTime
-        static DateTime ConvertFromUnixTime(double unixTime)
+        internal static DateTime ConvertFromUnixTime(double unixTime)
         {
             DateTime origin = new DateTime(1970, 1, 1, 0, 0, 0, 0);
             return origin.AddSeconds(unixTime);
         }
         
         //Converts DateTime to Seconds
-        static double ConvertToUnixTime(DateTime date)
+        internal static double ConvertToUnixTime(DateTime date)
         {
             DateTime origin = new DateTime(1970, 1, 1, 0, 0, 0, 0);
             TimeSpan diff = date - origin;

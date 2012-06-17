@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="HardcardModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+    <Schema Namespace="HardcardModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2005" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityContainer Name="HardcardModelStoreContainer">
           <EntitySet Name="Athlete" EntityType="HardcardModel.Store.Athlete" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="CompetitionNo" EntityType="HardcardModel.Store.CompetitionNo" store:Type="Tables" Schema="dbo" />
@@ -18,43 +18,43 @@
           <EntitySet Name="Session" EntityType="HardcardModel.Store.Session" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Standing" EntityType="HardcardModel.Store.Standing" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Synchronization" EntityType="HardcardModel.Store.Synchronization" store:Type="Tables" Schema="dbo" />
-          <AssociationSet Name="FK__Competito__Athle__173876EA" Association="HardcardModel.Store.FK__Competito__Athle__173876EA">
+          <AssociationSet Name="FK__Competito__Athle__09DE7BCC" Association="HardcardModel.Store.FK__Competito__Athle__09DE7BCC">
             <End Role="Athlete" EntitySet="Athlete" />
             <End Role="Competitor" EntitySet="Competitor" />
           </AssociationSet>
-          <AssociationSet Name="FK__Competito__Event__164452B1" Association="HardcardModel.Store.FK__Competito__Event__164452B1">
+          <AssociationSet Name="FK__Competito__Event__08EA5793" Association="HardcardModel.Store.FK__Competito__Event__08EA5793">
             <End Role="EventClass" EntitySet="EventClass" />
             <End Role="Competitor" EntitySet="Competitor" />
           </AssociationSet>
-          <AssociationSet Name="FK__Entry__Competito__2A4B4B5E" Association="HardcardModel.Store.FK__Entry__Competito__2A4B4B5E">
+          <AssociationSet Name="FK__Entry__Competito__15502E78" Association="HardcardModel.Store.FK__Entry__Competito__15502E78">
             <End Role="Competitor" EntitySet="Competitor" />
             <End Role="Entry" EntitySet="Entry" />
           </AssociationSet>
-          <AssociationSet Name="FK__Entry__SessionId__2B3F6F97" Association="HardcardModel.Store.FK__Entry__SessionId__2B3F6F97">
+          <AssociationSet Name="FK__Entry__SessionId__164452B1" Association="HardcardModel.Store.FK__Entry__SessionId__164452B1">
             <End Role="Session" EntitySet="Session" />
             <End Role="Entry" EntitySet="Entry" />
           </AssociationSet>
-          <AssociationSet Name="FK__EventClas__Class__108B795B" Association="HardcardModel.Store.FK__EventClas__Class__108B795B">
+          <AssociationSet Name="FK__EventClas__Class__0519C6AF" Association="HardcardModel.Store.FK__EventClas__Class__0519C6AF">
             <End Role="RaceClass" EntitySet="RaceClass" />
             <End Role="EventClass" EntitySet="EventClass" />
           </AssociationSet>
-          <AssociationSet Name="FK__EventClas__Event__117F9D94" Association="HardcardModel.Store.FK__EventClas__Event__117F9D94">
+          <AssociationSet Name="FK__EventClas__Event__060DEAE8" Association="HardcardModel.Store.FK__EventClas__Event__060DEAE8">
             <End Role="Event" EntitySet="Event" />
             <End Role="EventClass" EntitySet="EventClass" />
           </AssociationSet>
-          <AssociationSet Name="FK__Passing__Session__25869641" Association="HardcardModel.Store.FK__Passing__Session__25869641">
+          <AssociationSet Name="FK__Passing__Session__1273C1CD" Association="HardcardModel.Store.FK__Passing__Session__1273C1CD">
             <End Role="Session" EntitySet="Session" />
             <End Role="Passing" EntitySet="Passing" />
           </AssociationSet>
-          <AssociationSet Name="FK__Penality__Sessio__20C1E124" Association="HardcardModel.Store.FK__Penality__Sessio__20C1E124">
+          <AssociationSet Name="FK__Penality__Sessio__0F975522" Association="HardcardModel.Store.FK__Penality__Sessio__0F975522">
             <End Role="Session" EntitySet="Session" />
             <End Role="Penality" EntitySet="Penality" />
           </AssociationSet>
-          <AssociationSet Name="FK__Session__EventCl__1BFD2C07" Association="HardcardModel.Store.FK__Session__EventCl__1BFD2C07">
+          <AssociationSet Name="FK__Session__EventCl__0CBAE877" Association="HardcardModel.Store.FK__Session__EventCl__0CBAE877">
             <End Role="EventClass" EntitySet="EventClass" />
             <End Role="Session" EntitySet="Session" />
           </AssociationSet>
-          <AssociationSet Name="FK__Standing__EntryI__33D4B598" Association="HardcardModel.Store.FK__Standing__EntryI__33D4B598">
+          <AssociationSet Name="FK__Standing__EntryI__1B0907CE" Association="HardcardModel.Store.FK__Standing__EntryI__1B0907CE">
             <End Role="Entry" EntitySet="Entry" />
             <End Role="Standing" EntitySet="Standing" />
           </AssociationSet>
@@ -209,7 +209,7 @@
           <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="SyncDate" Type="datetime" Nullable="false" />
         </EntityType>
-        <Association Name="FK__Competito__Athle__173876EA">
+        <Association Name="FK__Competito__Athle__09DE7BCC">
           <End Role="Athlete" Type="HardcardModel.Store.Athlete" Multiplicity="1" />
           <End Role="Competitor" Type="HardcardModel.Store.Competitor" Multiplicity="*" />
           <ReferentialConstraint>
@@ -221,7 +221,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Competito__Event__164452B1">
+        <Association Name="FK__Competito__Event__08EA5793">
           <End Role="EventClass" Type="HardcardModel.Store.EventClass" Multiplicity="1" />
           <End Role="Competitor" Type="HardcardModel.Store.Competitor" Multiplicity="*" />
           <ReferentialConstraint>
@@ -233,7 +233,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Entry__Competito__2A4B4B5E">
+        <Association Name="FK__Entry__Competito__15502E78">
           <End Role="Competitor" Type="HardcardModel.Store.Competitor" Multiplicity="1" />
           <End Role="Entry" Type="HardcardModel.Store.Entry" Multiplicity="*" />
           <ReferentialConstraint>
@@ -245,7 +245,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Entry__SessionId__2B3F6F97">
+        <Association Name="FK__Entry__SessionId__164452B1">
           <End Role="Session" Type="HardcardModel.Store.Session" Multiplicity="1" />
           <End Role="Entry" Type="HardcardModel.Store.Entry" Multiplicity="*" />
           <ReferentialConstraint>
@@ -257,7 +257,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__EventClas__Class__108B795B">
+        <Association Name="FK__EventClas__Class__0519C6AF">
           <End Role="RaceClass" Type="HardcardModel.Store.RaceClass" Multiplicity="1" />
           <End Role="EventClass" Type="HardcardModel.Store.EventClass" Multiplicity="*" />
           <ReferentialConstraint>
@@ -269,7 +269,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__EventClas__Event__117F9D94">
+        <Association Name="FK__EventClas__Event__060DEAE8">
           <End Role="Event" Type="HardcardModel.Store.Event" Multiplicity="1" />
           <End Role="EventClass" Type="HardcardModel.Store.EventClass" Multiplicity="*" />
           <ReferentialConstraint>
@@ -281,7 +281,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Passing__Session__25869641">
+        <Association Name="FK__Passing__Session__1273C1CD">
           <End Role="Session" Type="HardcardModel.Store.Session" Multiplicity="0..1" />
           <End Role="Passing" Type="HardcardModel.Store.Passing" Multiplicity="*" />
           <ReferentialConstraint>
@@ -293,7 +293,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Penality__Sessio__20C1E124">
+        <Association Name="FK__Penality__Sessio__0F975522">
           <End Role="Session" Type="HardcardModel.Store.Session" Multiplicity="1" />
           <End Role="Penality" Type="HardcardModel.Store.Penality" Multiplicity="*" />
           <ReferentialConstraint>
@@ -305,7 +305,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Session__EventCl__1BFD2C07">
+        <Association Name="FK__Session__EventCl__0CBAE877">
           <End Role="EventClass" Type="HardcardModel.Store.EventClass" Multiplicity="1" />
           <End Role="Session" Type="HardcardModel.Store.Session" Multiplicity="*" />
           <ReferentialConstraint>
@@ -317,7 +317,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Standing__EntryI__33D4B598">
+        <Association Name="FK__Standing__EntryI__1B0907CE">
           <End Role="Entry" Type="HardcardModel.Store.Entry" Multiplicity="1" />
           <End Role="Standing" Type="HardcardModel.Store.Standing" Multiplicity="*" />
           <ReferentialConstraint>
@@ -329,8 +329,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="HardcardModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
@@ -488,6 +487,7 @@
           <Property Name="Invalid" Type="Boolean" />
           <Property Name="LastUpdated" Type="DateTime" />
           <NavigationProperty Name="Session" Relationship="HardcardModel.FK__Passing__Session__25869641" FromRole="Passing" ToRole="Session" />
+          <Property Type="DateTime" Name="PassingTime" Nullable="false" />
         </EntityType>
         <EntityType Name="Penality">
           <Key>
@@ -536,6 +536,8 @@
           <NavigationProperty Name="EventClass" Relationship="HardcardModel.FK__Session__EventCl__1BFD2C07" FromRole="Session" ToRole="EventClass" />
           <NavigationProperty Name="Passings" Relationship="HardcardModel.FK__Passing__Session__25869641" FromRole="Session" ToRole="Passing" />
           <NavigationProperty Name="Penalities" Relationship="HardcardModel.FK__Penality__Sessio__20C1E124" FromRole="Session" ToRole="Penality" />
+          <Property Type="Int64" Name="RaceStartTime_1" />
+          <Property Type="Int64" Name="RaceSchedStopTime_1" />
         </EntityType>
         <EntityType Name="Standing">
           <Key>
@@ -550,6 +552,7 @@
           <Property Name="AvgLapTime" Type="Int64" />
           <Property Name="WorstLapTime" Type="Int64" />
           <NavigationProperty Name="Entry" Relationship="HardcardModel.FK__Standing__EntryI__33D4B598" FromRole="Standing" ToRole="Entry" />
+          <Property Type="Int64" Name="PassingTime" />
         </EntityType>
         <EntityType Name="Synchronization">
           <Key>
@@ -742,7 +745,7 @@
             <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="Passings"><EntityTypeMapping TypeName="HardcardModel.Passing"><MappingFragment StoreEntitySet="Passing">
-            <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
             <ScalarProperty Name="SessionId" ColumnName="SessionId" />
             <ScalarProperty Name="RFID" ColumnName="RFID" />
             <ScalarProperty Name="RaceTime" ColumnName="RaceTime" />
@@ -774,18 +777,18 @@
             <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="Sessions"><EntityTypeMapping TypeName="HardcardModel.Session"><MappingFragment StoreEntitySet="Session">
-            <ScalarProperty Name="Id" ColumnName="Id" />
+            <ScalarProperty Name="RaceSchedStopTime_1" ColumnName="RaceSchedStopTime" />
+                <ScalarProperty Name="RaceStartTime_1" ColumnName="RaceStartTime" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
             <ScalarProperty Name="EventClassId" ColumnName="EventClassId" />
             <ScalarProperty Name="StartTime" ColumnName="StartTime" />
             <ScalarProperty Name="SchedStopTime" ColumnName="SchedStopTime" />
-            <ScalarProperty Name="RaceStartTime" ColumnName="RaceStartTime" />
-            <ScalarProperty Name="RaceSchedStopTime" ColumnName="RaceSchedStopTime" />
             <ScalarProperty Name="SchedLaps" ColumnName="SchedLaps" />
             <ScalarProperty Name="RollingStart" ColumnName="RollingStart" />
             <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="Standings"><EntityTypeMapping TypeName="HardcardModel.Standing"><MappingFragment StoreEntitySet="Standing">
-            <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
             <ScalarProperty Name="EntryId" ColumnName="EntryId" />
             <ScalarProperty Name="Position" ColumnName="Position" />
             <ScalarProperty Name="LapsCompleted" ColumnName="LapsCompleted" />

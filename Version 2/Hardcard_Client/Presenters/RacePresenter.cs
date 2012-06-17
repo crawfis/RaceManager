@@ -27,11 +27,8 @@ namespace RacingEventsTrackSystem.Presenters
         private long currentSession;
         private String currentEvent;
 
-        private NetworkListener networkListener;
+        private HardcardServer server;
         private TagSubscriber passingsLogger;
-        private ProcessBufferedReadings passingDetector;
-        private PriorityCollectionBlocking<TagInfo> passingsQueue;
-        private BufferReadings passingsBuffer;
 
         private Object lockObject;
 
@@ -120,27 +117,15 @@ namespace RacingEventsTrackSystem.Presenters
 
         public void StartRace()
         {
-            int queueCapacity = 10240;
 
-            _passingsList = new ObservableCollection<Passing>();
+            HardcardServer.NetworkPort = networkPort;
+            server = new HardcardServer("Hardcard Race System");
+            passingsLogger = new Hardcard.Scoring.TagSubscriber(UpdatePassingsList);
+            passingsLogger.AddPublisher(server.PassingsPublisher);
 
-            /*Start nework listener and detect passings*/
-            passingsLogger = new TagSubscriber(UpdatePassingsList);
+            server.Start();
 
-            passingsQueue = new PriorityCollectionBlocking<TagInfo>("Queue", queueCapacity);
-
-            passingsBuffer = new BufferReadings(passingsQueue);
-            passingDetector = new ProcessBufferedReadings("Pass Detector", passingsQueue);
-
-            networkListener = new NetworkListener("Race Host", networkPort);
-
-            passingsBuffer.AddPublisher(networkListener);
-            passingsLogger.AddPublisher(passingDetector);
-
-            passingDetector.Start();
-            networkListener.Start();
-
-            StatusText = "Race Started";
+            StatusText = "Hardcard Server Started";
         }
 
         public void UpdatePassingsList(TagReadEventArgs e)
@@ -148,26 +133,18 @@ namespace RacingEventsTrackSystem.Presenters
             lock (lockObject)
             {
                 Passing newPassing = new Passing();
-                //The tags receved from the simulator will not be valid 
-                //in the current database, seeting it to default - 1000.
-                /*
-                long id;
-                if (long.TryParse(e.TagInfo.ID.ToString(), out id))
-                {
-                    newPassing.RFID = id;
-                }
-                else
-                {
-                    newPassing.RFID = 0;
-                };*/
-                newPassing.RFID = 1000;
-                newPassing.SessionId = currentSession;
+                // TODO: Change the database to string or only allow Hardcard tags to be longs.
+                long rfid = 1000;
+                Int64.TryParse(e.TagInfo.ID.Value, out rfid);
+                newPassing.RFID = rfid;
+                newPassing.SessionId = null;
                 newPassing.RaceTime = e.TagInfo.Time;
+                newPassing.PassingTime = AllSessionsPresenter.ConvertFromUnixTime(newPassing.RaceTime);
                 newPassing.LastUpdated = DateTime.UtcNow;
                 hardcardContext.AddToPassings(newPassing);
                 hardcardContext.SaveChanges();
 
-                List<Passing> temp_passings_list = new List<Passing>();
+                List<Passing> temp_passings_list;
                 temp_passings_list = PassingsList.ToList();
                 temp_passings_list.Add(newPassing);
                 PassingsList = new ObservableCollection<Passing>(temp_passings_list.ToList());
@@ -176,9 +153,8 @@ namespace RacingEventsTrackSystem.Presenters
 
         public void StopRace()
         {
-            passingDetector.Exit();
-            networkListener.End();
-            StatusText = "Race Stopped";
+            server.End();
+            StatusText = "Hardcard Server Stopped";
         }
 
         public void FakeStartRace()

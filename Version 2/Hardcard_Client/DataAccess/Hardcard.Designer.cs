@@ -2063,12 +2063,14 @@ namespace RacingEventsTrackSystem.DataAccess
         /// <param name="id">Initial value of the Id property.</param>
         /// <param name="rFID">Initial value of the RFID property.</param>
         /// <param name="raceTime">Initial value of the RaceTime property.</param>
-        public static Passing CreatePassing(global::System.Int64 id, global::System.Int64 rFID, global::System.Int64 raceTime)
+        /// <param name="passingTime">Initial value of the PassingTime property.</param>
+        public static Passing CreatePassing(global::System.Int64 id, global::System.Int64 rFID, global::System.Int64 raceTime, global::System.DateTime passingTime)
         {
             Passing passing = new Passing();
             passing.Id = id;
             passing.RFID = rFID;
             passing.RaceTime = raceTime;
+            passing.PassingTime = passingTime;
             return passing;
         }
 
@@ -2269,6 +2271,30 @@ namespace RacingEventsTrackSystem.DataAccess
         private Nullable<global::System.DateTime> _LastUpdated;
         partial void OnLastUpdatedChanging(Nullable<global::System.DateTime> value);
         partial void OnLastUpdatedChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime PassingTime
+        {
+            get
+            {
+                return _PassingTime;
+            }
+            set
+            {
+                OnPassingTimeChanging(value);
+                ReportPropertyChanging("PassingTime");
+                _PassingTime = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("PassingTime");
+                OnPassingTimeChanged();
+            }
+        }
+        private global::System.DateTime _PassingTime;
+        partial void OnPassingTimeChanging(global::System.DateTime value);
+        partial void OnPassingTimeChanged();
 
         #endregion
     
@@ -3125,6 +3151,54 @@ namespace RacingEventsTrackSystem.DataAccess
         private Nullable<global::System.DateTime> _LastUpdated;
         partial void OnLastUpdatedChanging(Nullable<global::System.DateTime> value);
         partial void OnLastUpdatedChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int64> RaceStartTime_1
+        {
+            get
+            {
+                return _RaceStartTime_1;
+            }
+            set
+            {
+                OnRaceStartTime_1Changing(value);
+                ReportPropertyChanging("RaceStartTime_1");
+                _RaceStartTime_1 = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("RaceStartTime_1");
+                OnRaceStartTime_1Changed();
+            }
+        }
+        private Nullable<global::System.Int64> _RaceStartTime_1;
+        partial void OnRaceStartTime_1Changing(Nullable<global::System.Int64> value);
+        partial void OnRaceStartTime_1Changed();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int64> RaceSchedStopTime_1
+        {
+            get
+            {
+                return _RaceSchedStopTime_1;
+            }
+            set
+            {
+                OnRaceSchedStopTime_1Changing(value);
+                ReportPropertyChanging("RaceSchedStopTime_1");
+                _RaceSchedStopTime_1 = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("RaceSchedStopTime_1");
+                OnRaceSchedStopTime_1Changed();
+            }
+        }
+        private Nullable<global::System.Int64> _RaceSchedStopTime_1;
+        partial void OnRaceSchedStopTime_1Changing(Nullable<global::System.Int64> value);
+        partial void OnRaceSchedStopTime_1Changed();
 
         #endregion
     
@@ -3457,6 +3531,30 @@ namespace RacingEventsTrackSystem.DataAccess
         private Nullable<global::System.Int64> _WorstLapTime;
         partial void OnWorstLapTimeChanging(Nullable<global::System.Int64> value);
         partial void OnWorstLapTimeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int64> PassingTime
+        {
+            get
+            {
+                return _PassingTime;
+            }
+            set
+            {
+                OnPassingTimeChanging(value);
+                ReportPropertyChanging("PassingTime");
+                _PassingTime = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("PassingTime");
+                OnPassingTimeChanged();
+            }
+        }
+        private Nullable<global::System.Int64> _PassingTime;
+        partial void OnPassingTimeChanging(Nullable<global::System.Int64> value);
+        partial void OnPassingTimeChanged();
 
         #endregion
     

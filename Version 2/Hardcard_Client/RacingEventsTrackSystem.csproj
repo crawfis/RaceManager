@@ -300,7 +300,6 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
-    <None Include="RacingEventsTrackSystem_TemporaryKey.pfx" />
     <None Include="Web References\hardcardserver\Competitor.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
