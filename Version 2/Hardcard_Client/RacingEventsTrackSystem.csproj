@@ -118,10 +118,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="DataAccess\Hardcard.Designer.cs">
+    <Compile Include="DataAccess\Model.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Hardcard.edmx</DependentUpon>
+      <DependentUpon>Model.edmx</DependentUpon>
     </Compile>
     <Compile Include="Model\States.cs" />
     <Compile Include="Model\SynchronizeModel.cs" />
@@ -290,9 +290,9 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="ClassDiagram1.cd" />
-    <EntityDeploy Include="DataAccess\Hardcard.edmx">
+    <EntityDeploy Include="DataAccess\Model.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Hardcard.Designer.cs</LastGenOutput>
+      <LastGenOutput>Model.Designer.cs</LastGenOutput>
     </EntityDeploy>
     <None Include="Properties\DataSources\RacingEventsTrackSystem.DataAccess.HardcardEntities1.datasource" />
     <None Include="Properties\Settings.settings">

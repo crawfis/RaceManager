@@ -139,7 +139,7 @@ namespace RacingEventsTrackSystem.Presenters
                 newPassing.RFID = rfid;
                 newPassing.SessionId = null;
                 newPassing.RaceTime = e.TagInfo.Time;
-                newPassing.PassingTime = AllSessionsPresenter.ConvertFromUnixTime(newPassing.RaceTime);
+                //newPassing.PassingTime = AllSessionsPresenter.ConvertFromUnixTime(newPassing.RaceTime);
                 newPassing.LastUpdated = DateTime.UtcNow;
                 hardcardContext.AddToPassings(newPassing);
                 hardcardContext.SaveChanges();

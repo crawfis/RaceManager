@@ -82,17 +82,6 @@
                         <TextBlock> Create new Event</TextBlock>
                     </Button.ToolTip>
                 </Button>
-                <Button Content="Load Existing Event"  Click="LoadExistingEvent_Click" Width="108" HorizontalAlignment="Left" FontWeight="Normal" >
-                    <Button.ToolTip>
-                        <TextBlock> Load Data for Existing Event</TextBlock>
-                    </Button.ToolTip>
-                </Button>
-                <Button Content="Backup Current Event"  Click="BackupCurrentEvent_Click" Width="129" HorizontalAlignment="Left" FontWeight="Normal" >
-                    <Button.ToolTip>
-                        <TextBlock> Delete Data for Current Event except Race Classes and Athletes</TextBlock>
-                    </Button.ToolTip>
-                </Button>
-
             </StackPanel>
         </DockPanel>
 
