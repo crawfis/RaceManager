@@ -133,13 +133,11 @@ namespace RacingEventsTrackSystem.Presenters
             lock (lockObject)
             {
                 Passing newPassing = new Passing();
-                // TODO: Change the database to string or only allow Hardcard tags to be longs.
                 long rfid = 1000;
                 Int64.TryParse(e.TagInfo.ID.Value, out rfid);
                 newPassing.RFID = rfid;
                 newPassing.SessionId = null;
                 newPassing.RaceTime = e.TagInfo.Time;
-                //newPassing.PassingTime = AllSessionsPresenter.ConvertFromUnixTime(newPassing.RaceTime);
                 newPassing.LastUpdated = DateTime.UtcNow;
                 hardcardContext.AddToPassings(newPassing);
                 hardcardContext.SaveChanges();
@@ -207,8 +205,6 @@ namespace RacingEventsTrackSystem.Presenters
                     newPassing.SessionId = 1;
                     racetime = racetime + id - 10000 + (laptime%3);
                     newPassing.RaceTime = racetime;
-                    //newPassing.LapTime = id - 10000 + (laptime%3);
-                    //newPassing.Lap = lap;
                     hardcardContext.AddToPassings(newPassing);
                     hardcardContext.SaveChanges();
                 }
@@ -227,22 +223,12 @@ namespace RacingEventsTrackSystem.Presenters
         }
         public void SaveRace<T>(Session session, PresenterBase<T> presenter)
         {
-            /*    
-            if (CurrentEcent.Contains(competitor))
-                AllCompetitors.Remove(competitor);
-            _competitorRepository.Delete(competitor);
-            */
             MessageBox.Show("N/E");
             StatusText = string.Format("Event '{0}' was deleted.", session.EventClassId);
         }
 
         public void DeleteRace(Session session)
         {
-            /*    
-            if (CurrentEcent.Contains(competitor))
-                AllCompetitors.Remove(competitor);
-            _competitorRepository.Delete(competitor);
-            */
             MessageBox.Show("N/E");
             StatusText = string.Format("Event '{0}' was deleted.", session.StartTime);
         }

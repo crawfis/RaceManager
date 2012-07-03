@@ -64,8 +64,9 @@
                     <TextBlock Text="Race Classes for Current Event" />
                 </Border>
             </GroupBox.Header>
+                <!--//??? ItemsSource="{Binding ApplicationPresenter.AllEventsPresenter.AllEventClasses}" DisplayMemberPath="DataToDisplay" -->
                 <ListView x:Name="lsbxEventClasses"  VerticalAlignment="Stretch" BorderThickness="0" Background="AliceBlue" 
-                      ItemsSource="{Binding ApplicationPresenter.AllEventsPresenter.AllEventClasses}" DisplayMemberPath="DataToDisplay"
+                      ItemsSource="{Binding ApplicationPresenter.AllEventsPresenter.CurrentEvent.EventClasses}" DisplayMemberPath="DataToDisplay"
                       SelectedItem="{Binding ApplicationPresenter.AllEventsPresenter.CurrentEventClass}" FontWeight="Normal">
                 <ListView.View>
                     <GridView>

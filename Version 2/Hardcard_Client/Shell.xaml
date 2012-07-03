@@ -18,7 +18,7 @@
                         <view:EventView x:Name="eventView" DockPanel.Dock="Right" Height="434" BorderBrush="Black"  />
                     </Grid>
                 </DockPanel>
-                <StatusBar VerticalAlignment="Center" Height="30" Margin="0,468,0,3">
+                <StatusBar  x:Name="stbaAllEvents" VerticalAlignment="Center" Height="30" Margin="0,468,0,3">
                     <StatusBarItem VerticalAlignment="Center" Height="30">
                         <TextBlock Text="{Binding StatusText}" />
                     </StatusBarItem>
@@ -34,7 +34,7 @@
                         <view:RaceClassView x:Name="raceClassView" DockPanel.Dock="Right" Height="434" BorderBrush="Black"  />
                     </Grid>
                 </DockPanel>
-                <StatusBar VerticalAlignment="Center" Height="30" Margin="0,468,0,3">
+                <StatusBar x:Name="stbaAllRaceClasses" VerticalAlignment="Center" Height="30" Margin="0,468,0,3">
                     <StatusBarItem VerticalAlignment="Center" Height="30">
                         <TextBlock Text="{Binding StatusText}" />
                     </StatusBarItem>

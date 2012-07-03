@@ -7,10 +7,15 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <DockPanel>
         <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button Content="Delete Event" Click="DeleteEvent" Width="Auto"  >
-            <Button.ToolTip>
-                <TextBlock> Delete selected Event from the DataBase </TextBlock>
-            </Button.ToolTip>
+            <Button Content="Delete Event" Click="DeleteEvent_Click" Width="Auto"  >
+                <Button.ToolTip>
+                    <TextBlock> Delete selected Event from the DataBase</TextBlock>
+                </Button.ToolTip>
+            </Button>
+            <Button Content="Create New Event" Click="CreateNewEvent_Click" Width="Auto"  >
+                <Button.ToolTip>
+                    <TextBlock> Create new Event</TextBlock>
+                </Button.ToolTip>
             </Button>
         </StackPanel>
 
@@ -20,10 +25,10 @@
         </Border>
 
         <ScrollViewer x:Name="event_sbsv" VerticalScrollBarVisibility="Auto">
+            <!--MouseUp="EventsList_MouseUp" -->
             <ListView x:Name="lsvwEventsList"  VerticalAlignment="Stretch" BorderThickness="0"
                           ItemsSource="{Binding AllEvents}"
                           DisplayMemberPath="DataToDisplay"
-                          MouseUp="EventsList_MouseUp"                       
                           SelectedItem="{Binding CurrentEvent}">
                 <ListView.View>
                     <GridView>

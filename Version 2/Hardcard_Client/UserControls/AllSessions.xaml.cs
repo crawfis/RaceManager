@@ -32,7 +32,7 @@ namespace RacingEventsTrackSystem.UserControls
 
         private void ExcludeSession(object sender, RoutedEventArgs e)
         {
-            Presenter.ExcludeSessionFromEvent(Presenter.CurrentSessionForEvent);
+            Presenter.DeleteSessionFromEvent(Presenter.CurrentSessionForEvent);
         }
     }
 }

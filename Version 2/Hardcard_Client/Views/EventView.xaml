@@ -6,7 +6,7 @@
              mc:Ignorable="d" >
 
     <DockPanel >
-        <DockPanel DockPanel.Dock="Top" >
+        <DockPanel DockPanel.Dock="Top" Height="155">
             <GroupBox DockPanel.Dock="Left" BorderBrush="{StaticResource lightBlueBrush}"  Height="145" Width="290" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" IsTabStop="False" OverridesDefaultStyle="False">
                 <GroupBox.Header>
                     <Border Background="Green"
@@ -46,8 +46,9 @@
                         <TextBlock Text="List of Classes" />
                     </Border>
                 </GroupBox.Header>
+                <!--//???ItemsSource="{Binding AllEventClasses}" DisplayMemberPath="DataToDisplay"-->
                 <ListView x:Name="ClassList" VerticalAlignment="Stretch" BorderThickness="0" 
-                          ItemsSource="{Binding AllEventClasses}" DisplayMemberPath="DataToDisplay"
+                          ItemsSource="{Binding CurrentEvent.EventClasses}" DisplayMemberPath="DataToDisplay"
                           Background="AliceBlue" >
                     <ListView.View>
                         <GridView>
@@ -77,11 +78,6 @@
                     <TextBlock> Save Edited Event Info or Save New Event</TextBlock>
                 </Button.ToolTip>
                 </Button>
-                <Button Content="New Event"  Click="NewEvent_Click" Width="108" HorizontalAlignment="Left" FontWeight="Normal" >
-                    <Button.ToolTip>
-                        <TextBlock> Create new Event</TextBlock>
-                    </Button.ToolTip>
-                </Button>
             </StackPanel>
         </DockPanel>
 
@@ -101,7 +97,7 @@
                         <GridViewColumn Header="City" DisplayMemberBinding="{Binding Athlete.City}" />
                         <GridViewColumn Header="State" DisplayMemberBinding="{Binding Athlete.State}" />
                         <GridViewColumn Header="Country" DisplayMemberBinding="{Binding Athlete.Country}" />
-                        <GridViewColumn Header="Event Id" DisplayMemberBinding="{Binding EventClass.EventId}" />
+                        <GridViewColumn Header="Event Name" DisplayMemberBinding="{Binding EventClass.Event.EventName}" />
                     </GridView>
                 </ListView.View>
             </ListView>

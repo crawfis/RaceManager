@@ -33,8 +33,8 @@
                   ItemsSource="{Binding StandingsForSession}" FontWeight="Normal">
                     <ListView.View>
                         <GridView>
-                            <!--GridViewColumn Header="Sess Id" DisplayMemberBinding="{Binding Entry.SessionId}" /-->
-                            <!--GridViewColumn Header="Comp Id" DisplayMemberBinding="{Binding Entry.CompetitorId}" /-->
+                            <!--<GridViewColumn Header="Sess Id" DisplayMemberBinding="{Binding Entry.SessionId}" />-->
+                            <!--<GridViewColumn Header="Comp Id" DisplayMemberBinding="{Binding Entry.CompetitorId}" /> -->
                             <GridViewColumn Header="Last Name"  DisplayMemberBinding="{Binding Entry.Competitor.Athlete.LastName}" />
                             <GridViewColumn Header="First Name" DisplayMemberBinding="{Binding Entry.Competitor.Athlete.FirstName}" />
                             <GridViewColumn Header="Comp No"    DisplayMemberBinding="{Binding Entry.CompetitionNo}" />

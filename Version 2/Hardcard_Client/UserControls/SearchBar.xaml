@@ -14,8 +14,8 @@
             <TextBlock DockPanel.Dock="Left"  Text="Event: "  Foreground="White"  VerticalAlignment="Center"  FontSize="18"  FontFamily="Trebuchet" FontWeight="Bold" />
             <TextBlock DockPanel.Dock="Left" Text="{Binding CurrentEvent.EventName}" Width="300" Name="txblEventName"     FontWeight="Bold"   Foreground="White"  VerticalAlignment="Center"  FontSize="18"  FontFamily="Trebuchet" />
             
-            <TextBox x:Name="searchText" DockPanel.Dock="Right" Width="150" Background="White"  TextChanged="SearchText_Changed" />
-            <Label DockPanel.Dock="Right" Content="Search:"  FontWeight="Bold"   Foreground="White" />
+            <!--<TextBox x:Name="searchText" DockPanel.Dock="Right" Width="150" Background="White"  TextChanged="SearchText_Changed" />
+            <Label DockPanel.Dock="Right" Content="Search:"  FontWeight="Bold"   Foreground="White" />-->
         </DockPanel>
     </Border>
 </UserControl>

@@ -66,7 +66,6 @@ namespace RacingEventsTrackSystem.Presenters
             set
             {
                 _currentAthlete = value;
-                // Set EventClasses for CurrentAthlete
                 // Copy data from Database into  EventClassesForAthlete.
                 EventClassesForAthlete = InitEventClassesForAthlete(_currentAthlete);
                 OnPropertyChanged("CurrentAthlete");
@@ -115,15 +114,53 @@ namespace RacingEventsTrackSystem.Presenters
         // 
         public void CreateNewAthlete()
         {
+            var hc = _applicationPresenter.HardcardContext; 
             Athlete newAthlete = new Athlete();
-            newAthlete.FirstName = "Unknown";
-            newAthlete.LastName = "Unknown";
+            newAthlete.Id = 0;
+            long max_id = 0;
+            if ((from c in hc.Athletes select c).Count() > 0) // not empty table
+            {
+                max_id = (from e in hc.Athletes select e.Id).Max();
+                newAthlete.Id = ++max_id;
+            }
+
+            newAthlete.FirstName = "FirstName" + newAthlete.Id.ToString();
+            newAthlete.LastName = "LastName" + newAthlete.Id.ToString();
+            newAthlete.Gender = "F";
             newAthlete.DOB = DateTime.Now;
+            newAthlete.AddressLine1 = "1111 High St.";
+            newAthlete.AddressLine2 = "2222 High St.";
+            newAthlete.AddressLine3 = "3333 High St.";
+            newAthlete.City = "Dublin";
+            newAthlete.State = "Oh";
+            newAthlete.PostalCode = "43017";
+            newAthlete.Country = "USA";
+            newAthlete.Phone = "(614)614-6145";
+            hc.Athletes.AddObject(newAthlete);
+            hc.SaveChanges();
+            AllAthletes = InitAllAthletes();
             CurrentAthlete = newAthlete;
-            SaveAthlete(newAthlete);
-            OpenAthlete(newAthlete);
         }
 
+
+        // 
+        // Create Athletes collection and set default CurrentAthlete 
+        //
+        public ObservableCollection<Athlete> InitAllAthletes()
+        {
+            ObservableCollection<Athlete> Tmp = new ObservableCollection<Athlete>();
+            CurrentAthlete = null;
+
+            var hc = _applicationPresenter.HardcardContext;
+            List<Athlete> query = (from c in hc.Athletes select c).ToList();
+            if (query.Count() > 0)
+            {
+                Tmp = new ObservableCollection<Athlete>(query);
+                CurrentAthlete = Tmp.First();
+            }
+
+            return Tmp;
+        }
         //
         // Update existing Athlete or add new entry if Athlete is not in DataContext.Athletes
         //
@@ -131,48 +168,8 @@ namespace RacingEventsTrackSystem.Presenters
         {
             if (athlete == null) return;
             if (!ValidateAthlete(athlete)) return;
-
-            var hc = _applicationPresenter.HardcardContext;
-            // If athlete is in Athlete DataContext then just update it
-            if (IsInAthlete(athlete))
-            {
-                //update Athlete in DataContext.Athletes
-                Athlete dbAthlete = hc.Athletes.Single(p => p.Id == athlete.Id);
-                hc.ApplyCurrentValues(dbAthlete.EntityKey.EntitySetName, athlete);
-                StatusText = string.Format("Athlete '{0}' was updated.", athlete.ToString());
-            }
-            else
-            {
-                //Create new Athlete in DataContext.Athletes
-                //Use if (contact.Id == Guid.Empty) contact.Id = Guid.NewGuid(); to get Id.
-                long max_id = 0;
-                //var q = eventClasses.DefaultIfEmpty();// not empty table
-                if ((from c in hc.Athletes select c).Count() > 0) // not empty table
-                {
-                    max_id = (from c in hc.Athletes select c.Id).Max();
-                }
-                athlete.Id = ++max_id;
-                hc.Athletes.AddObject(athlete);
-                StatusText = string.Format("Athlete '{0}' was added to Athlete table.", athlete.ToString());
-            }
-
-            // Update AllAthletes Collection            
-            int i = AllAthletes.IndexOf(athlete);
-            if (i >= 0)
-            {
-                // If athlete is in AllAthletes Collection then just update it
-                AllAthletes.RemoveAt(i); 
-                AllAthletes.Insert(i, athlete);
-                CurrentAthlete = athlete; // Current event was just deleted before
-            }
-            else
-            {
-                AllAthletes.Add(athlete);
-            }
-
-            hc.SaveChanges();
-            OpenAthlete(athlete);
-            StatusText = string.Format("Athlete '{0}' was saved.", athlete.LastName);
+            _applicationPresenter.HardcardContext.SaveChanges();
+            StatusText = string.Format("Athlete '{0} {1}' was saved.", athlete.FirstName, athlete.LastName);
         }
 
         //
@@ -189,7 +186,6 @@ namespace RacingEventsTrackSystem.Presenters
 
         //
         // Returns false if some input data for athlete are not match the DataBase fields
-        // (!!!Replace with interective WPF validation during editing)
         public bool ValidateAthlete(Athlete athlete)
         {
             if (athlete.FirstName == null && athlete.LastName == null)
@@ -282,6 +278,26 @@ namespace RacingEventsTrackSystem.Presenters
             }
             return Tmp;
         }
+
+        // Copy Value from athlete to DbAthlete
+        public void UpdateAthlete(Athlete athlete, Athlete DbAthlete)
+        {
+            if (athlete == null || DbAthlete == null) return;
+            DbAthlete.FirstName   =  athlete.FirstName; 
+            DbAthlete.LastName   =  athlete.LastName;
+            DbAthlete.DOB = athlete.DOB;
+            DbAthlete.Gender = athlete.Gender;
+            DbAthlete.AddressLine1 = athlete.AddressLine1;
+            DbAthlete.AddressLine2 = athlete.AddressLine2;
+            DbAthlete.AddressLine3 = athlete.AddressLine3;
+            DbAthlete.City = athlete.City;
+            DbAthlete.State = athlete.State;
+            DbAthlete.PostalCode = athlete.PostalCode;
+            DbAthlete.Country = athlete.Country;
+            DbAthlete.Phone = athlete.Phone;
+        }
+
+
 
 
         public void DisplayCurrentAthlete()

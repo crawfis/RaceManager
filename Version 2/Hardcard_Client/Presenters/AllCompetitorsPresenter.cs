@@ -15,22 +15,21 @@ using System.Data.Objects;
 
 namespace RacingEventsTrackSystem.Presenters
 {
-    public struct CompetitorInfo
+    public class CompetitorInfo
     {
         public EventClass EventClass;
         public string status; // = bool Deleted in Competitor class
-        public string vehicleType;
-        public string vehicleModel;
-        public int    vehicleCC;
+        public string vehicleType = "Ford";
+        public string vehicleModel = "Ford150";
+        public int vehicleCC = 150;
     }
 
     public partial class AllCompetitorsPresenter : PresenterBase<Shell>
     {
         private readonly ApplicationPresenter _applicationPresenter;
 
-        // Keeps Competitors for the CurrentEvent
-        // any control changing CurrentEvent has to reset that collection.
         private ObservableCollection<Competitor> _allCompetitorsForEvent;
+        
         // Competitor selected in _allCompetitorsForEvent list.
         private Competitor _currentCompetitorForEvent;
 
@@ -111,9 +110,7 @@ namespace RacingEventsTrackSystem.Presenters
         {
             if (athlete == null || eventClass == null || eventClass.Id == 0) return; //Athlete not chosen
             var hc = _applicationPresenter.HardcardContext;
-            // add convertor constructor to Competitor    
             Competitor competitor = CreateNewCompetitor(athlete, eventClass.Id);
-            //competitor.EventClassId = eventClass.Id;
             competitor.VehicleType = vehicleType;
             competitor.VehicleModel = vehicleModel;
             competitor.VehicleCC = vehicleCC;
@@ -132,7 +129,9 @@ namespace RacingEventsTrackSystem.Presenters
                     max_id = (from c in hc.Competitors select c.Id).Max();
                 }
                 competitor.Id = ++max_id;
-                hc.Competitors.AddObject(competitor);
+                competitor.Athlete = athlete;
+                athlete.Competitors.Add(competitor);
+                //hc.Competitors.AddObject(competitor);
                 hc.SaveChanges();
             }
             else
@@ -173,33 +172,20 @@ namespace RacingEventsTrackSystem.Presenters
         //
         // Remove Competitor from Competitors
         //
-        public void ExcludeCompetitorFromCompetitorsList(Competitor competitor)
+        public void DeleteCompetitor(Competitor competitor)
         {
             if (competitor == null) return;
             var hc = _applicationPresenter.HardcardContext;
             string status = string.Format("Competitor '{0}' was deleted.", competitor.ToString());
 
-            if (IsCompetitorInCompetitor(competitor))
+            if (competitor.Entries.Count() > 0)
             {
-                if (IsCompetitorInEntry(competitor))
-                {   // Remove record from Entry first for the Competitor
-                    List<Entry> query = (from c in competitor.Entries 
-                                               select c).ToList();
-                    foreach (Entry e in query ) hc.Entries.DeleteObject(e);
-                }
-
-                hc.Competitors.DeleteObject(competitor);
-                hc.SaveChanges();
-                StatusText = status;
+                while (competitor.Entries.Count() > 0)
+                    ApplicationPresenter.AllSessionsPresenter.DeleteEntry(competitor.Entries.First());
             }
- 
-            if (AllCompetitors.Contains(competitor))
-            {
-                AllCompetitors.Remove(competitor);
-                StatusText = status;
-            }
-            //    OpenNewCompetitor();
-
+            hc.SaveChanges();
+            hc.Competitors.DeleteObject(competitor);
+            StatusText = status;
         }
 
         // Returns true if competitor with athlete.Id and eventClass.Id is in Competitor table
@@ -252,7 +238,7 @@ namespace RacingEventsTrackSystem.Presenters
             set { }
         }
         // 
-        // Create Race Classes ollection for Current Event
+        // Create Competitors collection for Current Event
         //
         public ObservableCollection<Competitor> InitCompetitorsForEvent(Event myEvent)
         {
@@ -261,16 +247,7 @@ namespace RacingEventsTrackSystem.Presenters
                 Tmp = new ObservableCollection<Competitor>();
             else
             {
-                var hc = _applicationPresenter.HardcardContext;
-                IQueryable<Competitor> competitors =
-                     from c in hc.Competitors
-                     from e in hc.Events
-                     from ec in hc.EventClasses
-                     where e.Id == myEvent.Id
-                        && ec.EventId == e.Id
-                        && ec.Id == c.EventClassId
-                     select c;
-                Tmp = new ObservableCollection<Competitor>(competitors.ToList());
+                Tmp = new ObservableCollection<Competitor>(myEvent.EventClasses.SelectMany(eventClass => eventClass.Competitors).ToList());
             }
 
             if (Tmp.Count() > 0)

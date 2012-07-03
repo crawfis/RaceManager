@@ -36,26 +36,27 @@ namespace RacingEventsTrackSystem.Views
             get { return DataContext as AllEventsPresenter; }
         }
 
+        /*
         // add race -- button deleted
         private void button1_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Not emplemented"); 
-            /*
+            
             ApplicationPresenter ap = Shell.theShell.DataContext as ApplicationPresenter;
             RaceManagement raceWin = new RaceManagement(ap.CurrentEvent);
             raceWin.Show();
-            */
+            
         }
-
+       */
+        /*
         private void NewEvent_Click(object sender, RoutedEventArgs e)
         {
             Presenter.CreateNewEvent();
         }
-
+        */
         private void SaveEvent_Click(object sender, RoutedEventArgs e)
         {
             Presenter.SaveEvent(Presenter.CurrentEvent);
         }
-        
     }
 }

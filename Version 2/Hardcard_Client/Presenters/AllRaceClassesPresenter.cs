@@ -115,17 +115,35 @@ namespace RacingEventsTrackSystem.Presenters
         // 
         public void CreateNewRaceClass()
         {
-            RaceClass raceClass = new RaceClass();
-            raceClass.ClassName = "Unknown";
-            raceClass.MinAge = 21;
-            raceClass.MaxAge = 90;
-            raceClass.VehicleType = "Bike";
-            CurrentRaceClass = raceClass;
-            SaveRaceClass(raceClass);
-            OpenRaceClass(raceClass);
+            RaceClass newRaceClass = new RaceClass();
+            newRaceClass.MinAge = 21;
+            newRaceClass.MaxAge = 90;
+            newRaceClass.VehicleType = "Ford";
+            newRaceClass.VehicleModel = "F150";
+            newRaceClass.VehicleCC = 150; 
+            newRaceClass.Deleted = false;
+            newRaceClass.Gender = "F";
+            ApplicationPresenter ap = _applicationPresenter;
+            var hc = ap.HardcardContext;
+            Session newSession = new Session();
+
+            newRaceClass.Id = 0;
+            long max_id = 0;
+            if ((from c in hc.RaceClasses select c).Count() > 0) // not empty table
+            {
+                max_id = (from e in hc.RaceClasses select e.Id).Max();
+                newRaceClass.Id = ++max_id;
+            }
+
+            newRaceClass.ClassName = "RClass" + newRaceClass.Id.ToString();
+            hc.RaceClasses.AddObject(newRaceClass);
+            hc.SaveChanges();
+            AllRaceClasses = InitAllRaceClasses();
+            CurrentRaceClass = newRaceClass;
+            StatusText = string.Format("RaceClass '{0}' was added to RaceClase table.", newRaceClass.ToString());
         }
 
-   
+        
         //
         // Save DataContext changes in Database, if any
         //
@@ -147,40 +165,43 @@ namespace RacingEventsTrackSystem.Presenters
             if (raceClass == null) return;
             var hc = _applicationPresenter.HardcardContext;
 
+            RaceClass dbRaceClass = null;
+            bool newRaceClass = IsInRaceClass(raceClass) ? false : true;
             // If raceClass is in RaceClasses DataContext then just update it
-            if (IsInRaceClass(raceClass))
-            {
-                RaceClass dbRaceClass = hc.RaceClasses.Single(r => r.Id == raceClass.Id);
-                hc.ApplyCurrentValues(dbRaceClass.EntityKey.EntitySetName, raceClass);
-                StatusText = string.Format("RaceClass '{0}' was updated.", raceClass.ToString());
-            }
-            else
+            if (newRaceClass)
             {
                 //Create new raceClass 
                 long max_id = 0;
                 if ((from c in hc.RaceClasses select c).Count() > 0) // not empty table
                 {
-                    max_id = (from c in hc.RaceClasses
-                              select c.Id).Max();
+                    max_id = (from c in hc.RaceClasses select c.Id).Max();
                 }
                 raceClass.Id = ++max_id;
                 hc.RaceClasses.AddObject(raceClass);
-                StatusText = string.Format("RaceClass '{0}' was added to RaceClase table.", raceClass.ToString());
+                StatusText = string.Format("RaceClass '{0}' was saved into RaceClase table.", raceClass.ToString());
+            }
+            else
+            {
+                dbRaceClass = hc.RaceClasses.Single(r => r.Id == raceClass.Id);
+                UpdateRaceClass(raceClass, dbRaceClass);
+                StatusText = string.Format("RaceClass '{0}' was updated.", raceClass.ToString());
             }
 
             // Update AllRaceClasses Collection  
-            int i = AllRaceClasses.IndexOf(raceClass);
-            if ( i >= 0 )
+            if (newRaceClass)
             {
-                // If raceClass is in AllRaceClasses Collection then just update it
-                AllRaceClasses.RemoveAt(i);
-                AllRaceClasses.Insert(i, raceClass);
+                AllRaceClasses.Add(raceClass);
                 CurrentRaceClass = raceClass; // Current Rase class was just deleted before
             }
             else
             {
-                AllRaceClasses.Add(raceClass);
+                // If raceClass is in AllRaceClasses Collection then just update it
+                int i = AllRaceClasses.IndexOf(dbRaceClass); 
+                AllRaceClasses.RemoveAt(i);
+                AllRaceClasses.Insert(i, dbRaceClass);
+                CurrentRaceClass = dbRaceClass; // Current Rase class was just deleted before
             }
+
 
             hc.SaveChanges();
             OpenRaceClass(raceClass); 
@@ -218,7 +239,8 @@ namespace RacingEventsTrackSystem.Presenters
             {
                 MessageBox.Show("Error:EventClass table constraint violation."); 
             }
-            if (esp.AllEventClasses.Contains(currEventClass)) esp.AllEventClasses.Remove(currEventClass);
+            if (currEvent.EventClasses.Contains(currEventClass)) currEvent.EventClasses.Remove(currEventClass);
+
         }
 
         //
@@ -275,51 +297,44 @@ namespace RacingEventsTrackSystem.Presenters
                 EventClass eventClass = new EventClass() { Id = ++max_id, EventId = currEvent.Id, ClassId = raceClass.Id };
                 hc.EventClasses.AddObject(eventClass);
                 hc.SaveChanges();
-                //_applicationPresenter.AllEventsPresenter.InitAllEventClasses(currEvent);
-                _applicationPresenter.AllEventsPresenter.AllEventClasses.Add(eventClass);
+                _applicationPresenter.AllEventsPresenter.CurrentEvent.EventClasses.Add(eventClass);//???
             }
 
-            _applicationPresenter.AllEventsPresenter.InitAllEventClasses(currEvent);
             this.CurrentRaceClass = raceClass;// to keep data for current Race Class on the screen
             OpenRaceClass(raceClass);
             StatusText = string.Format("Race Class '{0}' was added.", raceClass.ClassName);
         }
 
         // 
-        // Delete Race Class from DataContext and Collection. Don't reset Current Race Class.
+        // Delete Race Class from DataContext and Collection. Sets Current Race Class.
         //
         public void DeleteRaceClass(RaceClass raceClass)
         {
             if (raceClass == null) return;
             var hc = _applicationPresenter.HardcardContext;
-
-            // Check if raceClass is in RaceClass table
-            if (IsInRaceClass(raceClass))
+            // Delete from DataContext
+            if (raceClass.EventClasses.Count() > 0)
             {
-                // check if there is reference to this RaceClass in EventClass table
-                if (IsRaceClassInEventClass(raceClass))
-                {
-                    string str = string.Format("Remove record from EventClass first for RaceClass.Id = {0}. Check all Events.",
-                           raceClass.Id);
-                    MessageBox.Show(str);
-                    return;
-                }
-                else
-                {
-                    //delete from DataContext
-                    hc.RaceClasses.DeleteObject(hc.RaceClasses.Single(p => p.Id == raceClass.Id));
-                    StatusText = string.Format("Athlete '{0}' was deleted.", raceClass.ToString());
-                }
-            }
+                string str = string.Format("All data : Sessions, Competitors, ect. will be deleted for this event raceClass = '{0}'",
+                           raceClass.ClassName);
+                System.Windows.Forms.DialogResult result = System.Windows.Forms.MessageBox.Show(str, "Warning!",
+                    System.Windows.Forms.MessageBoxButtons.YesNo);
+                if (result == System.Windows.Forms.DialogResult.No) return;
 
-            // Delete from Collection            
-            if (AllRaceClasses.Contains(raceClass))
-            {
-                AllRaceClasses.Remove(raceClass);
-                OpenRaceClass(new RaceClass());
+                // check if there is reference to this Event in EventClass table
+                while (raceClass.EventClasses.Count() > 0)
+                    ApplicationPresenter.AllEventsPresenter.DeleteEventClass(raceClass.EventClasses.First());
             }
+            string str1 = raceClass.ClassName;
+            hc.RaceClasses.DeleteObject(raceClass);
+            hc.SaveChanges();
+            AllRaceClasses = InitAllRaceClasses();
+            if (AllRaceClasses.Count() > 0)
+                CurrentRaceClass = AllRaceClasses.First();
+            else
+                CurrentRaceClass = null;
 
-            StatusText = string.Format("Class '{0}' was deleted.", raceClass.ClassName);
+            StatusText = string.Format("RaceClass '{0}' was deleted.", str1);
         }
 
         public void OpenRaceClass(RaceClass raceClass)
@@ -367,5 +382,37 @@ namespace RacingEventsTrackSystem.Presenters
         {
         }
 
+        // 
+        // Create RaceClasses collection and set default CurrentRaceClass 
+        //
+        public ObservableCollection<RaceClass> InitAllRaceClasses()
+        {
+            ObservableCollection<RaceClass> Tmp = new ObservableCollection<RaceClass>();
+            CurrentRaceClass = null;
+
+            var hc = _applicationPresenter.HardcardContext;
+            List<RaceClass> query = (from c in hc.RaceClasses select c).ToList();
+            if (query.Count() > 0)
+            {
+                Tmp = new ObservableCollection<RaceClass>(query);
+                CurrentRaceClass = Tmp.First();
+            }
+
+            return Tmp;
+        }
+
+        // Copy Value from RaceClass to new RaceClass in Db
+        public void UpdateRaceClass(RaceClass newRaceClass, RaceClass dbRaceClass)
+        {
+            if (newRaceClass == null || dbRaceClass == null) return;
+            dbRaceClass.ClassName = newRaceClass.ClassName;
+            dbRaceClass.MinAge = newRaceClass.MinAge;
+            dbRaceClass.MaxAge = newRaceClass.MaxAge;
+            dbRaceClass.Gender = newRaceClass.Gender;
+            dbRaceClass.VehicleType = newRaceClass.VehicleType;
+            dbRaceClass.VehicleModel = newRaceClass.VehicleModel;
+            dbRaceClass.VehicleCC = newRaceClass.VehicleCC;
+            dbRaceClass.Deleted = newRaceClass.Deleted;
+        }
     }
 }

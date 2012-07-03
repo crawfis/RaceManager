@@ -38,7 +38,7 @@ namespace RacingEventsTrackSystem.UserControls
 
         private void ExcludeCompetitor(object sender, RoutedEventArgs e)
         {
-            Presenter.ExcludeCompetitorFromCompetitorsList(Presenter.CurrentCompetitorForEvent);
+            Presenter.DeleteCompetitor(Presenter.CurrentCompetitorForEvent);
         }
     }
 }

@@ -29,17 +29,12 @@ namespace RacingEventsTrackSystem.Presenters
         private Competitor _currentCompetitorForEventClass;
 
         // Keeps Entries  (and => Competitors) for Current Session
-        private ObservableCollection<Entry> _entriesForSession;
-        private Entry _currentEntryForSession;  // Entry/Competitor selected in _entriesForSession list.
-        private Entry _tmpEntry = new Entry();  // Kepps data from Entry fields while adding Competitor to Session
+        private ObservableCollection<Entry> _entriesForSession; //Keeps Entries for CurrentSessionForEvent.
+        private Entry _currentEntryForSession;                  // Entry/Competitor selected in _entriesForSession list.
+        private Entry _tmpEntry = new Entry();                  // Kepps data from Entry fields while adding Competitor to Session
 
         // Keeps Stendings  (and => Entry.Competitors nad => Entry.Session) for Current Session
         private ObservableCollection<Standing> _standingsForSession;
-        private Standing _tmpStanding = new Standing();  // Kepps data from Entry fields while adding Competitor to Session
-
-        //private ObservableCollection<Entry> _entriesForEventClass; //Keeps Entries for EventClass.
-        //private ObservableCollection<Entry> _entriesForSession;    //Keeps Entries for CurrentSessionForEvent.
-        //private Entry _currentEntry; //
 
         //Keeps all Sessions for CurrentEvent
         private ObservableCollection<Session> _sessionsForEvent; 
@@ -82,26 +77,14 @@ namespace RacingEventsTrackSystem.Presenters
             // if it called before AllEventsPresenter constructor
             if (_applicationPresenter.AllEventsPresenter == null) return;
 
+            InitTmpEntry();
+
             SessionsForEvent = InitSessionsForEvent(_applicationPresenter.AllEventsPresenter.CurrentEvent);
-            if (_sessionsForEvent.Count() > 0)
+            if (SessionsForEvent != null && _sessionsForEvent.Count() > 0)
             {
                 CurrentSessionForEvent = _sessionsForEvent.First();
-
                 CompetitorsForEventClass = InitCompetitorsForEventClass(_currentSessionForEvent.EventClass);
-                if (_competitorsForEventClass.Count() > 0)
-                    CurrentCompetitorForEventClass = _competitorsForEventClass.First();
-
                 EntriesForSession = InitEntriesForSession(_currentSessionForEvent);
-                if (_entriesForSession.Count() > 0)
-                    CurrentEntryForSession = _entriesForSession.First();
-
-                StandingsForSession = InitStandingsForSession(_currentSessionForEvent);
-
-            }
-            else
-            {
-                InitTmpEntry();
-                InitTmpStanding();
             }
         }
 
@@ -128,13 +111,6 @@ namespace RacingEventsTrackSystem.Presenters
             set
             {
                 _sessionsForEvent = value;
-                if (_sessionsForEvent.Count() > 0)
-                    CurrentSessionForEvent = _sessionsForEvent.First();//it will update Competitors and Entries
-                else 
-                    CurrentSessionForEvent = null;
-
-                EntriesForSession = InitEntriesForSession(_currentSessionForEvent);
-                StandingsForSession = InitStandingsForSession(_currentSessionForEvent);
                 OnPropertyChanged("SessionsForEvent");
             }
         }
@@ -169,7 +145,6 @@ namespace RacingEventsTrackSystem.Presenters
             }
         }
 
-
         public ObservableCollection<Entry> EntriesForSession
         {
             get { return _entriesForSession; }
@@ -197,16 +172,6 @@ namespace RacingEventsTrackSystem.Presenters
             {
                 _standingsForSession = value;
                 OnPropertyChanged("StandingsForSession");
-            }
-        }
-
-        public Standing TmpStanding
-        {
-            get { return _tmpStanding; }
-            set
-            {
-                _tmpStanding = value;
-                OnPropertyChanged("TmpStanding");
             }
         }
 
@@ -251,19 +216,41 @@ namespace RacingEventsTrackSystem.Presenters
         // 
         public void CreateNewSession()
         {
+            var hc = _applicationPresenter.HardcardContext; 
             Session newSession = new Session();
+    
             newSession.Id = 0;
-            newSession.EventClassId = 0;
+            long max_id = 0;
+            if ((from c in hc.Sessions select c).Count() > 0) // not empty table
+            {
+                max_id = (from e in hc.Sessions select e.Id).Max();
+                //max_id = hc.Sessions.Max(s => s.Id);
+                newSession.Id = ++max_id;
+            }
+           
             newSession.StartTime = DateTime.Now;
             newSession.SchedStopTime = DateTime.Now;
             newSession.RollingStart = false;
-            newSession.SchedLaps = -1;
+            newSession.SchedLaps = 10;
+
+            // populate RaceSchedStopTime and RaceStartTime in milliseconds
+            newSession.RaceSchedStopTime = (long)ConvertToUnixTime((DateTime)newSession.SchedStopTime) * 1000;
+            newSession.RaceStartTime = (long)ConvertToUnixTime((DateTime)newSession.StartTime) * 1000;
+            
+            //Assign sesssion to first available eventClass
+            Event currEvent = _applicationPresenter.AllEventsPresenter.CurrentEvent;
+            if (currEvent == null) return;
+            if (currEvent.EventClasses.Count() <= 0 ) return;
+            EventClass eventClass = currEvent.EventClasses.First();
+            newSession.EventClassId = eventClass.Id;
+            hc.Sessions.AddObject(newSession);
+            hc.SaveChanges();
+
+            SessionsForEvent =  InitSessionsForEvent(currEvent);// updatesessionsforevent()
             CurrentSessionForEvent = newSession;
-            //SaveSession(newSession);
-            //OpenSession(newSession);
         }
 
-
+        
         //
         // Create new Entry. 
         // 
@@ -278,21 +265,7 @@ namespace RacingEventsTrackSystem.Presenters
             _tmpEntry.EntryDate = DateTime.Now;
         }
 
-        //
-        // Create new Standing. 
-        // 
-        public void InitTmpStanding()
-        {
-            _tmpStanding.Id = 1;
-            _tmpStanding.EntryId = 2;
-            _tmpStanding.Position = 3;
-            _tmpStanding.LapsCompleted = 4;
-            _tmpStanding.CompletedTime = 5;
-            _tmpStanding.BestLapTime = 6;
-            _tmpStanding.AvgLapTime = 7;
-            _tmpStanding.WorstLapTime = 8;
-        }
-
+      
 
         //
         // Update existing Session or add new entry if Session is not in DataContext.Session
@@ -306,64 +279,15 @@ namespace RacingEventsTrackSystem.Presenters
         public void SaveSession(Session session)
         {
             if (session == null) return;
-
-            // populate RaceSchedStopTime and RaceStartTime in milliseconds
-            session.RaceSchedStopTime = (long)ConvertToUnixTime((DateTime)session.SchedStopTime) * 1000;
-            session.RaceStartTime = (long)ConvertToUnixTime((DateTime)session.StartTime) * 1000;
-
             if (ValidateSession(session) == false) return; // not valid input parameters
-
             var hc = _applicationPresenter.HardcardContext;
-
-            // If session is in DataContext.Sessions then just update it
-            if (IsInSession(session))
-            {
-                //update DataContext
-                Session dbSession = hc.Sessions.Single(e => e.Id == session.Id);
-                hc.ApplyCurrentValues(dbSession.EntityKey.EntitySetName, session);
-                StatusText = string.Format("Session '{0}' was updated.", session.ToString());
-            }
-            else
-            {
-                //Create new Session in DataContext.Sessions
-                long max_id = 0;
-                if ((from c in hc.Sessions select c).Count() > 0) // not empty table
-                {
-                    //long max_id = (from e in hc.Sessions select e.Id).Max();
-                    max_id = hc.Sessions.Max(s => s.Id);
-                }
-                session.Id = ++max_id;
-                hc.Sessions.AddObject(session);
-            }
-
-            int i = SessionsForEvent.IndexOf(session);
-            if (i >= 0)
-            {
-                //Update in Collection
-                SessionsForEvent.RemoveAt(i);
-                SessionsForEvent.Insert(i, session);
-                CurrentSessionForEvent = session; // Current Session was just deleted before
-            }
-            else
-            {
-                ////Create new myEvent in AllEvents Collection
-                SessionsForEvent.Add(session);
-            }
-
             hc.SaveChanges();
-            StatusText = string.Format("Event '{0}' was saved.", session.Id);
-
-            //catch (Exception ex)
-            //{
-            //  if (value < 0) throw new ArgumentException("Can not be < 0"); 
-            //       MessageBox.Show(ex.ToString());
-            //}
-
+            StatusText = string.Format("Session '{0}' was saved.", session.Id);
         }
 
         //
         // Returns false if some input data for the session are not match the DataBase constraints
-        // (!!!Replace with interective WPF validation during editing)
+        //
         public bool ValidateSession(Session session)
         {
             if (ApplicationPresenter.AllEventsPresenter.CurrentEvent.EventClasses.Count(ec => ec.Id ==  session.EventClassId) == 0)
@@ -377,92 +301,55 @@ namespace RacingEventsTrackSystem.Presenters
         // 
         // Delete session from DataContext.Sessions and SessionsForEvent Collection. Resets CurrentSessionForEvent.
         //
-        public void ExcludeSessionFromEvent(Session session)
+        public void DeleteSessionFromEvent(Session session)
         {
             if (session == null) return;
             var hc = _applicationPresenter.HardcardContext;
             string status = string.Format("Session '{0}' was deleted.", session.ToString());
             
-            // Delete from DataContext
-            // Check if session is in DataContext.Sessions
-            if (IsInSession(session))
+            // Delete from Entry
+            if (session.Entries.Count() > 0)
             {
-                if (IsSessionInEntry(session))
-                {   // Remove records from Entry first for the Competitor
-                    List<Entry> query = (from c in session.Entries
-                                         select c).ToList();
-                    foreach (Entry e in query) hc.Entries.DeleteObject(e);
-                }
-                if (IsSessionInPassing(session))
-                {   // Remove records from Entry first for the Competitor
-                    List<Passing> query = (from p in session.Passings
-                                         select p).ToList();
-                    foreach (Passing p in query) hc.Passings.DeleteObject(p);
-                }
-                // check if (IsSessionInPenalties(session){. . .})
-
-                hc.Sessions.DeleteObject(session);
-                hc.SaveChanges();
-                StatusText = status;
+                while (session.Entries.Count() > 0)
+                    DeleteEntry(session.Entries.First());
             }
-                        
-            // Delete from Collection            
-            if (SessionsForEvent.Contains(session))
+            // Delete from Passing
+            if (session.Passings.Count() > 0)
             {
-                SessionsForEvent.Remove(session); //???
-                StatusText = status;
+                while (session.Passings.Count() > 0)
+                    hc.Passings.DeleteObject(session.Passings.First());
             }
-
-            // ReSet Current session or open empty screen if list of sessions is empty
-            if (SessionsForEvent.Count() > 0)
+            // Delete from Penality
+            if (session.Penalities.Count() > 0)
             {
-                CurrentSessionForEvent = _sessionsForEvent.First();
-                //EntriesForSession = InitEntriesForSession(_currentSessionForEvent);
-                CompetitorsForEventClass = InitCompetitorsForEventClass(_currentSessionForEvent.EventClass);
+                while (session.Penalities.Count() > 0)
+                    hc.Penalities.DeleteObject(session.Penalities.First());
             }
-            else 
-            {
-                OpenSession(new Session());
-            }
-
+            hc.SaveChanges();
+            hc.Sessions.DeleteObject(session);
+            StatusText = status;
         }
-
 
         //
         // Set data depending on Current session
         //
         public void SetSessionDependents(Session session)
         {
-            if (session == null) return;
-            if (_applicationPresenter.AllEventsPresenter == null) return;
-
-            CompetitorsForEventClass = InitCompetitorsForEventClass(_currentSessionForEvent.EventClass);
-             if (_competitorsForEventClass.Count() > 0)
-                CurrentCompetitorForEventClass = _competitorsForEventClass.First();
-            else
-                CurrentCompetitorForEventClass = null;
-
-            EntriesForSession = InitEntriesForSession(_currentSessionForEvent);
-            if (_entriesForSession.Count() > 0)
-                CurrentEntryForSession = _entriesForSession.First();
-            else
-                CurrentEntryForSession = null;
-
-            StandingsForSession = InitStandingsForSession(_currentSessionForEvent);
+             if (session == null) return;
+             if (_applicationPresenter.AllEventsPresenter == null) return;
+             if (_currentSessionForEvent == null) return;
+             var hc = _applicationPresenter.HardcardContext;
+             CompetitorsForEventClass = InitCompetitorsForEventClass(_currentSessionForEvent.EventClass);
+             hc.SaveChanges();
+             EntriesForSession = InitEntriesForSession(_currentSessionForEvent);
+             hc.SaveChanges();
+             hc.SaveChanges();
         }
 
-        //
-        // Creates record for Competitor in Entry table. CurrentSessionForEvent and Entry-data from screen are used.
-        // Input: competitor - Competitor to be used to create Entry
-        // Input: entry - data from the screen to create Entry for Competitor
-        // Use it to add competitor to session
-        // Remove ???
-        //
         public void AddCompetitorToSession(Competitor competitor, Entry entry)
         {
             if (competitor == null || entry == null) return;
             
-            // To save Competitor as an Entry for this Session, screen fields for Entry should be populated properly. 
             if (ValidateEntry(competitor, entry) == false) return;
             var hc = _applicationPresenter.HardcardContext;
          
@@ -484,14 +371,8 @@ namespace RacingEventsTrackSystem.Presenters
 
             hc.Entries.AddObject(newEntry);
             hc.SaveChanges();
-
-            if (!_entriesForSession.Contains(newEntry))
-            {
-                _entriesForSession.Add(newEntry);
-            }
             EntriesForSession = InitEntriesForSession(CurrentSessionForEvent);
             CurrentEntryForSession = newEntry;
-
         }
 
         public void ExcludeCompetitorFromSession(Entry entry)
@@ -500,20 +381,18 @@ namespace RacingEventsTrackSystem.Presenters
             var hc = _applicationPresenter.HardcardContext;
             string status = string.Format("entry '{0}' was deleted.", entry.ToString());
             long entryId = entry.Id;
-            
-            if (EntriesForSession.Contains(entry))
+
+            // delete FK records from Standings first
+            if (entry.Standings.Count > 0)
             {
-                EntriesForSession.Remove(entry);
-                StatusText = status;
+                List<Standing> query = (from c in entry.Standings
+                                     select c).ToList();
+                foreach (Standing s in query) hc.Standings.DeleteObject(s);
             }
-            
-            if (IsEntryInEntry(entryId))
-            {
-                Entry dbEntry = hc.Entries.Single(e => e.Id == entry.Id);
-                if (dbEntry != null) hc.Entries.DeleteObject(dbEntry);
-                hc.SaveChanges();
-                StatusText = status;
-            }
+
+            // delete record from Entries
+            hc.Entries.DeleteObject(entry);
+            hc.SaveChanges();
             EntriesForSession = InitEntriesForSession(CurrentSessionForEvent);
         }
 
@@ -531,7 +410,7 @@ namespace RacingEventsTrackSystem.Presenters
                 return false;
             }
 
-            // The CompetitionNo can not be used twice
+            // The CompetitionNo can not be used twice in the same session
             if (EntriesForSession.Count(efs => efs.CompetitionNo == entry.CompetitionNo) != 0)
             {
                 String str = String.Format("CompetitionNo {0} is already in this session", entry.CompetitionNo);
@@ -539,7 +418,7 @@ namespace RacingEventsTrackSystem.Presenters
                 return false;
             }
 
-            // The RFID can not be used twice
+            // The RFID can not be used twice in the same session
             if (EntriesForSession.Count(efs => efs.RFID == entry.RFID) != 0)
             {
                 String str = String.Format("RFID {0} is already in this session", entry.RFID);
@@ -548,15 +427,66 @@ namespace RacingEventsTrackSystem.Presenters
             }
 
             // Valid values for Status are 'a'(active)  or 'n'(nonactive)
-            if (entry.Status.Count() != 1)
+            if (entry.Status == null || entry.Status.Count() != 1)
             {
                 String str = String.Format("Status should be one character, e.g. 'a' (active)");
+                MessageBox.Show(str);
+                return false;
+            }
+
+            if (entry.CompetitionNo == null || entry.CompetitionNo.Count() > 10)
+            {
+                String str = String.Format("Number of chars in CompetitionNo should be <= 10 , e.g. '102a'");
+                MessageBox.Show(str);
+                return false;
+            }
+
+            if (entry.Equipment == null || entry.Equipment.Count() > 50)
+            {
+                String str = String.Format("Number of chars in Equipment should be <= 50 , e.g. 'Car'");
+                MessageBox.Show(str);
+                return false;
+            }
+
+            if (entry.Sponsors == null || entry.Sponsors.Count() > 300)
+            {
+                String str = String.Format("Number of chars in Sponsors should be less < 300 , e.g. 'IBM'");
                 MessageBox.Show(str);
                 return false;
             }
             return true;
         }
         
+        //
+        // 
+        //
+        public void DeleteEntry(Entry entry)
+        {
+            if (entry == null) return;
+            var hc = _applicationPresenter.HardcardContext;
+            hc.SaveChanges();
+            // Delete from Standings
+            if (entry.Standings.Count() > 0)
+            {
+                while (entry.Standings.Count() > 0)
+                    hc.Standings.DeleteObject(entry.Standings.First());
+            }
+            hc.Entries.DeleteObject(entry);
+            hc.SaveChanges();
+        }
+
+        //
+        // 
+        //
+        public void DeleteStanding(Standing standing)
+        {
+            if (standing == null) return;
+            var hc = _applicationPresenter.HardcardContext;
+            hc.SaveChanges();
+            hc.Standings.DeleteObject(standing);
+            hc.SaveChanges();
+        }  
+
         //
         // Returns true if sesion.SessionID exists in the Session table
         //
@@ -592,46 +522,39 @@ namespace RacingEventsTrackSystem.Presenters
         public void OpenSession(Session session)
         {
             if (session == null) return;
-
-            // Set CurrentSessionForEvent (see OpenEvent())
-           /* 
-            if (_applicationPresenter.AllSessionsPresenter.CurrentSessionForEvent == null)
-            {
-                MessageBox.Show("Error!!! Some Session has to be choosen.");
-                return;
-            } 
-            */
             View.ShowSession(new SessionPresenter(this, new SessionView(), session),
                             View.sessionView);
         }
 
         // 
-        // Create Session collection for Event and set default CurrentSession
+        // Create Sessions collection for Event and set default CurrentSession
         //
         public ObservableCollection<Session> InitSessionsForEvent(Event myEvent)
         {
-
             ObservableCollection<Session> Tmp;
             if (myEvent == null)
                 Tmp = new ObservableCollection<Session>();
             else
-            {
-                var hc = _applicationPresenter.HardcardContext;
-                long eventId = myEvent.Id;
-                IQueryable<Session> sessions =
-                     from s in hc.Sessions
-                     from ec in hc.EventClasses
-                     where ec.EventId == eventId
-                     && s.EventClassId == ec.Id
-                     select s;
-                Tmp = new ObservableCollection<Session>(sessions.ToList());
-            }
-            
+                Tmp = new ObservableCollection<Session>(myEvent.EventClasses.SelectMany(eventClass => eventClass.Sessions));
+
             if (Tmp.Count() > 0)
                 CurrentSessionForEvent = Tmp.First();
             else
                 CurrentSessionForEvent = null;
 
+            return Tmp;
+        }  
+        
+        // 
+        // Update Sessions collection for Event 
+        //
+        public ObservableCollection<Session> UpdateSessionsForEvent(Event myEvent)
+        {
+            ObservableCollection<Session> Tmp;
+            if (myEvent == null)
+                Tmp = new ObservableCollection<Session>();
+            else
+                Tmp = new ObservableCollection<Session>(myEvent.EventClasses.SelectMany(eventClass => eventClass.Sessions));
             return Tmp;
         }
 
@@ -650,7 +573,6 @@ namespace RacingEventsTrackSystem.Presenters
                 CurrentEntryForSession = Tmp.First();
             else
                 CurrentEntryForSession = null;
-
             return Tmp;
         }
 
@@ -672,9 +594,11 @@ namespace RacingEventsTrackSystem.Presenters
                 Tmp = new ObservableCollection<Standing>();
                 return Tmp;
             }
-
-            SetSessionIdForPassingTable(session);
-            Tmp = GetStandingsForSession(session);
+            else
+            {
+                SetSessionIdForPassingTable(session);
+                Tmp = GetStandingsForSession(session);
+            }
             return Tmp;
         }
 
@@ -687,6 +611,7 @@ namespace RacingEventsTrackSystem.Presenters
         // 
         public void SetSessionIdForPassingTable(Session session)
         {
+            //???
             var hc = _applicationPresenter.HardcardContext;
             long sessionId = session.Id;
 
@@ -698,8 +623,11 @@ namespace RacingEventsTrackSystem.Presenters
                                        && session.RaceStartTime <= p.RaceTime
                                        && p.RaceTime <= session.RaceSchedStopTime
                                    select p).ToList();
-            foreach (Passing p in query) p.SessionId = sessionId;
-            hc.SaveChanges();
+            if (query.Count > 0)
+            {
+                foreach (Passing p in query) p.SessionId = sessionId;
+                hc.SaveChanges();
+            }
         }
 
         // 
@@ -722,13 +650,13 @@ namespace RacingEventsTrackSystem.Presenters
                 var passings =
                      (from p in hc.Passings
                       from e in hc.Entries
-                     where e.SessionId == sessionId
-                     && p.SessionId == sessionId
-                     && e.RFID == p.RFID
-                     orderby p.RaceTime
-                     group p by p.RFID into p_group
-                     orderby p_group.Key
-                     select p_group);
+                      where e.SessionId == sessionId
+                      && p.SessionId == sessionId
+                      && e.RFID == p.RFID
+                      orderby p.RaceTime
+                      group p by p.RFID into p_group
+                      orderby p_group.Key
+                      select p_group);
 
                 // Calculate field values for Standing table.
                 int i = 0;
@@ -738,42 +666,42 @@ namespace RacingEventsTrackSystem.Presenters
                     ++i;
                     Standing st = new Standing();
                     st.Id = i;
-                    st.EntryId = hc.Entries.First(a => a.RFID == p_group.Key).Id; 
-                    
+                    st.EntryId = hc.Entries.First(a => a.RFID == p_group.Key).Id;
+
 
                     // Compute Best, Average, and Worst Loop Time
                     long bestLapTime = 0;
                     long avgLapTime = 0;
                     long worstLapTime = 0;
                     long delta = 0;
-                     if (p_group.Count() <= 1)
-                     {
-                         st.LapsCompleted = 0;
-                     }
-                     else
-                     {
-                         st.LapsCompleted = (short)(p_group.Count() - 1);
-                         avgLapTime = (long)((p_group.Last().RaceTime - p_group.First().RaceTime) / st.LapsCompleted);
-                         bestLapTime = avgLapTime;
-                         worstLapTime = avgLapTime;
-                         List<Passing> tmpList = p_group.ToList();
-                         for ( int j = 1; j < tmpList.Count(); ++j)
-                         {
-                             delta = tmpList[j].RaceTime - tmpList[j - 1].RaceTime;
-                             if (bestLapTime > delta) bestLapTime = delta;
-                             if (worstLapTime < delta) worstLapTime = delta;
-                         }
+                    if (p_group.Count() <= 1)
+                    {
+                        st.LapsCompleted = 0;
+                    }
+                    else
+                    {
+                        st.LapsCompleted = (short)(p_group.Count() - 1);
+                        avgLapTime = (long)((p_group.Last().RaceTime - p_group.First().RaceTime) / st.LapsCompleted);
+                        bestLapTime = avgLapTime;
+                        worstLapTime = avgLapTime;
+                        List<Passing> tmpList = p_group.ToList();
+                        for (int j = 1; j < tmpList.Count(); ++j)
+                        {
+                            delta = tmpList[j].RaceTime - tmpList[j - 1].RaceTime;
+                            if (bestLapTime > delta) bestLapTime = delta;
+                            if (worstLapTime < delta) worstLapTime = delta;
+                        }
 
-                     }
+                    }
 
                     st.CompletedTime = p_group.Last().RaceTime - p_group.First().RaceTime;
                     st.BestLapTime = bestLapTime;
                     st.AvgLapTime = avgLapTime;
                     st.WorstLapTime = worstLapTime;
-                    
-                    lstStandings.Add(st); 
+
+                    lstStandings.Add(st);
                 }
-                
+
                 List<Standing> srtLstStandings = new List<Standing>();
                 srtLstStandings = lstStandings.OrderBy(c => c.AvgLapTime).ToList();
                 int pos = 0;
@@ -785,16 +713,23 @@ namespace RacingEventsTrackSystem.Presenters
                 Tmp = new ObservableCollection<Standing>(srtLstStandings);
             }
 
-            //Remove data from Standing table
+            //Delete/Populate data in Standing table for session
             List<Standing> query = (from c in hc.Standings
                                     select c).ToList();
-            foreach (Standing e in query) hc.Standings.DeleteObject(e);
-            hc.SaveChanges();
+            if ( query.Count > 0 )
+            {
+                //Remove data from Standing table
+                foreach (Standing e in query) hc.Standings.DeleteObject(e);
+                hc.SaveChanges();
+            }
 
-            //Populate Standing table
-            foreach (Standing st in Tmp)
-                hc.Standings.AddObject(st);
-            hc.SaveChanges();
+            if ( Tmp.Count > 0 )
+            {
+                //Populate Standing table
+                foreach (Standing st in Tmp)
+                    hc.Standings.AddObject(st);
+                hc.SaveChanges();
+            }
 
             return Tmp;
         }
@@ -829,42 +764,14 @@ namespace RacingEventsTrackSystem.Presenters
             {
                 // Remove records from Standings 
                 List<Standing> query = (from c in hc.Standings
-                                     select c).ToList();
+                                        select c).ToList();
                 foreach (Standing e in query) hc.Standings.DeleteObject(e);
                 hc.SaveChanges();
+            }
                 InitEntriesForSession(session);
-                InitStandingsForSession(session);
+                StandingsForSession = InitStandingsForSession(session);
                 return;
             }
-
-  /*        for test only:  
-            int NumOfLaps = (int)session.SchedLaps;
-            int standingId = 0;
-            Random random = new Random();
-
-            for ( short lap = 0; lap < NumOfLaps; ++lap)
-            {
-                
-                foreach (Entry e in EntriesForSession)
-                {
-                    Standing st = new Standing();
-                    st.Id = standingId++;
-                    st.EntryId = e.Id;
-                    st.Position = 3;
-                    st.LapsCompleted = (short)(lap + 1);
-                    st.CompletedTime = st.LapsCompleted * 100 ;
-                    st.BestLapTime = random.Next(90,110);
-                    st.AvgLapTime = st.BestLapTime + random.Next(5,10);
-                    st.WorstLapTime = st.AvgLapTime + random.Next(10,20);
-
-                    hc.Standings.AddObject(st);
-                }
-            }
-            hc.SaveChanges(); 
-            InitEntriesForSession(session);
-            InitStandingsForSession(session);
-   */
-        }
 
         //Converts Seconds to DateTime
         internal static DateTime ConvertFromUnixTime(double unixTime)
@@ -883,6 +790,19 @@ namespace RacingEventsTrackSystem.Presenters
 
         public void SessionSelected()
         {
+        }
+
+          // Copy Value from new event to event in Db
+        public void UpdateSession(Session newSession, Session dbSession)
+        {
+            if (newSession == null || dbSession == null) return;
+            dbSession.EventClassId = newSession.EventClassId;
+            dbSession.StartTime = newSession.StartTime;
+            dbSession.SchedStopTime = newSession.SchedStopTime;
+            dbSession.RaceStartTime = newSession.RaceStartTime;
+            dbSession.RaceSchedStopTime = newSession.RaceSchedStopTime;
+            dbSession.SchedLaps = newSession.SchedLaps;
+            dbSession.RollingStart = newSession.RollingStart;
         }
     
     }

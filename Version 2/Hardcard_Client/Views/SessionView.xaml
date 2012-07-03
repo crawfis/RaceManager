@@ -42,9 +42,10 @@
 
                     <Label   Content="Race Class"  Grid.Row="2"  HorizontalAlignment="Left"/>
 
+                    <!--SelectedItem="{Binding Path = ApplicationPresenter.AllSessionsPresenter.CurrentSessionForEvent.EventClass, Mode=TwoWay}" doesn't work too-->
                     <ComboBox Name="cmbxEventClasses" Grid.Row="2" Grid.Column="1" Height="Auto"  DockPanel.Dock="Right" VerticalAlignment="Center" Foreground="Black"
                         ItemsSource="{Binding  ApplicationPresenter.AllEventsPresenter.CurrentEvent.EventClasses}" Margin="0,0,26,2"
-                        SelectedItem="{Binding Path = CurrentSessionForEvent.EventClass, Mode=TwoWay}" >
+                        SelectedItem="{Binding Path = CurrentSessionForEvent.EventClass, Mode=TwoWay}" SelectedIndex="-1">
                     </ComboBox>
 
                     <Label   Content="Sch. Laps" Grid.Row="3" HorizontalAlignment="Left"  />

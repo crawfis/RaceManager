@@ -32,6 +32,7 @@ namespace RacingEventsTrackSystem.Presenters
 
         // Keeps EventClasses for the CurrentEvent, any control changing CurrentEvent, has to reset that collection.
         private ObservableCollection<EventClass> _allEventClasses;
+       
         // EventClass selected in _allEventClasses list.
         private EventClass _currentEventClass;                    
         private string _statusText;                              
@@ -47,7 +48,7 @@ namespace RacingEventsTrackSystem.Presenters
                 _applicationPresenter = applicationPresenter;
                 _allEventClasses = new ObservableCollection<EventClass>();
                 _allEvents = new ObservableCollection<Event>(hc.Events);
-                if (_allEvents.Count() > 0 ) 
+                if (_allEvents.Count() > 0) 
                 { 
                     _currentEvent =_allEvents.First();
                     _allEventClasses = new ObservableCollection<EventClass>(_currentEvent.EventClasses);
@@ -154,13 +155,27 @@ namespace RacingEventsTrackSystem.Presenters
         // 
         public void CreateNewEvent()
         {
-            _applicationPresenter.HardcardContext.SaveChanges();
+            var hc = _applicationPresenter.HardcardContext; 
             Event newEvent = new Event();
-            newEvent.EventName = "Unknown";
+
+            newEvent.Id = 0;
+            long max_id = 0;
+            if ((from c in hc.Events select c).Count() > 0) // not empty table
+            {
+                max_id = (from e in hc.Events select e.Id).Max();
+                newEvent.Id = ++max_id;
+            }
+
+            newEvent.EventName = "Event" + newEvent.Id.ToString();
             newEvent.EventLocation = "USA";
-            SaveEvent(newEvent);
+            newEvent.StartDate = DateTime.Now;
+            newEvent.EndDate = DateTime.Now;
+            hc.Events.AddObject(newEvent);
+            hc.SaveChanges();
             CurrentEvent = newEvent;
-            OpenEvent(newEvent);
+            AllEvents = UpdateAllEvents();
+
+            //OpenEvent(newEvent);
         }
         
         //
@@ -174,84 +189,84 @@ namespace RacingEventsTrackSystem.Presenters
 
         public void SaveEvent(Event myEvent)
         {
-            var hc = _applicationPresenter.HardcardContext;
             if (myEvent == null) return;
-            //hc.SaveChanges();
-            Event dbEvent = null;
-            // If myEvent is in DataContext.Events then just update it
-            if (IsInEvent(myEvent))
-            {
-                //update DataContext.RaceClasses
-                dbEvent = hc.Events.Single(e => e.Id == myEvent.Id);
-                hc.ApplyCurrentValues(dbEvent.EntityKey.EntitySetName, myEvent);
-                StatusText = string.Format("Event '{0}' was updated.", myEvent.ToString());
-            }
-            else
-            {
-                long max_id = 0;
-                if ((from c in hc.Events select c).Count() > 0) 
-                    max_id = (from e in hc.Events select e.Id).Max();
-                myEvent.Id = ++max_id;
-                hc.Events.AddObject(myEvent);
-            }
-            
-            int i = AllEvents.IndexOf(myEvent);
-            if (i >= 0)
-            {
-                //Update in Collection
-                AllEvents.RemoveAt(i);
-                //dbEvent = hc.Events.Single(e => e.Id == myEvent.Id);//
-                //AllEvents.Insert(i, dbEvent);
-                AllEvents.Insert(i, myEvent);
-                CurrentEvent = myEvent;
-            }
-            else
-            {
-                AllEvents.Add(myEvent);
-            }
+            if (ValidateEvent(myEvent) == false) return; // not valid input parameters
+            _applicationPresenter.HardcardContext.SaveChanges();
+            StatusText = string.Format("Event '{0}' was saved.", myEvent.EventName);
+        }
 
+        //
+        // Returns false if some input data for the session are not match the DataBase constraints
+        public bool ValidateEvent(Event myEvent)
+        {
+            if (AllEvents.Count(ec => ec.Id == myEvent.Id) == 0)
+            {
+                MessageBox.Show("Event is not in the AllEvents list");
+                return false;
+            }
+            return true;
+        }
+
+        // 
+        // Delete myEvent DataContext.Events and AllEvents Collection.
+        //
+        public void DeleteEvent(Event myEvent)
+        {
+            if (myEvent == null) return;
+            var hc = _applicationPresenter.HardcardContext;
+            // Delete from DataContext
+            if (myEvent.EventClasses.Count() > 0)
+            {
+                string str = string.Format("All data : Sessions, Competitors, ect. will be deleted for this event Event = '{0}'",
+                           myEvent.EventName);
+                System.Windows.Forms.DialogResult result = System.Windows.Forms.MessageBox.Show(str, "Warning!",
+                    System.Windows.Forms.MessageBoxButtons.YesNo);
+                if (result == System.Windows.Forms.DialogResult.No) return;
+
+                // check if there is reference to this Event in EventClass table
+                while (myEvent.EventClasses.Count() > 0)
+                {
+                    DeleteEventClass(myEvent.EventClasses.First());
+                }
+            }
+            string str1 = myEvent.EventName;
             hc.SaveChanges();
-            OpenEvent(myEvent);
-            StatusText = string.Format( "Event '{0}' was saved.", myEvent.EventName);
+            hc.Events.DeleteObject(myEvent);
+            StatusText = string.Format("Event '{0}' was deleted.", str1);
+            if (AllEvents.Count() > 0)
+                CurrentEvent = AllEvents.First();
+            else
+                CurrentEvent = null;
+            AllEvents = UpdateAllEvents();
         }
 
 
         // 
         // Delete myEvent DataContext.Events and AllEvents Collection. Don't reset Current Event.
         //
-        public void DeleteEvent(Event myEvent)
+        public void DeleteEventClass(EventClass eventClass)
         {
-            if (myEvent == null) return;
+            if (eventClass == null) return;
             var hc = _applicationPresenter.HardcardContext;
             hc.SaveChanges();
             // Delete from DataContext
-            if (IsInEvent(myEvent))
+            if (eventClass.Competitors.Count() > 0)
             {
-                // check if there is reference to this Athlete in Competitor table
-                if (IsEventInEventClass(myEvent))
-                {
-                    string str = string.Format("Remove record from EventClass first for Event.Id = {0}",
-                           myEvent.Id);
-                    MessageBox.Show(str);
-                    return;
-                }
-                else
-                {
-                    //delete from DataContext
-                    hc.Events.DeleteObject(hc.Events.Single(e => e.Id == myEvent.Id));
-                    StatusText = string.Format("Athlete '{0}' was deleted.", myEvent.ToString());
-                }
-
+                while (eventClass.Competitors.Count() > 0)
+                    ApplicationPresenter.AllCompetitorsPresenter.DeleteCompetitor(eventClass.Competitors.First());
             }
 
-            // Delete from Collection            
-            if (AllEvents.Contains(myEvent))
+            if (eventClass.Sessions.Count() > 0)
             {
-                AllEvents.Remove(myEvent);
-                OpenEvent(new Event());
+                while (eventClass.Sessions.Count() > 0)
+                {
+                    ApplicationPresenter.AllSessionsPresenter.DeleteSessionFromEvent(eventClass.Sessions.First());
+                }
             }
+            string str = eventClass.RaceClass.ClassName;
             hc.SaveChanges();
-            StatusText = string.Format("Event '{0}' was deleted.", myEvent.EventName);
+            hc.EventClasses.DeleteObject(eventClass);
+            StatusText = string.Format("eventClass '{0}' was deleted.", str);
         }
 
         //
@@ -268,8 +283,8 @@ namespace RacingEventsTrackSystem.Presenters
         //
         private bool IsEventInEventClass(Event myEvent)
         {
-            var hc = _applicationPresenter.HardcardContext;
-            return (hc.EventClasses.Count(ec => ec.EventId == myEvent.Id) == 0) ? false : true;
+            return myEvent.EventClasses.Count() > 0; 
+
         }
 
         public void OpenEvent(Event myEvent)
@@ -285,22 +300,52 @@ namespace RacingEventsTrackSystem.Presenters
                 OpenEvent(_currentEvent);
         }
 
-        
+        // 
+        // Create Events collection and set default CurrentEvent 
+        //
+        public ObservableCollection<Event> InitAllEvents()
+        {
+            ObservableCollection<Event> Tmp = new ObservableCollection<Event>();
+            CurrentEvent = null;
+
+            var hc = _applicationPresenter.HardcardContext;
+            List<Event>  query = (from c in hc.Events select c).ToList();
+            if (query.Count() > 0)
+            {
+                Tmp = new ObservableCollection<Event>(query);
+                CurrentEvent = Tmp.First();
+            }
+
+            return Tmp;
+        }
+        // 
+        // Update Events collection 
+        //
+        public ObservableCollection<Event> UpdateAllEvents()
+        {
+            ObservableCollection<Event> Tmp = new ObservableCollection<Event>();
+            var hc = _applicationPresenter.HardcardContext;
+            var query = (from c in hc.Events select c);
+            if (query.Count() > 0)
+                Tmp = new ObservableCollection<Event>(query);
+
+            return Tmp;
+        }
+  
         public void  SetEventDependents(Event myEvent)
         {
             // Set Competitors, EventClasses, and Sessions for CurrentEvent
-            // Actually it should reset Sessions only when Session view is called??!!!!!!!!!!!!!
             if (myEvent == null) return;
 
-            var allCompetitorsPresenter = _applicationPresenter.AllCompetitorsPresenter;
-            if (allCompetitorsPresenter == null) return;
-            allCompetitorsPresenter.AllCompetitors = allCompetitorsPresenter.InitCompetitorsForEvent(myEvent);
-
             AllEventClasses = InitAllEventClasses(myEvent);
+            
+            var allCompetitorsPresenter = _applicationPresenter.AllCompetitorsPresenter;
+            if (allCompetitorsPresenter != null)
+            allCompetitorsPresenter.AllCompetitors = allCompetitorsPresenter.InitCompetitorsForEvent(myEvent);
 
             // Set Sessions for myEvent
             var sessionsPresenter = _applicationPresenter.AllSessionsPresenter;
-            if (sessionsPresenter == null) return;
+            if (sessionsPresenter != null)
             sessionsPresenter.SessionsForEvent = sessionsPresenter.InitSessionsForEvent(myEvent);
         }
 
@@ -309,18 +354,30 @@ namespace RacingEventsTrackSystem.Presenters
         //
         public ObservableCollection<EventClass> InitAllEventClasses(Event myEvent)
         {
+            ObservableCollection<EventClass> Tmp;
             if (myEvent == null)
-            {
+                Tmp = new ObservableCollection<EventClass>();
+            else
+                Tmp = new ObservableCollection<EventClass>(myEvent.EventClasses.ToList());
+  
+            if (Tmp.Count() > 0)
+                CurrentEventClass = Tmp.First();
+            else
                 CurrentEventClass = null;
-                return new ObservableCollection<EventClass>(); 
-            }
-            else if (myEvent.EventClasses.Count() == 0)
-            {
-                CurrentEventClass = null;
-                return new ObservableCollection<EventClass>(); 
-            }
-            CurrentEventClass = myEvent.EventClasses.First();
-            return new ObservableCollection<EventClass>(myEvent.EventClasses.ToList());
+
+            return Tmp;
+        }
+
+
+        // Copy Value from new event to event in Db
+        public void UpdateEvent(Event newEvent, Event dbEvent)
+        {
+            if (newEvent == null || dbEvent == null) return;
+            dbEvent.EventName = newEvent.EventName;
+            dbEvent.EventLocation = newEvent.EventLocation;
+            dbEvent.StartDate = newEvent.StartDate;
+            dbEvent.EndDate = newEvent.EndDate;
+            dbEvent.Deleted = newEvent.Deleted;
         }
     }
 }

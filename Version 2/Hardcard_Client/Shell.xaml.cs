@@ -54,7 +54,7 @@ namespace RacingEventsTrackSystem
             //DataContext for SearchBar
             ctlEventSearchBar.DataContext = ap.AllEventsPresenter;
             ctlRaceClassSearchBar.DataContext = ap.AllEventsPresenter;
-
+            
             // Desable buttons 'New' and "Delete' Athletes for GetCompetitors
 
             // Tab "Events"    
@@ -62,6 +62,13 @@ namespace RacingEventsTrackSystem
             //"Edit Event"/eventView/EventView.xaml
             ctlAllEvents.DataContext = ap.AllEventsPresenter;
             eventView.DataContext = ap.AllEventsPresenter;
+            stbaAllEvents.DataContext = ap.AllEventsPresenter;
+
+            // Tab "RaceClasses"    
+            //"Events List"/ctlAllEvents/AllEventsControl.xaml
+            //"Edit Event"/eventView/EventView.xaml
+            stbaAllRaceClasses.DataContext = ap.AllRaceClassesPresenter;
+
 
             // Tab "Athletes"    
             //"Athletes List"/ctlAllAthletes/AllAthletesControl.xaml

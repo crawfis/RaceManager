@@ -77,7 +77,6 @@ namespace RacingEventsTrackSystem.Presenters
             catch (Exception ex)
             {
                 StatusText = "ApplicationPresenter constructor failed with error: " + ex.Message;
-                System.Console.WriteLine("ApplicationPresenter constructor failed with error: " + ex.Message);
             }
         }
         
@@ -87,14 +86,13 @@ namespace RacingEventsTrackSystem.Presenters
             {
                 _allEventsPresenter = new AllEventsPresenter(this, View);
                 _allAthletesPresenter = new AllAthletesPresenter(this, View);
-                _allCompetitorsPresenter = new AllCompetitorsPresenter(this, View);
                 _allRaceClassesPresenter = new AllRaceClassesPresenter(this, View);
                 _allSessionsPresenter = new AllSessionsPresenter(this, View);
+                _allCompetitorsPresenter = new AllCompetitorsPresenter(this, View);
             }
             catch (Exception ex)
             {
                 StatusText = "ApplicationPresenter constructor failed with error: " + ex.Message;
-                System.Console.WriteLine("ApplicationPresenter constructor failed with error: " + ex.Message);
             }
         }
 

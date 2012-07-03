@@ -212,10 +212,12 @@ namespace RacingEventsTrackSystem.Presenters
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
+            
             long data = (long)value;
             TimeSpan result = new TimeSpan();
-            if (data != 0 )  return result = TimeSpan.FromMilliseconds(data);
-            else return result;
+            if (data != 0) result = TimeSpan.FromMilliseconds(data);
+            string str = string.Format(result.ToString(@"hh\:mm\:ss\.FFFFF"));
+            return str;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)

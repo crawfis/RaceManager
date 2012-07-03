@@ -32,12 +32,24 @@ namespace RacingEventsTrackSystem.UserControls
             get { return DataContext as AllEventsPresenter; }
         }
 
+        /*
         private void EventsList_MouseUp(object sender, MouseButtonEventArgs e)
         {
             Presenter.DisplayCurrentEvent();
         }
 
         private void DeleteEvent(object sender, RoutedEventArgs e)
+        {
+            Presenter.DeleteEvent(Presenter.CurrentEvent);
+        }
+         */ 
+
+        private void CreateNewEvent_Click(object sender, RoutedEventArgs e)
+        {
+            Presenter.CreateNewEvent();
+        }
+
+        private void DeleteEvent_Click(object sender, RoutedEventArgs e)
         {
             Presenter.DeleteEvent(Presenter.CurrentEvent);
         }
