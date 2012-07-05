@@ -200,6 +200,10 @@ namespace RacingEventsTrackSystem.Presenters
             AllEventsPresenter aep = ApplicationPresenter.AllEventsPresenter;
             if (aep != null && aep.CurrentEvent != null)
                 AllCompetitors = InitCompetitorsForEvent(aep.CurrentEvent);
+
+            AllSessionsPresenter asp = ApplicationPresenter.AllSessionsPresenter;
+            if (asp != null && asp.CurrentSessionForEvent != null)
+                asp.CompetitorsForEventClass = asp.InitCompetitorsForEventClass(asp.CurrentSessionForEvent.EventClass);
         }
 
         //
@@ -212,6 +216,11 @@ namespace RacingEventsTrackSystem.Presenters
             AllSessionsPresenter asp = ApplicationPresenter.AllSessionsPresenter;
             if (asp != null && asp.CurrentSessionForEvent != null)
                 asp.CompetitorsForEventClass = asp.InitCompetitorsForEventClass(asp.CurrentSessionForEvent.EventClass);
+
+            AllEventsPresenter aep = ApplicationPresenter.AllEventsPresenter;
+            if (aep != null && aep.CurrentEvent != null)
+                AllCompetitors = InitCompetitorsForEvent(aep.CurrentEvent);
+
         }
 
 

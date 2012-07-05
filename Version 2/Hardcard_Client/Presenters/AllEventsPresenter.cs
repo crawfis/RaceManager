@@ -262,6 +262,7 @@ namespace RacingEventsTrackSystem.Presenters
             string str = eventClass.RaceClass.ClassName;
             hc.SaveChanges();
             hc.EventClasses.DeleteObject(eventClass);
+            hc.SaveChanges();
 
             StatusText = string.Format("eventClass '{0}' was deleted.", str);
         }

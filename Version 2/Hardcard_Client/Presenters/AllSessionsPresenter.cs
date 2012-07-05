@@ -477,6 +477,7 @@ namespace RacingEventsTrackSystem.Presenters
                 while (entry.Standings.Count() > 0)
                     hc.Standings.DeleteObject(entry.Standings.First());
             }
+            hc.SaveChanges();
             hc.Entries.DeleteObject(entry);
             hc.SaveChanges();
         }
