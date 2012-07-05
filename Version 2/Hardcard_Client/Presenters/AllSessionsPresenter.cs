@@ -74,9 +74,7 @@ namespace RacingEventsTrackSystem.Presenters
 
             _standingsForSession = new ObservableCollection<Standing>();
 
-            // if it called before AllEventsPresenter constructor
             if (_applicationPresenter.AllEventsPresenter == null) return;
-
             InitTmpEntry();
 
             SessionsForEvent = InitSessionsForEvent(_applicationPresenter.AllEventsPresenter.CurrentEvent);
@@ -144,6 +142,7 @@ namespace RacingEventsTrackSystem.Presenters
                 OnPropertyChanged("CurrentEntryForSession");
             }
         }
+
 
         public ObservableCollection<Entry> EntriesForSession
         {
@@ -224,7 +223,6 @@ namespace RacingEventsTrackSystem.Presenters
             if ((from c in hc.Sessions select c).Count() > 0) // not empty table
             {
                 max_id = (from e in hc.Sessions select e.Id).Max();
-                //max_id = hc.Sessions.Max(s => s.Id);
                 newSession.Id = ++max_id;
             }
            
@@ -248,6 +246,7 @@ namespace RacingEventsTrackSystem.Presenters
 
             SessionsForEvent =  InitSessionsForEvent(currEvent);// updatesessionsforevent()
             CurrentSessionForEvent = newSession;
+            //MessageBox.Show(string.Format("CurrentSessionForEvent.EventClass.Id = {0}", CurrentSessionForEvent.EventClass.Id));//it works
         }
 
         
@@ -278,8 +277,10 @@ namespace RacingEventsTrackSystem.Presenters
 
         public void SaveSession(Session session)
         {
+            
             if (session == null) return;
             if (ValidateSession(session) == false) return; // not valid input parameters
+
             var hc = _applicationPresenter.HardcardContext;
             hc.SaveChanges();
             StatusText = string.Format("Session '{0}' was saved.", session.Id);
@@ -287,7 +288,7 @@ namespace RacingEventsTrackSystem.Presenters
 
         //
         // Returns false if some input data for the session are not match the DataBase constraints
-        //
+        // TODO!
         public bool ValidateSession(Session session)
         {
             if (ApplicationPresenter.AllEventsPresenter.CurrentEvent.EventClasses.Count(ec => ec.Id ==  session.EventClassId) == 0)
@@ -328,7 +329,15 @@ namespace RacingEventsTrackSystem.Presenters
             hc.SaveChanges();
             hc.Sessions.DeleteObject(session);
             StatusText = status;
+            SessionsForEvent = InitSessionsForEvent(_applicationPresenter.AllEventsPresenter.CurrentEvent);
+            if (SessionsForEvent != null && _sessionsForEvent.Count() > 0)
+            {
+                CurrentSessionForEvent = _sessionsForEvent.First();
+                CompetitorsForEventClass = InitCompetitorsForEventClass(_currentSessionForEvent.EventClass);
+                EntriesForSession = InitEntriesForSession(_currentSessionForEvent);
+            }
         }
+
 
         //
         // Set data depending on Current session
@@ -346,10 +355,18 @@ namespace RacingEventsTrackSystem.Presenters
              hc.SaveChanges();
         }
 
+        //
+        // Creates record in Entry table.
+        // Creates record for Competitor in Entry table. CurrentSessionForEvent and Entry-data from screen are used.
+        // Input: competitor - Competitor to be used to create Entry
+        // Input: entry - data from the screen to create Entry for Competitor
+        // Use it to add competitor to session
+        //
         public void AddCompetitorToSession(Competitor competitor, Entry entry)
         {
             if (competitor == null || entry == null) return;
             
+            // To save Competitor as an Entry for this Session, screen fields for Entry should be populated properly. 
             if (ValidateEntry(competitor, entry) == false) return;
             var hc = _applicationPresenter.HardcardContext;
          
@@ -375,24 +392,13 @@ namespace RacingEventsTrackSystem.Presenters
             CurrentEntryForSession = newEntry;
         }
 
-        public void ExcludeCompetitorFromSession(Entry entry)
+        //
+        // This method deletes records from Entry table, not from Competitor table !!!
+        // This method uses input parameter even delete Current competitor because  there is no Current Entry in the class
+        //
+        public void ExcludeCurrentCompetitorFromSession(Entry entry)
         {
-            if (entry == null) return;
-            var hc = _applicationPresenter.HardcardContext;
-            string status = string.Format("entry '{0}' was deleted.", entry.ToString());
-            long entryId = entry.Id;
-
-            // delete FK records from Standings first
-            if (entry.Standings.Count > 0)
-            {
-                List<Standing> query = (from c in entry.Standings
-                                     select c).ToList();
-                foreach (Standing s in query) hc.Standings.DeleteObject(s);
-            }
-
-            // delete record from Entries
-            hc.Entries.DeleteObject(entry);
-            hc.SaveChanges();
+            DeleteEntry(entry);
             EntriesForSession = InitEntriesForSession(CurrentSessionForEvent);
         }
 
@@ -409,7 +415,7 @@ namespace RacingEventsTrackSystem.Presenters
                 MessageBox.Show(str);
                 return false;
             }
-
+            
             // The CompetitionNo can not be used twice in the same session
             if (EntriesForSession.Count(efs => efs.CompetitionNo == entry.CompetitionNo) != 0)
             {
@@ -475,6 +481,7 @@ namespace RacingEventsTrackSystem.Presenters
             hc.SaveChanges();
         }
 
+
         //
         // 
         //
@@ -522,6 +529,8 @@ namespace RacingEventsTrackSystem.Presenters
         public void OpenSession(Session session)
         {
             if (session == null) return;
+
+            // Set CurrentSessionForEvent (see OpenEvent())
             View.ShowSession(new SessionPresenter(this, new SessionView(), session),
                             View.sessionView);
         }
@@ -611,7 +620,6 @@ namespace RacingEventsTrackSystem.Presenters
         // 
         public void SetSessionIdForPassingTable(Session session)
         {
-            //???
             var hc = _applicationPresenter.HardcardContext;
             long sessionId = session.Id;
 
@@ -792,7 +800,7 @@ namespace RacingEventsTrackSystem.Presenters
         {
         }
 
-          // Copy Value from new event to event in Db
+        // Copy Value from new event to event in Db
         public void UpdateSession(Session newSession, Session dbSession)
         {
             if (newSession == null || dbSession == null) return;

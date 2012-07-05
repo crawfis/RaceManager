@@ -28,8 +28,9 @@ namespace RacingEventsTrackSystem.Presenters
     {
         private readonly ApplicationPresenter _applicationPresenter;
 
+        // Keeps Competitors for the CurrentEvent
+        // any control changing CurrentEvent has to reset that collection.
         private ObservableCollection<Competitor> _allCompetitorsForEvent;
-        
         // Competitor selected in _allCompetitorsForEvent list.
         private Competitor _currentCompetitorForEvent;
 
@@ -185,8 +186,34 @@ namespace RacingEventsTrackSystem.Presenters
             }
             hc.SaveChanges();
             hc.Competitors.DeleteObject(competitor);
-            StatusText = status;
+            hc.SaveChanges();
         }
+
+
+        //
+        // Remove CurrentCompetitor from Competitors for Event
+        //
+        public void DeleteCurrentCompetitorForEvent()
+        {
+            DeleteCompetitor(CurrentCompetitorForEvent);
+
+            AllEventsPresenter aep = ApplicationPresenter.AllEventsPresenter;
+            if (aep != null && aep.CurrentEvent != null)
+                AllCompetitors = InitCompetitorsForEvent(aep.CurrentEvent);
+        }
+
+        //
+        // Remove CurrentCompetitor from Competitors for EventClass
+        //
+        public void DeleteCurrentCompetitorForEventClass()
+        {
+            DeleteCompetitor(CurrentCompetitorForEvent);
+
+            AllSessionsPresenter asp = ApplicationPresenter.AllSessionsPresenter;
+            if (asp != null && asp.CurrentSessionForEvent != null)
+                asp.CompetitorsForEventClass = asp.InitCompetitorsForEventClass(asp.CurrentSessionForEvent.EventClass);
+        }
+
 
         // Returns true if competitor with athlete.Id and eventClass.Id is in Competitor table
         // Use this method to add new competitor

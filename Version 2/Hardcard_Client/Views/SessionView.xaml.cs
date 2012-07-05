@@ -31,7 +31,7 @@ namespace RacingEventsTrackSystem.Views
 
         private void ExcludeCompetitorFromSession(object sender, RoutedEventArgs e)
         {
-            Presenter.ExcludeCompetitorFromSession(liviEntriesList.SelectedItem as Entry);
+            Presenter.ExcludeCurrentCompetitorFromSession(liviEntriesList.SelectedItem as Entry);
         }
 
         private void AddCompetitorToSession(object sender, RoutedEventArgs e)

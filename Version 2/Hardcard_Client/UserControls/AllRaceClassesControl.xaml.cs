@@ -44,7 +44,7 @@ namespace RacingEventsTrackSystem.UserControls
 
         private void DeleteRaceClass(object sender, RoutedEventArgs e)
         {
-            Presenter.DeleteRaceClass(Presenter.CurrentRaceClass);
+            Presenter.DeleteCurrentRaceClass();
         }
         
 

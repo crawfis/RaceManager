@@ -167,7 +167,6 @@ namespace RacingEventsTrackSystem.Presenters
 
             RaceClass dbRaceClass = null;
             bool newRaceClass = IsInRaceClass(raceClass) ? false : true;
-            // If raceClass is in RaceClasses DataContext then just update it
             if (newRaceClass)
             {
                 //Create new raceClass 
@@ -202,7 +201,6 @@ namespace RacingEventsTrackSystem.Presenters
                 CurrentRaceClass = dbRaceClass; // Current Rase class was just deleted before
             }
 
-
             hc.SaveChanges();
             OpenRaceClass(raceClass); 
             StatusText = string.Format("Race Class '{0}' was saved.", raceClass.ClassName);
@@ -211,7 +209,7 @@ namespace RacingEventsTrackSystem.Presenters
         //
         // Exclude CurrentEventClass.RaceClass from the CurrentEvent
         //
-        public void ExcludeClassFromEvent()
+        public void ExcludeRaceClassFromEvent()
         {
             AllEventsPresenter esp = _applicationPresenter.AllEventsPresenter;
             Event currEvent = esp.CurrentEvent;
@@ -240,7 +238,6 @@ namespace RacingEventsTrackSystem.Presenters
                 MessageBox.Show("Error:EventClass table constraint violation."); 
             }
             if (currEvent.EventClasses.Contains(currEventClass)) currEvent.EventClasses.Remove(currEventClass);
-
         }
 
         //
@@ -308,34 +305,31 @@ namespace RacingEventsTrackSystem.Presenters
         // 
         // Delete Race Class from DataContext and Collection. Sets Current Race Class.
         //
-        public void DeleteRaceClass(RaceClass raceClass)
+        public void DeleteCurrentRaceClass()
         {
-            if (raceClass == null) return;
+            if (CurrentRaceClass == null) return;
             var hc = _applicationPresenter.HardcardContext;
             // Delete from DataContext
-            if (raceClass.EventClasses.Count() > 0)
+            if (CurrentRaceClass.EventClasses.Count() > 0)
             {
                 string str = string.Format("All data : Sessions, Competitors, ect. will be deleted for this event raceClass = '{0}'",
-                           raceClass.ClassName);
+                           CurrentRaceClass.ClassName);
                 System.Windows.Forms.DialogResult result = System.Windows.Forms.MessageBox.Show(str, "Warning!",
                     System.Windows.Forms.MessageBoxButtons.YesNo);
                 if (result == System.Windows.Forms.DialogResult.No) return;
 
                 // check if there is reference to this Event in EventClass table
-                while (raceClass.EventClasses.Count() > 0)
-                    ApplicationPresenter.AllEventsPresenter.DeleteEventClass(raceClass.EventClasses.First());
+                while (CurrentRaceClass.EventClasses.Count() > 0)
+                    ApplicationPresenter.AllEventsPresenter.DeleteEventClass(CurrentRaceClass.EventClasses.First());
             }
-            string str1 = raceClass.ClassName;
-            hc.RaceClasses.DeleteObject(raceClass);
+            string str1 = CurrentRaceClass.ClassName;
+            hc.SaveChanges();
+            hc.RaceClasses.DeleteObject(CurrentRaceClass);
             hc.SaveChanges();
             AllRaceClasses = InitAllRaceClasses();
-            if (AllRaceClasses.Count() > 0)
-                CurrentRaceClass = AllRaceClasses.First();
-            else
-                CurrentRaceClass = null;
-
             StatusText = string.Format("RaceClass '{0}' was deleted.", str1);
         }
+
 
         public void OpenRaceClass(RaceClass raceClass)
         {

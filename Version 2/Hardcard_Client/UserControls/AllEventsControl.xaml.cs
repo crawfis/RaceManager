@@ -51,7 +51,7 @@ namespace RacingEventsTrackSystem.UserControls
 
         private void DeleteEvent_Click(object sender, RoutedEventArgs e)
         {
-            Presenter.DeleteEvent(Presenter.CurrentEvent);
+            Presenter.DeleteCurrentEvent();
         }
 
     }

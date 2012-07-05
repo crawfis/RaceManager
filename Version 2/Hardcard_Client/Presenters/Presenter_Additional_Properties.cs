@@ -96,6 +96,7 @@ namespace RacingEventsTrackSystem.DataAccess
  
         public override string ToString()
         {
+            if (EventClass == null || EventClass.RaceClass == null) return "";
             return string.Format("{0} {1} {2} {3} {4}",
                     Id, EventClass.RaceClass.ClassName, StartTime, SchedStopTime, SchedLaps);
         }

@@ -18,7 +18,7 @@
 
     <DockPanel>
         <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button Name ="btnExcludeCompetitor" Content="Exclude Competitor" Click="ExcludeCompetitor">
+            <Button Name ="btnExcludeCompetitor" Content="Exclude Competitor from Event" Click="ExcludeCompetitor">
             <Button.ToolTip>
                     <TextBlock> Exclude Competitor from the Event</TextBlock>
             </Button.ToolTip>

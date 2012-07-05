@@ -32,9 +32,10 @@ namespace RacingEventsTrackSystem.Views
             get { return (DataContext as AllRaceClassesPresenter); }
         }
 
-        private void ExcludeClassFromEvent(object sender, RoutedEventArgs e)
+        private void ExcludeRaceClassFromEvent(object sender, RoutedEventArgs e)
         {
-            Presenter.ExcludeClassFromEvent();
+            //Presenter.ExcludeRaceClassFromEvent();
+            Presenter.ApplicationPresenter.AllEventsPresenter.DeleteCurrentEventClass();
         }
 
         private void AddClassToEvent(object sender, RoutedEventArgs e)

@@ -33,7 +33,7 @@ namespace RacingEventsTrackSystem.Presenters
 
         public void Delete()
         {
-            _allRaceClassesPresenter.DeleteRaceClass(RaceClass);
+         //   _allRaceClassesPresenter.DeleteRaceClass(RaceClass);
         }
 
         public override bool Equals(object obj)

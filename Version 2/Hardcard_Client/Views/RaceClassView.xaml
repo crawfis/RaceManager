@@ -84,7 +84,7 @@
         </GroupBox>
 
             <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" OverridesDefaultStyle="False" HorizontalAlignment="Center" VerticalAlignment="Top">
-                <Button Content="Exclude Class from Event" Click="ExcludeClassFromEvent" />
+                <Button Content="Exclude Class from Event" Click="ExcludeRaceClassFromEvent" />
                 <Button Content="Save Changes" Click="SaveChanges" />
             </StackPanel>
           

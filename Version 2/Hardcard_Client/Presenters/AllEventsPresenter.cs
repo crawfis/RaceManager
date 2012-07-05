@@ -32,7 +32,6 @@ namespace RacingEventsTrackSystem.Presenters
 
         // Keeps EventClasses for the CurrentEvent, any control changing CurrentEvent, has to reset that collection.
         private ObservableCollection<EventClass> _allEventClasses;
-       
         // EventClass selected in _allEventClasses list.
         private EventClass _currentEventClass;                    
         private string _statusText;                              
@@ -48,7 +47,7 @@ namespace RacingEventsTrackSystem.Presenters
                 _applicationPresenter = applicationPresenter;
                 _allEventClasses = new ObservableCollection<EventClass>();
                 _allEvents = new ObservableCollection<Event>(hc.Events);
-                if (_allEvents.Count() > 0) 
+                if (_allEvents.Count() > 0) //??? it should be in SetEventDependents
                 { 
                     _currentEvent =_allEvents.First();
                     _allEventClasses = new ObservableCollection<EventClass>(_currentEvent.EventClasses);
@@ -197,6 +196,7 @@ namespace RacingEventsTrackSystem.Presenters
 
         //
         // Returns false if some input data for the session are not match the DataBase constraints
+        //
         public bool ValidateEvent(Event myEvent)
         {
             if (AllEvents.Count(ec => ec.Id == myEvent.Id) == 0)
@@ -210,46 +210,42 @@ namespace RacingEventsTrackSystem.Presenters
         // 
         // Delete myEvent DataContext.Events and AllEvents Collection.
         //
-        public void DeleteEvent(Event myEvent)
+        public void DeleteCurrentEvent()
         {
-            if (myEvent == null) return;
+            if (CurrentEvent == null) return;
             var hc = _applicationPresenter.HardcardContext;
             // Delete from DataContext
-            if (myEvent.EventClasses.Count() > 0)
+            if (CurrentEvent.EventClasses.Count() > 0)
             {
                 string str = string.Format("All data : Sessions, Competitors, ect. will be deleted for this event Event = '{0}'",
-                           myEvent.EventName);
+                           CurrentEvent.EventName);
                 System.Windows.Forms.DialogResult result = System.Windows.Forms.MessageBox.Show(str, "Warning!",
                     System.Windows.Forms.MessageBoxButtons.YesNo);
                 if (result == System.Windows.Forms.DialogResult.No) return;
 
                 // check if there is reference to this Event in EventClass table
-                while (myEvent.EventClasses.Count() > 0)
+                while (CurrentEvent.EventClasses.Count() > 0)
                 {
-                    DeleteEventClass(myEvent.EventClasses.First());
+                    DeleteEventClass(CurrentEvent.EventClasses.First());
                 }
             }
-            string str1 = myEvent.EventName;
+            string str1 = CurrentEvent.EventName;
             hc.SaveChanges();
-            hc.Events.DeleteObject(myEvent);
+            hc.Events.DeleteObject(CurrentEvent);
             StatusText = string.Format("Event '{0}' was deleted.", str1);
-            if (AllEvents.Count() > 0)
-                CurrentEvent = AllEvents.First();
-            else
-                CurrentEvent = null;
-            AllEvents = UpdateAllEvents();
+            hc.SaveChanges();
+            AllEvents = InitAllEvents();
         }
 
 
         // 
-        // Delete myEvent DataContext.Events and AllEvents Collection. Don't reset Current Event.
+        // Delete eventClass from DataContext. 
         //
         public void DeleteEventClass(EventClass eventClass)
         {
             if (eventClass == null) return;
             var hc = _applicationPresenter.HardcardContext;
             hc.SaveChanges();
-            // Delete from DataContext
             if (eventClass.Competitors.Count() > 0)
             {
                 while (eventClass.Competitors.Count() > 0)
@@ -266,9 +262,24 @@ namespace RacingEventsTrackSystem.Presenters
             string str = eventClass.RaceClass.ClassName;
             hc.SaveChanges();
             hc.EventClasses.DeleteObject(eventClass);
+
             StatusText = string.Format("eventClass '{0}' was deleted.", str);
         }
 
+        // 
+        // Delete Current eventClass from DataContext and Collection. 
+        //
+        public void DeleteCurrentEventClass()
+        {
+            if (CurrentEventClass == null) return;
+            if (CurrentEvent == null) return;
+
+            var hc = _applicationPresenter.HardcardContext;
+            hc.SaveChanges();
+            DeleteEventClass(CurrentEventClass);
+            hc.SaveChanges();
+            AllEventClasses = InitAllEventClasses(CurrentEvent);
+        }
         //
         // Returns true if myEvent.Id exists in the Event table
         //
@@ -284,7 +295,6 @@ namespace RacingEventsTrackSystem.Presenters
         private bool IsEventInEventClass(Event myEvent)
         {
             return myEvent.EventClasses.Count() > 0; 
-
         }
 
         public void OpenEvent(Event myEvent)

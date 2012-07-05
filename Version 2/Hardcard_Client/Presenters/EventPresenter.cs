@@ -33,10 +33,12 @@ namespace RacingEventsTrackSystem.Presenters
             get { return _allEventsPresenter; }
         }
 
+        /*
         public void Delete()
         {
-            _allEventsPresenter.DeleteEvent(Event);
+            //_allEventsPresenter.DeleteEvent(Event);
         }
+         */ 
 
         public override bool Equals(object obj)
         {

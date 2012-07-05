@@ -66,6 +66,7 @@ namespace RacingEventsTrackSystem.Presenters
             set
             {
                 _currentAthlete = value;
+                // Set EventClasses for CurrentAthlete
                 // Copy data from Database into  EventClassesForAthlete.
                 EventClassesForAthlete = InitEventClassesForAthlete(_currentAthlete);
                 OnPropertyChanged("CurrentAthlete");
@@ -161,6 +162,7 @@ namespace RacingEventsTrackSystem.Presenters
 
             return Tmp;
         }
+        
         //
         // Update existing Athlete or add new entry if Athlete is not in DataContext.Athletes
         //
@@ -179,13 +181,13 @@ namespace RacingEventsTrackSystem.Presenters
         {
             if (athlete == null) return;
             if (!ValidateAthlete(athlete)) return;
-
             var hc = _applicationPresenter.HardcardContext;
         }
  
 
         //
         // Returns false if some input data for athlete are not match the DataBase fields
+        // (!!!Replace with interective WPF validation during editing)
         public bool ValidateAthlete(Athlete athlete)
         {
             if (athlete.FirstName == null && athlete.LastName == null)
@@ -218,36 +220,29 @@ namespace RacingEventsTrackSystem.Presenters
         // 
         // Delete Athlete from DataContext and Collection. Doesn't reset Current Race Class.
         //
-        public void DeleteAthlete(Athlete athlete)
+        public void DeleteCurrentAthlete()
         {
-            if (athlete == null) return;
+            if (CurrentAthlete == null) return;
             var hc = _applicationPresenter.HardcardContext;
 
             // Delete from DataContext
-            // Check if athlete is in Athlete table
-            if (IsInAthlete(athlete))
-            {
-                // check if there is reference FK in Competitor table
-                if (IsAthleteInCompetitor(athlete))
-                {
-                     string str = string.Format("Remove dependent Competitor first for Athlete.Id = {0}", 
-                         athlete.Id);
-                     MessageBox.Show(str);
-                     return;
-                }
-                else
-                { 
-                    hc.Athletes.DeleteObject(hc.Athletes.Single(p => p.Id == athlete.Id));
-                    StatusText = string.Format("Athlete '{0}' was deleted.", athlete.ToString());
-                }
-            }
 
-            if (AllAthletes.Contains(athlete))
+            if (CurrentAthlete.Competitors.Count() > 0)
             {
-                AllAthletes.Remove(athlete);
-                OpenAthlete(new Athlete());
+                string str = string.Format("All data : Competitors, ect. will be deleted for this Athlete = '{0} {1}'",
+                           CurrentAthlete.FirstName, CurrentAthlete.LastName);
+                System.Windows.Forms.DialogResult result = System.Windows.Forms.MessageBox.Show(str, "Warning!",
+                    System.Windows.Forms.MessageBoxButtons.YesNo);
+                if (result == System.Windows.Forms.DialogResult.No) return;
+
+                // check if there is reference to this Event in EventClass table
+                while (CurrentAthlete.Competitors.Count() > 0)
+                    ApplicationPresenter.AllCompetitorsPresenter.DeleteCompetitor(CurrentAthlete.Competitors.First());
             }
-            StatusText = string.Format("Athlete '{0}' was deleted.", athlete.LastName);
+            hc.SaveChanges();
+            hc.Athletes.DeleteObject(CurrentAthlete);
+            hc.SaveChanges();
+            AllAthletes = InitAllAthletes();
         }
 
         public void OpenAthlete(Athlete athlete)

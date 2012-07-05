@@ -43,7 +43,7 @@ namespace RacingEventsTrackSystem.UserControls
 
         private void DeleteAthlete(object sender, RoutedEventArgs e)
         {
-            Presenter.DeleteAthlete(Presenter.CurrentAthlete);
+            Presenter.DeleteCurrentAthlete();
         }
      }
 }
