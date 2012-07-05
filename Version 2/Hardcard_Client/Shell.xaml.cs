@@ -81,11 +81,9 @@ namespace RacingEventsTrackSystem
             //"Athletes List"/ctlAthletes/AllAthletesControl.xaml
             //"Competitors for Event" control: AllCompetitorsControl.xaml
             ctlAthletes.DataContext = ap.AllAthletesPresenter;
-            //competitorView.DataContext = ap.AllCompetitorsPresenter;
             competitorView.DataContext = ap.AllCompetitorsPresenter;
             ctlCompetitorsSearchBar.DataContext = ap.AllEventsPresenter;
             ctlCompetitorsForEvent.DataContext = ap.AllCompetitorsPresenter;
-            //ctlAllAthletes.btnAddAthleteToCompetitors.Visibility = System.Windows.Visibility.Hidden;
             ctlAthletes.btnNewAthlete.Visibility = System.Windows.Visibility.Hidden;
             ctlAthletes.btnDeleteAthlete.Visibility = System.Windows.Visibility.Hidden;
 
