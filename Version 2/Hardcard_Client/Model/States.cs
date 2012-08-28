@@ -85,5 +85,24 @@ namespace RacingEventsTrackSystem.Model
         }
 
     }
+
+    public static class SessionTypes
+    {
+        private static readonly List<string> _types;
+        static SessionTypes()
+        {
+            _types = new List<string>(3);
+
+            _types.Add("Practice");
+            _types.Add("Qualifying");
+            _types.Add("Race");
+        }
+
+        public static IList<string> GetSessionTypes()
+        {
+            return _types;
+        }
+    }
+
 }
 
