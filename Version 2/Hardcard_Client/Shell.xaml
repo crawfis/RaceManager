@@ -42,7 +42,7 @@
             </Grid>
         </TabItem>
 
-        <TabItem Header="Athlete" Name="AthleteTab">
+        <TabItem Header="Competitor" Name="AthleteTab">
             <Grid Height="501">
                 <uc:SearchBar x:Name="ctlAthleteSearchBar" Margin="0,-9,0,475"  />
                 <DockPanel>
@@ -59,7 +59,7 @@
             </Grid>
         </TabItem>
 
-        <TabItem Header="Competitor" Name="CompetitorsTab">
+        <TabItem Header="Entry" Name="CompetitorsTab">
             <Grid Height="501">
                 <uc:SearchBar x:Name="ctlCompetitorsSearchBar" Margin="0,-9,0,475" />
                 <DockPanel>
@@ -99,9 +99,36 @@
             </Grid>
         </TabItem>
 
-        <TabItem Header="Race" Name="RaceTab">
-            <Grid>
-                <view:RaceManagerView  Margin="0,0,0,6" />
+        <TabItem Header="Timing" Name="TimingTab">
+            <Grid  Height="501"  >
+                <!--<view:RaceManagerView  x:Name="raceManagerView" Margin="0,0,0,6" /> -->
+                <DockPanel>
+                    <DockPanel DockPanel.Dock="Top" Height="30" Margin="0,-9,0,0"  >
+                        <uc:EventAndSessionSearchBar x:Name="ctlTimingSearchBar" />
+                    </DockPanel>
+
+                    <DockPanel DockPanel.Dock="Bottom" Height="25"  >
+                        <StatusBar >
+                            <StatusBarItem VerticalAlignment="Center" Height="25">
+                                <TextBlock Text="{Binding StatusText}" />
+                            </StatusBarItem>
+                        </StatusBar>
+                    </DockPanel>
+                    
+                    <DockPanel>
+                        <!--<DockPanel  DockPanel.Dock="Right" Width="100" HorizontalAlignment="Right"  >
+                            <Border BorderThickness="1" BorderBrush="Black" CornerRadius="6" Padding="4"  >
+                            </Border>
+                        </DockPanel>-->
+        
+                        <DockPanel>
+                        <view:StandingView x:Name="viewStanding"  DockPanel.Dock="Top" BorderThickness="1" BorderBrush="Black" Height="200"  />
+                        <view:TimingView   x:Name="viewTiming" DockPanel.Dock="Bottom" BorderThickness="1" BorderBrush="Black" />
+                        </DockPanel>
+                    </DockPanel>
+
+                </DockPanel>
+
             </Grid>
         </TabItem>
         
@@ -126,6 +153,10 @@
         </TabItem>
         
         <TabItem Header="Tags" Name="TagsTab">
+
+            <!--DockPanel DockPanel.Dock="Top" Margin="0,-9,0,125"  >
+                <view:PassingEditControl x:Name="viewPassingEdit" Height="169" />
+            </DockPanel-->
         </TabItem>
         
         <TabItem Header="Synchronization" Name="SynchronizationTab">

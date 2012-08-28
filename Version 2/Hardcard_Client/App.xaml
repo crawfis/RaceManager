@@ -17,6 +17,10 @@
                                  MethodName="GetCompetitorStatus"
                                  ObjectType="{x:Type Model:CompStatus}" />
 
+            <ObjectDataProvider  x:Key="sessionTypes"
+                                 MethodName="GetSessionTypes"
+                                 ObjectType="{x:Type Model:SessionTypes}" />
+
         </ResourceDictionary>
     </Application.Resources>
 </Application>

@@ -96,6 +96,11 @@ namespace RacingEventsTrackSystem
             ctlAllSessions.DataContext = ap.AllSessionsPresenter;
             ctlCompetitorsForEventClass.DataContext = ap.AllSessionsPresenter;
 
+            // Tab "Timing" (former Race)
+            ctlTimingSearchBar.DataContext = ap;
+            viewTiming.DataContext = ap.AllSessionsPresenter;
+            viewStanding.DataContext = ap.AllSessionsPresenter;
+
             // Tab "Results"
             resultsView.DataContext = ap.AllSessionsPresenter;
             ctlAllResultsSessions.DataContext = ap.AllSessionsPresenter;
