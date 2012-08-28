@@ -35,5 +35,10 @@ namespace RacingEventsTrackSystem.Views
         {
             Presenter.UpdateStandingTable(Presenter.CurrentSessionForEvent);
         }
+
+        private void WriteStandingReport_Click(object sender, RoutedEventArgs e)
+        {
+            Presenter.WriteStandingReport(Presenter.CurrentSessionForEvent); 
+        }
     }
 }

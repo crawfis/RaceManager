@@ -16,7 +16,7 @@
             <DataGrid AutoGenerateColumns="True" Height="204" HorizontalAlignment="Left" Margin="0,279,0,0" Name="rankingsDataGrid" VerticalAlignment="Top" Width="680" Background="#FFE7EBF7" AlternatingRowBackground="#595695CB" />
             <DataGrid AutoGenerateColumns="True" Height="211" HorizontalAlignment="Left" Margin="0,35,0,0" Name="passingsDataGrid" VerticalAlignment="Top" Width="680" ItemsSource="{Binding PassingsList}" Background="#21105D9C" CanUserReorderColumns="False" ForceCursor="False" AlternatingRowBackground="#595695CB" AllowDrop="True" CanUserAddRows="True" CanUserDeleteRows="True" SelectionMode="Single" CanUserResizeRows="False"></DataGrid>
         </Grid>
-        <TextBlock Height="23" HorizontalAlignment="Left" Margin="747,39,0,0" Name="textBlock2" Text="Select Race" VerticalAlignment="Top" FontWeight="ExtraBold" Foreground="#FF105D9C" />
+        <TextBlock Height="23" HorizontalAlignment="Left" Margin="747,39,0,0" Name="textBlock2" Text="Select Event" VerticalAlignment="Top" FontWeight="ExtraBold" Foreground="#FF105D9C" />
         <ComboBox Height="23" HorizontalAlignment="Left" Margin="707,61,0,0" Name="eventComboBox" VerticalAlignment="Top" Width="150" ItemsSource="{Binding EventList}" SelectionChanged="Event_Selected" Background="#FFE7EBF7" Foreground="#FF105D9C" />
         <TextBlock Height="23" HorizontalAlignment="Left" Margin="741,95,0,0" Name="textBlock3" Text="Select Session" VerticalAlignment="Top" FontWeight="ExtraBold" Foreground="#FF105D9C" />
         <ComboBox Height="23" HorizontalAlignment="Left" Margin="707,118,0,0" Name="sessionComboBox" VerticalAlignment="Top" Width="150" ItemsSource="{Binding SessionList}"  SelectionChanged="Session_Selected" Background="#FFE7EBF7" Foreground="#FF105D9C" />

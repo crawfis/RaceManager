@@ -26,7 +26,7 @@ namespace RacingEventsTrackSystem.Views
             try
             {
                 InitializeComponent();
-                DataContext = new RacePresenter(this);
+                //DataContext = new RacePresenter(this);
             }
             catch (Exception ex) 
             {

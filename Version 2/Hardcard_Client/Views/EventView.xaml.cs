@@ -40,7 +40,7 @@ namespace RacingEventsTrackSystem.Views
         // add race -- button deleted
         private void button1_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Not emplemented"); 
+            MessageBox.Show("Not implemented"); 
             
             ApplicationPresenter ap = Shell.theShell.DataContext as ApplicationPresenter;
             RaceManagement raceWin = new RaceManagement(ap.CurrentEvent);

@@ -38,18 +38,20 @@
 
                     <Label   Content="_Last Name:"  Grid.Row="1"  HorizontalAlignment="Left"/>
                     <TextBox Grid.Row="1" Grid.Column="1"  
-                             Text="{Binding CurrentAthlete.LastName}" Margin="0,0,25,0" />
+                             Text ="{Binding CurrentAthlete.LastName}" Margin="0,0,25,0" />
 
                     <Label   Content="_Birthday:" Grid.Row="2" HorizontalAlignment="Left" />
-                    <TextBox Grid.Row="2" Grid.Column="1"  
-                             Text="{Binding CurrentAthlete.DOB}" Margin="0,0,25,0"/>
+                    <!--<TextBox Grid.Row="2" Grid.Column="1"  
+                             Text="{Binding CurrentAthlete.DOB}" Margin="0,0,25,0"/>-->
+                        <DatePicker Grid.Row="2" Grid.Column="1" Grid.RowSpan="2" 
+                                    SelectedDate ="{Binding CurrentAthlete.DOB, Mode=TwoWay}" HorizontalAlignment="Left" Name="datePicker1" VerticalAlignment="Top" Width="154" VerticalContentAlignment="Stretch" FontSize="12" />
 
-                    <Label   Content="_Gender:" Grid.Row="3" HorizontalAlignment="Left"  />
+                        <Label   Content="_Gender:" Grid.Row="3" HorizontalAlignment="Left"  />
                   <!--  <TextBox Grid.Row="3" Grid.Column="1"  
                              Text="{Binding CurrentAthlete.Gender,  Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True}" Margin="0,0,25,0" />-->
                     <TextBox Grid.Row="3" Grid.Column="1"  
                              Text="{Binding CurrentAthlete.Gender}" Margin="0,0,25,0" />
-                </Grid>
+                    </Grid>
             </GroupBox>
 
             <!-- Address information-->

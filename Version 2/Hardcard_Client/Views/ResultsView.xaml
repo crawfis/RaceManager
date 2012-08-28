@@ -13,6 +13,7 @@
         <DockPanel DockPanel.Dock="Bottom" >
             <StackPanel DockPanel.Dock="Left" Orientation="Horizontal" OverridesDefaultStyle="False" HorizontalAlignment="Left" VerticalAlignment="Top">
                 <Button Content="Update Standing" Click="UpdateStanding_Click" Width="108" FontWeight="Normal" />
+                <Button Content="Write Standing Report" Click="WriteStandingReport_Click" Width="127" FontWeight="Normal" />
             </StackPanel>
         </DockPanel>
 
