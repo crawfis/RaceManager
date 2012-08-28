@@ -57,6 +57,13 @@ namespace RacingEventsTrackSystem.Presenters
             set { _allAthletesPresenter = value; }
         }
 
+        private RacePresenter _racePresenter;
+        public RacePresenter RacePresenter
+        {
+            get { return _racePresenter; }
+            set { _racePresenter = value; }
+        }
+    
         private AllSessionsPresenter _allSessionsPresenter;
         public AllSessionsPresenter AllSessionsPresenter
         {
@@ -89,6 +96,7 @@ namespace RacingEventsTrackSystem.Presenters
                 _allRaceClassesPresenter = new AllRaceClassesPresenter(this, View);
                 _allSessionsPresenter = new AllSessionsPresenter(this, View);
                 _allCompetitorsPresenter = new AllCompetitorsPresenter(this, View);
+                _racePresenter = new RacePresenter(this, View);
             }
             catch (Exception ex)
             {

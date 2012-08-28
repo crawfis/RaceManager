@@ -90,7 +90,9 @@ namespace RacingEventsTrackSystem.DataAccess
         {
             get
             {
-                return this.ToString();
+                if (EventClass == null || EventClass.RaceClass == null) return "";
+                return string.Format("{0} {1} {2} ",
+                        Id, Name, SessionType);
             }
         }
  

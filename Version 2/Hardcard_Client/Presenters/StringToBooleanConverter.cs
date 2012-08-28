@@ -113,6 +113,70 @@ namespace RacingEventsTrackSystem.Presenters
         #endregion
     }//class BooleanToStatusConverter : IValueConverter
 
+    //
+    //
+    //
+    public class BooleanToDeletedConverter : IValueConverter
+    {
+        #region IValueConverter Members
+
+        public object Convert(object value,
+                                Type targetType,
+                                object parameter,
+                                System.Globalization.CultureInfo culture)
+        {
+            if (value == null) return "ssdfdel";
+            bool data = (bool)value;
+            if (data) return "Deleted";
+            return ""; // Not deleted
+        }
+
+        public object ConvertBack(object value,
+                                    Type targetType,
+                                    object parameter,
+                                    System.Globalization.CultureInfo culture)
+        {
+            string data = (string)value;
+            if (data == "Deleted") return true;
+            return false;
+        }
+
+
+        #endregion
+    }//class BooleanToDeletedConverter : IValueConverter
+
+    //
+    //Converts Boolean(bit) in DataBase into string "Invalid" in Passing
+    //
+    public class BooleanToInvalidConverter : IValueConverter
+    {
+        #region IValueConverter Members
+
+        public object Convert(object value,
+                                Type targetType,
+                                object parameter,
+                                System.Globalization.CultureInfo culture)
+        {
+            if (value == null) return "ssdfdinv";
+            bool data = (bool)value;
+            if (data) return "MinLapTime";
+            return ""; // Not deleted
+        }
+
+        public object ConvertBack(object value,
+                                    Type targetType,
+                                    object parameter,
+                                    System.Globalization.CultureInfo culture)
+        {
+            string data = (string)value;
+            if (data == "MinLapTime") return true;
+            return false;
+        }
+
+
+        #endregion
+    }//class BooleanToInvalidConverter : IValueConverter
+
     public class StatusToBooleanConverter : IValueConverter
     {
         #region IValueConverter Members
@@ -208,18 +272,48 @@ namespace RacingEventsTrackSystem.Presenters
         }
     }//class PhoneConverter : IValueConverter
 
+
+    public class UnixTimeToDateTimeConverter : IValueConverter
+    {
+
+        //Converts Seconds to DateTime
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        //internal static DateTime ConvertFromUnixTime(double unixTime)
+        {
+            //if (value == null) value = 1333850000000;
+
+            double unixTime = (double)((long)value/1000);
+            DateTime origin = new DateTime(1970, 1, 1, 0, 0, 0, 0);
+            return origin.AddSeconds(unixTime);
+        }
+
+        //Converts DateTime to Seconds
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        //internal static double ConvertToUnixTime(DateTime date)
+        {
+            string str = (string)value;
+            DateTime date = DateTime.Parse(str); // "09/23/201 //todo exception if Parse faild
+            //DateTime date = (DateTime)value;
+            DateTime origin = new DateTime(1970, 1, 1, 0, 0, 0, 0);
+            TimeSpan diff = date - origin;
+            return (Math.Floor(diff.TotalSeconds)) * 1000;
+        }
+    }//class UnixTimeToDateTimeConverter : IValueConverter
+
     public class TimeSpanConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             
+            string str = "";
+            if (value == null) return str; // return emty string
             long data = (long)value;
             TimeSpan result = new TimeSpan();
             //if (data != 0) return result = TimeSpan.FromMilliseconds(data);
             //else return result;
             
             if (data != 0) result = TimeSpan.FromMilliseconds(data);
-            string str = string.Format(result.ToString(@"hh\:mm\:ss\.FFFFF"));
+            str = string.Format(result.ToString(@"hh\:mm\:ss\.FFFFF"));
             return str;
             
         }
@@ -229,5 +323,99 @@ namespace RacingEventsTrackSystem.Presenters
             //you only need to implement this for two-way conversions
             throw new NotImplementedException();
         }
-    }//class PhoneConverter : IValueConverter
+    }//class TimeSpanConverter : IValueConverter
+
+    public class MilitaryTime : IValueConverter
+    {
+         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+      //public static string WriteMilitaryTime(DateTime date)
+        {
+            //
+            // Convert hours and minutes to 24-hour scale.
+            //
+            DateTime date = (DateTime)value;
+            //string format = "MMM ddd d HH:mm yyyy";
+            string format = "MM/dd/yyyy HH:mm:ss";
+            return date.ToString(format);
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            DateTime date;
+            //return date.ToString(format);
+            //return date.ToString("MM/dd/yyyy HH:mm");
+            string str = (string)value;
+            //string format = "MM/dd/yyyy HH:mm";
+            return date = DateTime.Parse(str); // "09/23/2012 23:00"
+        }
+        
+        
+        private static DateTime ParseMilitaryTime(string time, int year, int month, int day)
+        {
+            //
+            // Convert hour part of string to integer.
+            //
+            string hour = time.Substring(0, 2);
+            int hourInt = int.Parse(hour);
+            if (hourInt >= 24)
+            {
+                throw new ArgumentOutOfRangeException("Invalid hour");
+            }
+            //
+            // Convert minute part of string to integer.
+            //
+            string minute = time.Substring(2, 2);
+            int minuteInt = int.Parse(minute);
+            if (minuteInt >= 60)
+            {
+                throw new ArgumentOutOfRangeException("Invalid minute");
+            }
+            //
+            // Return the DateTime.
+            //
+            return new DateTime(year, month, day, hourInt, minuteInt, 0);
+        }
+    }//class MilitaryTime : IValueConverter
+
+    public class CheckBoxToBitConverter : IValueConverter
+    {
+        #region IValueConverter Members
+
+        public object ConvertBack(object value,
+                              Type targetType,
+                              object parameter,
+                              System.Globalization.CultureInfo culture)
+        {
+            try
+            {
+                bool data = (bool)value;
+                return (data) ? 1 : 0;
+            }
+            catch (Exception)
+            {
+                new ArgumentException("CheckBoxToBitConverter Conversion failed");
+            }
+            return 0;
+        }
+        public object Convert( object value,
+                                   Type targetType,
+                                   object parameter,
+                                   System.Globalization.CultureInfo culture)
+        {
+            int data = (int)value;
+            if (data == 1 || data == 0)
+            {
+                return (data == 1) ? true : false;
+            }
+            else
+            {
+                new ArgumentException(" CheckBoxToBitConverter Back Conversion failed");
+            }
+            return false;
+        }
+
+        #endregion
+    } //public class CheckBoxToBitConverter : IValueConverter
+
+    
 }

@@ -111,7 +111,9 @@ namespace RacingEventsTrackSystem.Presenters
         {
             if (athlete == null || eventClass == null || eventClass.Id == 0) return; //Athlete not chosen
             var hc = _applicationPresenter.HardcardContext;
+            // add convertor constructor to Competitor    
             Competitor competitor = CreateNewCompetitor(athlete, eventClass.Id);
+            //competitor.EventClassId = eventClass.Id;
             competitor.VehicleType = vehicleType;
             competitor.VehicleModel = vehicleModel;
             competitor.VehicleCC = vehicleCC;
@@ -184,9 +186,32 @@ namespace RacingEventsTrackSystem.Presenters
                 while (competitor.Entries.Count() > 0)
                     ApplicationPresenter.AllSessionsPresenter.DeleteEntry(competitor.Entries.First());
             }
+
+            /* if (IsCompetitorInCompetitor(competitor))
+             {
+                 if (IsCompetitorInEntry(competitor))
+                 {   // Remove record from Entry first for the Competitor
+                     List<Entry> query = (from c in competitor.Entries 
+                                                select c).ToList();
+                     foreach (Entry e in query ) hc.Entries.DeleteObject(e);
+                 }
+                 Athlete athlete = competitor.Athlete;
+                 //athlete.Competitors.Remove(competitor);//???diassociate from athlete
+             }
+             */
             hc.SaveChanges();
             hc.Competitors.DeleteObject(competitor);
             hc.SaveChanges();
+             
+            /*
+                       if (AllCompetitors.Contains(competitor))
+                       {
+                           AllCompetitors.Remove(competitor);
+                           StatusText = status;
+                       }
+             */ 
+            //    OpenNewCompetitor();
+
         }
 
 
@@ -201,9 +226,11 @@ namespace RacingEventsTrackSystem.Presenters
             if (aep != null && aep.CurrentEvent != null)
                 AllCompetitors = InitCompetitorsForEvent(aep.CurrentEvent);
 
+            //???
             AllSessionsPresenter asp = ApplicationPresenter.AllSessionsPresenter;
             if (asp != null && asp.CurrentSessionForEvent != null)
                 asp.CompetitorsForEventClass = asp.InitCompetitorsForEventClass(asp.CurrentSessionForEvent.EventClass);
+
         }
 
         //
@@ -216,7 +243,7 @@ namespace RacingEventsTrackSystem.Presenters
             AllSessionsPresenter asp = ApplicationPresenter.AllSessionsPresenter;
             if (asp != null && asp.CurrentSessionForEvent != null)
                 asp.CompetitorsForEventClass = asp.InitCompetitorsForEventClass(asp.CurrentSessionForEvent.EventClass);
-
+            //???
             AllEventsPresenter aep = ApplicationPresenter.AllEventsPresenter;
             if (aep != null && aep.CurrentEvent != null)
                 AllCompetitors = InitCompetitorsForEvent(aep.CurrentEvent);
@@ -283,6 +310,7 @@ namespace RacingEventsTrackSystem.Presenters
                 Tmp = new ObservableCollection<Competitor>();
             else
             {
+                //???
                 Tmp = new ObservableCollection<Competitor>(myEvent.EventClasses.SelectMany(eventClass => eventClass.Competitors).ToList());
             }
 

@@ -196,7 +196,7 @@ namespace RacingEventsTrackSystem.Presenters
 
         //
         // Returns false if some input data for the session are not match the DataBase constraints
-        //
+        // (!!!Replace with interective WPF validation during editing)
         public bool ValidateEvent(Event myEvent)
         {
             if (AllEvents.Count(ec => ec.Id == myEvent.Id) == 0)
@@ -207,13 +207,35 @@ namespace RacingEventsTrackSystem.Presenters
             return true;
         }
 
+
+        // 
+        // Delete myEvent DataContext.Events.
+        //
+        public void DeleteEvent(Event myEvent)
+        {
+            if (CurrentEvent == null) return;
+            var hc = _applicationPresenter.HardcardContext;
+            // Delete from DataContext
+            if (CurrentEvent.EventClasses.Count() > 0)
+            {
+                // check if there is reference to this Event in EventClass table
+                while (CurrentEvent.EventClasses.Count() > 0)
+                {
+                    DeleteEventClass(CurrentEvent.EventClasses.First());
+                    //hc.EventClasses.DeleteObject(myEvent.EventClasses.First());
+                }
+            }
+            hc.SaveChanges();
+            hc.Events.DeleteObject(CurrentEvent);
+            hc.SaveChanges();
+        }
+
         // 
         // Delete myEvent DataContext.Events and AllEvents Collection.
         //
         public void DeleteCurrentEvent()
         {
             if (CurrentEvent == null) return;
-            var hc = _applicationPresenter.HardcardContext;
             // Delete from DataContext
             if (CurrentEvent.EventClasses.Count() > 0)
             {
@@ -222,19 +244,12 @@ namespace RacingEventsTrackSystem.Presenters
                 System.Windows.Forms.DialogResult result = System.Windows.Forms.MessageBox.Show(str, "Warning!",
                     System.Windows.Forms.MessageBoxButtons.YesNo);
                 if (result == System.Windows.Forms.DialogResult.No) return;
-
-                // check if there is reference to this Event in EventClass table
-                while (CurrentEvent.EventClasses.Count() > 0)
-                {
-                    DeleteEventClass(CurrentEvent.EventClasses.First());
-                }
             }
+
             string str1 = CurrentEvent.EventName;
-            hc.SaveChanges();
-            hc.Events.DeleteObject(CurrentEvent);
-            StatusText = string.Format("Event '{0}' was deleted.", str1);
-            hc.SaveChanges();
+            DeleteEvent(CurrentEvent);
             AllEvents = InitAllEvents();
+            StatusText = string.Format("Event '{0}' was deleted.", str1);
         }
 
 
@@ -295,7 +310,10 @@ namespace RacingEventsTrackSystem.Presenters
         //
         private bool IsEventInEventClass(Event myEvent)
         {
+            //???var hc = _applicationPresenter.HardcardContext;
+            //???return (hc.EventClasses.Count(ec => ec.EventId == myEvent.Id) == 0) ? false : true;
             return myEvent.EventClasses.Count() > 0; 
+
         }
 
         public void OpenEvent(Event myEvent)
@@ -346,6 +364,7 @@ namespace RacingEventsTrackSystem.Presenters
         public void  SetEventDependents(Event myEvent)
         {
             // Set Competitors, EventClasses, and Sessions for CurrentEvent
+            // Actually it should reset Sessions only when Session view is called??!!!!!!!!!!!!!
             if (myEvent == null) return;
 
             AllEventClasses = InitAllEventClasses(myEvent);

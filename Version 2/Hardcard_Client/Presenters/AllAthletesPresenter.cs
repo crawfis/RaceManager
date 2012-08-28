@@ -141,10 +141,13 @@ namespace RacingEventsTrackSystem.Presenters
             hc.SaveChanges();
             AllAthletes = InitAllAthletes();
             CurrentAthlete = newAthlete;
+
+            //SaveAthlete(newAthlete);
+            //OpenAthlete(newAthlete);
         }
 
 
-        // 
+         // 
         // Create Athletes collection and set default CurrentAthlete 
         //
         public ObservableCollection<Athlete> InitAllAthletes()
@@ -162,7 +165,6 @@ namespace RacingEventsTrackSystem.Presenters
 
             return Tmp;
         }
-        
         //
         // Update existing Athlete or add new entry if Athlete is not in DataContext.Athletes
         //
@@ -172,6 +174,55 @@ namespace RacingEventsTrackSystem.Presenters
             if (!ValidateAthlete(athlete)) return;
             _applicationPresenter.HardcardContext.SaveChanges();
             StatusText = string.Format("Athlete '{0} {1}' was saved.", athlete.FirstName, athlete.LastName);
+
+/*
+            var hc = _applicationPresenter.HardcardContext;
+            Athlete dbAthlete = null;
+            bool newAthlete = IsInAthlete(athlete) ? false : true;
+
+            // If athlete is in Athlete DataContext then just update it
+            if (newAthlete)
+            {
+                //Create new Athlete in DataContext.Athletes
+                //Use if (contact.Id == Guid.Empty) contact.Id = Guid.NewGuid(); to get Id.
+                long max_id = 0;
+                //var q = eventClasses.DefaultIfEmpty();// not empty table
+                if ((from c in hc.Athletes select c).Count() > 0) // not empty table
+                    max_id = (from c in hc.Athletes select c.Id).Max();
+
+                athlete.Id = ++max_id;
+                hc.Athletes.AddObject(athlete);
+                StatusText = string.Format("Athlete '{0}' was added to Athlete table.", athlete.ToString());
+            }
+            else
+            {
+                //update Athlete in DataContext.Athletes
+                dbAthlete = hc.Athletes.Single(p => p.Id == athlete.Id);
+                // hc.ApplyCurrentValues(dbAthlete.EntityKey.EntitySetName, athlete);
+                UpdateAthlete(athlete, dbAthlete);
+                StatusText = string.Format("Athlete '{0}' was updated.", athlete.ToString());
+            }
+
+            // Update AllAthletes Collection            
+            
+            if (newAthlete)
+            {
+                AllAthletes.Add(athlete);
+                CurrentAthlete = athlete; // Current event was just deleted before
+            }
+            else
+            {
+                // If athlete is in AllAthletes Collection then just update it
+                int i = AllAthletes.IndexOf(dbAthlete); 
+                AllAthletes.RemoveAt(i);
+                AllAthletes.Insert(i, dbAthlete);
+                CurrentAthlete = dbAthlete; // Current event was just deleted before
+            }
+
+            hc.SaveChanges();
+            OpenAthlete(athlete);
+            StatusText = string.Format("Athlete '{0}' was saved.", athlete.LastName);
+         */
         }
 
         //
@@ -181,6 +232,7 @@ namespace RacingEventsTrackSystem.Presenters
         {
             if (athlete == null) return;
             if (!ValidateAthlete(athlete)) return;
+
             var hc = _applicationPresenter.HardcardContext;
         }
  
@@ -239,10 +291,32 @@ namespace RacingEventsTrackSystem.Presenters
                 while (CurrentAthlete.Competitors.Count() > 0)
                     ApplicationPresenter.AllCompetitorsPresenter.DeleteCompetitor(CurrentAthlete.Competitors.First());
             }
+
+
+            /*
+            if (IsInAthlete(CurrentAthlete))
+            {
+                // check if there is reference FK in Competitor table
+                if (IsAthleteInCompetitor(CurrentAthlete))
+                {
+                     string str = string.Format("Remove dependent Competitor first for Athlete.Id = {0}",
+                         CurrentAthlete.Id);
+                     MessageBox.Show(str);
+                     return;
+                }
+                else
+                {
+                    hc.Athletes.DeleteObject(hc.Athletes.Single(p => p.Id == CurrentAthlete.Id));
+                    StatusText = string.Format("Athlete '{0}' was deleted.", CurrentAthlete.ToString());
+                }
+            }
+            */
             hc.SaveChanges();
             hc.Athletes.DeleteObject(CurrentAthlete);
             hc.SaveChanges();
+
             AllAthletes = InitAllAthletes();
+            //StatusText = string.Format("Athlete '{0}' was deleted.", athlete.LastName);
         }
 
         public void OpenAthlete(Athlete athlete)

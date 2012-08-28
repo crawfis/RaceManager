@@ -167,6 +167,7 @@ namespace RacingEventsTrackSystem.Presenters
 
             RaceClass dbRaceClass = null;
             bool newRaceClass = IsInRaceClass(raceClass) ? false : true;
+            // If raceClass is in RaceClasses DataContext then just update it
             if (newRaceClass)
             {
                 //Create new raceClass 
@@ -183,10 +184,12 @@ namespace RacingEventsTrackSystem.Presenters
             {
                 dbRaceClass = hc.RaceClasses.Single(r => r.Id == raceClass.Id);
                 UpdateRaceClass(raceClass, dbRaceClass);
+                //hc.ApplyCurrentValues(dbRaceClass.EntityKey.EntitySetName, raceClass);
                 StatusText = string.Format("RaceClass '{0}' was updated.", raceClass.ToString());
             }
 
             // Update AllRaceClasses Collection  
+            //if ( i >= 0 )
             if (newRaceClass)
             {
                 AllRaceClasses.Add(raceClass);
@@ -200,6 +203,7 @@ namespace RacingEventsTrackSystem.Presenters
                 AllRaceClasses.Insert(i, dbRaceClass);
                 CurrentRaceClass = dbRaceClass; // Current Rase class was just deleted before
             }
+
 
             hc.SaveChanges();
             OpenRaceClass(raceClass); 
@@ -237,7 +241,9 @@ namespace RacingEventsTrackSystem.Presenters
             {
                 MessageBox.Show("Error:EventClass table constraint violation."); 
             }
+            //???if (esp.AllEventClasses.Contains(currEventClass)) esp.AllEventClasses.Remove(currEventClass);
             if (currEvent.EventClasses.Contains(currEventClass)) currEvent.EventClasses.Remove(currEventClass);
+
         }
 
         //
@@ -294,9 +300,12 @@ namespace RacingEventsTrackSystem.Presenters
                 EventClass eventClass = new EventClass() { Id = ++max_id, EventId = currEvent.Id, ClassId = raceClass.Id };
                 hc.EventClasses.AddObject(eventClass);
                 hc.SaveChanges();
+                //_applicationPresenter.AllEventsPresenter.InitAllEventClasses(currEvent);
+                //???_applicationPresenter.AllEventsPresenter.AllEventClasses.Add(eventClass);
                 _applicationPresenter.AllEventsPresenter.CurrentEvent.EventClasses.Add(eventClass);//???
             }
 
+            //???_applicationPresenter.AllEventsPresenter.InitAllEventClasses(currEvent);
             this.CurrentRaceClass = raceClass;// to keep data for current Race Class on the screen
             OpenRaceClass(raceClass);
             StatusText = string.Format("Race Class '{0}' was added.", raceClass.ClassName);

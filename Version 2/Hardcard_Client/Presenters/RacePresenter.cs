@@ -13,42 +13,62 @@ using System.Windows;
 
 namespace RacingEventsTrackSystem.Presenters
 {
-    public class RacePresenter : Notifier
+    public class RacePresenter : PresenterBase<Shell>
     {
         private HardcardEntities hardcardContext;
+        private readonly ApplicationPresenter _applicationPresenter;
+        private Shell _view;
 
-        private RaceManagerView _view;
-        private ObservableCollection<Passing> _passingsList;
+        //private ObservableCollection<Passing> _passingsList;
         private ObservableCollection<String> _eventList;
-        private ObservableCollection<long> _sessionList;
+        //private ObservableCollection<long> _sessionList;
         private bool _manualPassing = false;
         private String _statusText;
 
-        private long currentSession;
-        private String currentEvent;
+        //private long currentSession;
+        //private String currentEvent;
 
         private HardcardServer server;
         private TagSubscriber passingsLogger;
 
         private Object lockObject;
 
-        private long lastPassing;
-        private Thread passingsThread;
-        private bool stopThread = false;
+        //private long lastPassing;
+        //private Thread passingsThread;
+        //private bool stopThread = false;
 
         // TODO put this in a config
         private int networkPort = 3900;
 
-        public RacePresenter(RaceManagerView view)
+        public ApplicationPresenter ApplicationPresenter
         {
-            _view = view;
-            hardcardContext = new HardcardEntities();
-            IQueryable<String> events = 
-                from p in hardcardContext.Events 
-                orderby p.EventName
-                select p.EventName;
-            _eventList = new ObservableCollection<string>(events.ToList());
-            lockObject = new Object();
+            get { return _applicationPresenter; }
+            set { }
+        }
+
+        public RacePresenter(ApplicationPresenter applicationPresenter, 
+                                   Shell view
+                                   ) : base(view)
+        {
+            try 
+            { 
+                _applicationPresenter = applicationPresenter;
+
+                _view = view;
+                hardcardContext = new HardcardEntities();
+                IQueryable<String> events =
+                    from p in hardcardContext.Events
+                    orderby p.EventName
+                    select p.EventName;
+                _eventList = new ObservableCollection<string>(events.ToList());
+                lockObject = new Object();
+                StatusText = ("RacePresenter constructor no error");
+            } 
+            catch (Exception ex)
+            {
+                StatusText = "RacePresenter constructor failed with error: " + ex.Message;
+                MessageBox.Show(StatusText); // stop executable
+            }
         }
 
         public ObservableCollection<String> EventList
@@ -61,6 +81,7 @@ namespace RacingEventsTrackSystem.Presenters
             }
         }
 
+        /*
         public ObservableCollection<long> SessionList
         {
             get { return _sessionList; }
@@ -70,7 +91,9 @@ namespace RacingEventsTrackSystem.Presenters
                 OnPropertyChanged("SessionList");
             }
         }
+        */
 
+        /*
         public ObservableCollection<Passing> PassingsList
         {
             get { return _passingsList; }
@@ -80,7 +103,7 @@ namespace RacingEventsTrackSystem.Presenters
                 OnPropertyChanged("PassingsList");
             }
         }
-
+        */
         public string StatusText
         {
             get { return _statusText; }
@@ -101,20 +124,16 @@ namespace RacingEventsTrackSystem.Presenters
             }
         }
 
+        /*
         public void EventSelected()
         {
-            currentEvent = _view.eventComboBox.SelectedValue.ToString();
+            //currentEvent = _view.eventComboBox.SelectedValue.ToString();
             IQueryable<long> sessions =
                 from p in hardcardContext.Sessions
                 select p.Id;
             SessionList = new ObservableCollection<long>(sessions.ToList());
         }
-
-        public void SessionSelected()
-        {
-            currentSession = (long) long.Parse(_view.sessionComboBox.SelectedValue.ToString());
-        }
-
+        */
         public void StartRace()
         {
 
@@ -127,7 +146,14 @@ namespace RacingEventsTrackSystem.Presenters
 
             StatusText = "Hardcard Server Started";
         }
+        public void StartTestRace()
+        {
+            ApplicationPresenter.AllSessionsPresenter.WriteTestDataToPassing();
+        }
 
+        //
+        // Add one row to PassingsForSession list.
+        //
         public void UpdatePassingsList(TagReadEventArgs e)
         {
             lock (lockObject)
@@ -138,6 +164,8 @@ namespace RacingEventsTrackSystem.Presenters
                 Int64.TryParse(e.TagInfo.ID.Value, out rfid);
                 newPassing.RFID = rfid;
                 newPassing.SessionId = null;
+                newPassing.LapNo = null;
+                newPassing.LapTime = null;
                 newPassing.RaceTime = e.TagInfo.Time;
                 //newPassing.PassingTime = AllSessionsPresenter.ConvertFromUnixTime(newPassing.RaceTime);
                 newPassing.LastUpdated = DateTime.UtcNow;
@@ -145,9 +173,9 @@ namespace RacingEventsTrackSystem.Presenters
                 hardcardContext.SaveChanges();
 
                 List<Passing> temp_passings_list;
-                temp_passings_list = PassingsList.ToList();
+                temp_passings_list =  (ApplicationPresenter.AllSessionsPresenter.PassingsForSession).ToList();
                 temp_passings_list.Add(newPassing);
-                PassingsList = new ObservableCollection<Passing>(temp_passings_list.ToList());
+                ApplicationPresenter.AllSessionsPresenter.PassingsForSession = new ObservableCollection<Passing>(temp_passings_list);
             }
         }
 
@@ -157,8 +185,15 @@ namespace RacingEventsTrackSystem.Presenters
             StatusText = "Hardcard Server Stopped";
         }
 
+        /* Rmoved as obsolete on 2012/08/17. Just double check if it can be reused
+         
+        public void SessionSelected()
+        {
+            //currentSession = (long) long.Parse(_view.sessionComboBox.SelectedValue.ToString());
+        }
+
         public void FakeStartRace()
-        {  
+        {
             int numpassings = 0;
             stopThread = false;
             numpassings = (from p in hardcardContext.Passings
@@ -205,7 +240,7 @@ namespace RacingEventsTrackSystem.Presenters
                     Passing newPassing = new Passing();
                     newPassing.RFID = id;
                     newPassing.SessionId = 1;
-                    racetime = racetime + id - 10000 + (laptime%3);
+                    racetime = racetime + id - 10000 + (laptime % 3);
                     newPassing.RaceTime = racetime;
                     //newPassing.LapTime = id - 10000 + (laptime%3);
                     //newPassing.Lap = lap;
@@ -227,26 +262,26 @@ namespace RacingEventsTrackSystem.Presenters
         }
         public void SaveRace<T>(Session session, PresenterBase<T> presenter)
         {
-            /*    
-            if (CurrentEcent.Contains(competitor))
-                AllCompetitors.Remove(competitor);
-            _competitorRepository.Delete(competitor);
-            */
+
+            //if (CurrentEcent.Contains(competitor))
+            //    AllCompetitors.Remove(competitor);
+            //_competitorRepository.Delete(competitor);
+
             MessageBox.Show("N/E");
             StatusText = string.Format("Event '{0}' was deleted.", session.EventClassId);
         }
 
         public void DeleteRace(Session session)
         {
-            /*    
-            if (CurrentEcent.Contains(competitor))
-                AllCompetitors.Remove(competitor);
-            _competitorRepository.Delete(competitor);
-            */
+
+            //if (CurrentEcent.Contains(competitor))
+            //    AllCompetitors.Remove(competitor);
+            //_competitorRepository.Delete(competitor);
+
             MessageBox.Show("N/E");
             StatusText = string.Format("Event '{0}' was deleted.", session.StartTime);
         }
 
-
+        */
     }
 }
