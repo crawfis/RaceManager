@@ -1,12 +1,14 @@
 ﻿<UserControl x:Class="RacingEventsTrackSystem.UserControls.AllSessions"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:RacingEventsTrackSystem.Presenters"
              xmlns:ComponentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              d:DesignHeight="265" d:DesignWidth="316" HorizontalAlignment="Right">
     <UserControl.Resources>
+        <local:MilitaryTime x:Key="militaryTime"/>
         <CollectionViewSource x:Key="contactSource" Source="{Binding SessionsForEvent}">
             <CollectionViewSource.SortDescriptions>
                 <!--<ComponentModel:SortDescription PropertyName="SessionID" />--> <!-- TODO: Sort by start time -->
@@ -51,9 +53,9 @@
                         <!--<GridViewColumn Header="Class"
                                     DisplayMemberBinding="{Binding EventClassId}"/>--> <!--it works-->
                         <GridViewColumn Header="Start Time"
-                                    DisplayMemberBinding="{Binding StartTime}" />
+                                    DisplayMemberBinding="{Binding Path = StartTime, Converter = {StaticResource militaryTime}}" />
                         <GridViewColumn Header="Stop Time"
-                                    DisplayMemberBinding="{Binding SchedStopTime}" />
+                                    DisplayMemberBinding="{Binding Path = SchedStopTime, Converter = {StaticResource militaryTime}}" />
                         <GridViewColumn Header="Sch. Laps"
                                     DisplayMemberBinding="{Binding SchedLaps}" />
                         <GridViewColumn Header="EventId"
