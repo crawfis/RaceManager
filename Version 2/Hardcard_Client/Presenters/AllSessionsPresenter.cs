@@ -15,7 +15,8 @@ using System.Linq.Expressions;
 using System.Data.Linq.SqlClient;
 using System.IO;
 using RacingEventsTrackSystem.UserControls;
-//using System.Windows.Forms; 
+using System.Windows.Threading;
+using System.Windows.Forms; 
 
 
 // EU new module
@@ -49,7 +50,7 @@ namespace RacingEventsTrackSystem.Presenters
         private ObservableCollection<Session> _sessionsForEvent; 
         private Session _currentSessionForEvent;
         private string _statusText = "";
-
+        private Shell _view;
 
         public AllSessionsPresenter(ApplicationPresenter applicationPresenter, 
                                    Shell view
@@ -58,6 +59,7 @@ namespace RacingEventsTrackSystem.Presenters
             try 
             { 
                 _applicationPresenter = applicationPresenter;
+                _view = view;
 
                 // to populate SessionView with some data while openinig
                 InitSessionView();
@@ -66,7 +68,7 @@ namespace RacingEventsTrackSystem.Presenters
             catch (Exception ex)
             {
                 StatusText = "AllSessionsPresenter constructor failed with error: " + ex.Message;
-                MessageBox.Show(StatusText); // stop executable
+                System.Windows.MessageBox.Show(StatusText); // stop executable
             }
         }
 
@@ -257,7 +259,7 @@ namespace RacingEventsTrackSystem.Presenters
             long max_id = 0;
             if ((from c in hc.Sessions select c).Count() > 0) // not empty table
             {
-                max_id = 
+                max_id = (from e in hc.Sessions select e.Id).Max();
                 //max_id = hc.Sessions.Max(s => s.Id);
                 newSession.Id = ++max_id;
             }
@@ -374,7 +376,7 @@ namespace RacingEventsTrackSystem.Presenters
         {
             if (ApplicationPresenter.AllEventsPresenter.CurrentEvent.EventClasses.Count(ec => ec.Id ==  session.EventClassId) == 0)
             {
-                MessageBox.Show("EventClassId field is not in the list of EventClasses");
+                System.Windows.MessageBox.Show("EventClassId field is not in the list of EventClasses");
                 return false;
             }
             return true;
@@ -547,7 +549,7 @@ namespace RacingEventsTrackSystem.Presenters
             {
                 String str = String.Format("This Athlete: {0} {1} Competitorid = {2} is already in this session",
                                 competitor.Athlete.FirstName, competitor.Athlete.LastName, competitor.Id);
-                MessageBox.Show(str);
+                System.Windows.MessageBox.Show(str);
                 return false;
             }
 
@@ -555,7 +557,7 @@ namespace RacingEventsTrackSystem.Presenters
             if (EntriesForSession.Count(efs => efs.CompetitionNo == entry.CompetitionNo) != 0)
             {
                 String str = String.Format("CompetitionNo {0} is already in this session", entry.CompetitionNo);
-                MessageBox.Show(str);
+                System.Windows.MessageBox.Show(str);
                 return false;
             }
 
@@ -563,7 +565,7 @@ namespace RacingEventsTrackSystem.Presenters
             if (EntriesForSession.Count(efs => efs.RFID == entry.RFID) != 0)
             {
                 String str = String.Format("RFID {0} is already in this session", entry.RFID);
-                MessageBox.Show(str);
+                System.Windows.MessageBox.Show(str);
                 return false;
             }
 
@@ -571,28 +573,28 @@ namespace RacingEventsTrackSystem.Presenters
             if (entry.Status == null || entry.Status.Count() != 1)
             {
                 String str = String.Format("Status should be one character, e.g. 'a' (active)");
-                MessageBox.Show(str);
+                System.Windows.MessageBox.Show(str);
                 return false;
             }
 
             if (entry.CompetitionNo == null || entry.CompetitionNo.Count() > 10)
             {
                 String str = String.Format("Number of chars in CompetitionNo should be <= 10 , e.g. '102a'");
-                MessageBox.Show(str);
+                System.Windows.MessageBox.Show(str);
                 return false;
             }
 
             if (entry.Equipment == null || entry.Equipment.Count() > 50)
             {
                 String str = String.Format("Number of chars in Equipment should be <= 50 , e.g. 'Car'");
-                MessageBox.Show(str);
+                System.Windows.MessageBox.Show(str);
                 return false;
             }
 
             if (entry.Sponsors == null || entry.Sponsors.Count() > 300)
             {
                 String str = String.Format("Number of chars in Sponsors should be less < 300 , e.g. 'IBM'");
-                MessageBox.Show(str);
+                System.Windows.MessageBox.Show(str);
                 return false;
             }
             return true;
@@ -1033,7 +1035,7 @@ namespace RacingEventsTrackSystem.Presenters
                                        select p).ToList();
                 if (query.Count != 1)
                 {
-                    MessageBox.Show("Error during insertion");
+                    System.Windows.MessageBox.Show("Error during insertion");
                 }
                 Passing prev = query.First();
                 pas.RaceTime = prev.RaceTime + (long)(0.5*(CurrentPassingForSession.RaceTime - prev.RaceTime));
@@ -1247,7 +1249,7 @@ namespace RacingEventsTrackSystem.Presenters
             long[] raceTime =  new long[bnd];
             if (entryCount > bnd)
             {
-                MessageBox.Show("Array raceTime[] too small"); // exit
+                System.Windows.MessageBox.Show("Array raceTime[] too small"); // exit
                 return;
             }
 
@@ -1273,6 +1275,11 @@ namespace RacingEventsTrackSystem.Presenters
                     hc.SaveChanges();
                     UpdateStandingTable(session);
                     hc.SaveChanges();
+
+                    // just nice view in real time. Replace with Threads and timer later
+
+                    System.Windows.Forms.Application.DoEvents();
+                    System.Threading.Thread.Sleep(1000); 
 
                     raceTime[j_e] += random.Next(20000, 30000);//lapTime ~ 20 . . . 30 sec
                     j_e++;
