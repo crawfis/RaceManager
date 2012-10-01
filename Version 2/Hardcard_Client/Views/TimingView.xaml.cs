@@ -64,6 +64,8 @@ namespace RacingEventsTrackSystem.Views
         }
         private void RefreshPassingAndStanding(object sender, RoutedEventArgs e)
         {
+            if (txbxMinLapTime.Text == "")
+                txbxMinLapTime.Text = "10";
             Presenter.CurrentSessionForEvent.MinLapTime = Int32.Parse(txbxMinLapTime.Text);
             Presenter.ReCalculatePassingsAndStandings(Presenter.CurrentSessionForEvent);
         }
